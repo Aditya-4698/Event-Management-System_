@@ -1,0 +1,14 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+.DS_Store
+=======
+*.cpp
+/demo
+>>>>>>> 8f6eb2d82dbac8d59107b482d9b6fcaee12ea4e0
+=======
+*.cpp
+/demo
+=======
+.DS_Store
+>>>>>>> 36a09fd (project structure)
+>>>>>>> 6b8e014 (logo added)
