@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .main-box {
+            height: 100vh;
+            display: flex;
+            background: url(https://www.visionvivaah.com/blog/wp-content/uploads/2019/11/Top-10-Event-Management-Companies-In-India.jpg)no-repeat center center/cover;
+        }
+
+        .main-box::before {
+            content: "";
+            background-color: black;
+            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .input-box {
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+
+        }
+
+        h3 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            padding-top: 10%;
+        }
+
+        input[type="password"] {
+            border-bottom-right-radius: 8px;
+            border-top-left-radius: 8px;
+            border: none;
+        }
+
+        input[type="password"]::after{
+             border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid main-box align-items-center justify-content-center">
+        <div class="row col-lg-6 col-md-12 align-items-center justify-content-center">
+            <div class="col-lg-6 col-md-12 text-left text-white input-box" style="border: 1px solid;">
+                <h3>Update Password</h3>
+                <hr>
+                <!-- <p>Enter your email and we'll send a link to reset your password</p> -->
+                <form>
+                    <div class="pt-3">
+                        <label for="password" class="form-control-label sr-only">New Passward</label>
+                        <div class="d-flex bg-white text-center"><input type="password" class="form-control "  id="email"
+                                placeholder="Enter new password" required><label style="color: black;"
+                                class="pr-2 pt-2"><i class="bi bi-eye-fill" ></i></label></div>
+                    </div>
+                    <div class="pt-3">
+                        <label for="password" class="form-control-label sr-only">Confirm Passward</label>
+                        <div class="d-flex bg-white text-center"><input type="password" class="form-control" id="email"
+                                placeholder="Confirm password" required><label style="color: black;"
+                                class="pr-2 pt-2"><i class="bi bi-eye-fill"></i></label></div>
+                    </div>
+                    <div class="pt-4">
+                        <button class="btn btn-primary btn-ml btn-block" type="submit">Update</button>
+                    </div>
+                    <hr>
+                    <!-- <p class="pt-2 text-white text-center">Back to <a href="#!">Log In</a></p> -->
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

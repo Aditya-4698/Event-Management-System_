@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     // Field Selectors
     const mandatoryFields = "#venuename,#address,#dist,#state,#pincode,#contact,#alt_cont,#categname,#sername,#vistname,#custname,#adhar,#eventname,#cost,#capacity,#amt,#balance,#description,#gallery";
-    const alphabetOnlyFields = "#venuename,#dist,#state,#categname,#sername,#vistname,#custname,#eventname";
+    const alphabetOnlyFields = "#venuename,#dist,#state,#categname,#sername,#vistname,#custname,#eventname,#exampleselect";
     const only10digitsfield = "#contact,#alt_cont";
     const pin6digits = "#pincode";
     const adhar12digits = "#adhar";
@@ -145,6 +145,37 @@ $(document).ready(function () {
     });
 
     /*--------------------------------------
+     * 6. cost
+     --------------------------------------*/
+
+    $(cost).on('keydown', function (e) {
+        let ch = e.which;
+        const currentVal = $(this).val();
+        const errorSpan = $(this).siblings('span');
+        errorSpan.text("");
+
+        if (currentVal.length === 0 && ch === 32) {
+            errorSpan.text("*Cannot start with a space!").css("color", "red");
+            return false;
+        }
+
+        const controlKeys = [8, 9, 37, 38, 39, 40, 46];
+        if (controlKeys.includes(ch)) return true;
+
+        if (ch >= 48 && ch <= 57) {
+            if (currentVal.length >= 10) {
+                errorSpan.text("*Maximum 12 digits allowed!").css("color", "red");
+                return false;
+            }
+            return true;
+        } else {
+            errorSpan.text("*Only digits allowed!").css("color", "red");
+            return false;
+        }
+    });
+
+
+    /*--------------------------------------
      * 6. Address
      --------------------------------------*/
     $(address).on("keydown", function (e) {
@@ -173,6 +204,22 @@ $(document).ready(function () {
             return false;
         }
     });
+
+    /*--------------------------------------
+     * 7. select
+     --------------------------------------*/
+
+        $("#exampleselect").on("focusout",function(){
+                v=$(this).val();
+                if(v=="")
+                {
+                    $(this).css("border","2px solid red");
+                }
+            });
+            $("#exampleselect").on("focus",function(){
+                  $(this).css("border","2px solid black");
+            });
+
 
     /*--------------------------------------
      * 7.Submit
