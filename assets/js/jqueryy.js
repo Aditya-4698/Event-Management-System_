@@ -251,7 +251,7 @@ $(document).ready(function () {
 
         if (isValid) {
             alert("Form submitted successfully!");
-            $("#myForm").submit(); // Submit form only if all validations pass
+            $("#myForm").submit();
         } else {
             console.log("Validation failed, form not submitted");
         }
