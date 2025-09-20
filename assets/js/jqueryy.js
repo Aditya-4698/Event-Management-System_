@@ -33,30 +33,6 @@ $(document).ready(function () {
     /*--------------------------------------
      * 2. Only alphabets and spaces
      --------------------------------------*/
-    // $(alphabetOnlyFields).on("keydown", function (e) {
-    //     let ch = e.which;
-    //     const currentVal = $(this).val();
-    //     const errorSpan = $(this).siblings('span');
-    //     errorSpan.text("");
-
-    //     if (currentVal.length === 0 && ch === 32) {
-    //         errorSpan.text("*Cannot start with a space!").css("color", "red");
-    //         return false;
-    //     }
-
-    //     if (ch === 32 && currentVal.slice(-1) === " ") {
-    //         errorSpan.text("*Cannot have double spaces!").css("color", "red");
-    //         return false;
-    //     }
-
-    //     const controlKeys = [8, 9, 13, 37, 38, 39, 40, 46];
-    //     if ((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch === 32 || controlKeys.includes(ch)) {
-    //         return true;
-    //     } else {
-    //         errorSpan.text("*Only alphabets and space allowed!").css("color", "red");
-    //         return false;
-    //     }
-    // });
 
     $(alphabetOnlyFields).on("keydown", function (e) {
         const ch = e.which;
@@ -256,37 +232,74 @@ $(document).ready(function () {
     /*--------------------------------------
      * 7.Submit
      --------------------------------------*/
+
     $("#submit").on("click", function (e) {
-        e.preventDefault();
+    e.preventDefault();
 
-        let isValid = true;
+    let isValid = true;
+    let firstInvalidField = null;
 
-        $(mandatoryFields).each(function () {
-            let value = $(this).val().trim();
-            const errorSpan = $(this).siblings('span');
+    $(mandatoryFields).each(function () {
+        const input = $(this);
+        const value = input.val().trim();
+        const errorSpan = input.siblings('span');
 
-            if (value === "" || value.toLowerCase() === "*field is mandatory") {
-                $(this).val("Field is mandatory").css({
-                    "border": "2px solid red",
-                    "color": "red"
+        errorSpan.text("");
+        if (value === "" || value === "Field is mandatory") {
+            errorSpan.text("*Field is mandatory").css({
+                "color": "red","font-size": "13px","font-weight": "light"
+            });
+
+            input
+                .removeClass("success")
+                .addClass("error")
+                .css({"border": "1px solid red","color": "red"
                 });
-                errorSpan.text("*Field is mandatory").css("color", "red");
-                isValid = false;
-            } else {
-                $(this).css({
-                    "border": "2px solid green",
-                    "color": "green"
-                });
-                errorSpan.text("");
+
+            if (!firstInvalidField) {
+                firstInvalidField = input;
             }
-        });
 
-        if (isValid) {
-            alert("Form submitted successfully!");
-            $("#myForm").submit();
+            isValid = false;
         } else {
-            console.log("Validation failed, form not submitted");
+  
+            input
+                .removeClass("error")
+                .addClass("success")
+                .css({"border": "1px solid green","color": "green"
+                });
         }
     });
+
+    const selectField = $("#exampleselect");
+    if (selectField.val() === "") {
+        selectField
+            .removeClass("success")
+            .addClass("error")
+            .css("border", "1px solid red");
+
+        if (!firstInvalidField) {
+            firstInvalidField = selectField;
+        }
+
+        isValid = false;
+    } else {
+        selectField
+            .removeClass("error")
+            .addClass("success")
+            .css("border", "1px solid green");
+    }
+
+    if (firstInvalidField) {
+        firstInvalidField.focus();
+    }
+    if (isValid) {
+        alert("Form submitted successfully!");
+        $("#myForm").submit();
+    } else {
+        console.log("Validation failed, form not submitted");
+    }
+});
+
 });
 
