@@ -17,7 +17,7 @@ $(document).ready(function () {
         let value = $(this).val().trim();
 
         if (value.length === 0) {
-            $(this).val("Field is mandatory"); 
+            $(this).val("Field is mandatory");
             $(this).css({ "border": "1px solid red", "color": "red" });
         }
     });
@@ -29,25 +29,55 @@ $(document).ready(function () {
         }
     });
 
+
     /*--------------------------------------
      * 2. Only alphabets and spaces
      --------------------------------------*/
+    // $(alphabetOnlyFields).on("keydown", function (e) {
+    //     let ch = e.which;
+    //     const currentVal = $(this).val();
+    //     const errorSpan = $(this).siblings('span');
+    //     errorSpan.text("");
+
+    //     if (currentVal.length === 0 && ch === 32) {
+    //         errorSpan.text("*Cannot start with a space!").css("color", "red");
+    //         return false;
+    //     }
+
+    //     if (ch === 32 && currentVal.slice(-1) === " ") {
+    //         errorSpan.text("*Cannot have double spaces!").css("color", "red");
+    //         return false;
+    //     }
+
+    //     const controlKeys = [8, 9, 13, 37, 38, 39, 40, 46];
+    //     if ((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch === 32 || controlKeys.includes(ch)) {
+    //         return true;
+    //     } else {
+    //         errorSpan.text("*Only alphabets and space allowed!").css("color", "red");
+    //         return false;
+    //     }
+    // });
+
     $(alphabetOnlyFields).on("keydown", function (e) {
-        let ch = e.which;
+        const ch = e.which;
+        const pos = this.selectionStart;
         const currentVal = $(this).val();
         const errorSpan = $(this).siblings('span');
         errorSpan.text("");
 
-        if (currentVal.length === 0 && ch === 32) {
+        // Prevent starting with space
+        if (pos === 0 && ch === 32) {
             errorSpan.text("*Cannot start with a space!").css("color", "red");
             return false;
         }
 
-        if (ch === 32 && currentVal.slice(-1) === " ") {
+        // Prevent double spaces
+        if (ch === 32 && currentVal.charAt(pos - 1) === " ") {
             errorSpan.text("*Cannot have double spaces!").css("color", "red");
             return false;
         }
 
+        // Allowed keys
         const controlKeys = [8, 9, 13, 37, 38, 39, 40, 46];
         if ((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch === 32 || controlKeys.includes(ch)) {
             return true;
@@ -56,6 +86,7 @@ $(document).ready(function () {
             return false;
         }
     });
+
 
     /*--------------------------------------
      * 3. Phone Numbers (10 digits only)
@@ -164,7 +195,7 @@ $(document).ready(function () {
 
         if (ch >= 48 && ch <= 57) {
             if (currentVal.length >= 10) {
-                errorSpan.text("*Maximum 12 digits allowed!").css("color", "red");
+                errorSpan.text("*Maximum 10 digits allowed!").css("color", "red");
                 return false;
             }
             return true;
@@ -178,19 +209,21 @@ $(document).ready(function () {
     /*--------------------------------------
      * 6. Address
      --------------------------------------*/
+
     $(address).on("keydown", function (e) {
         let ch = e.which;
+        const pos = this.selectionStart;
         const currentVal = $(this).val();
         const errorSpan = $(this).siblings('span');
         errorSpan.text("");
 
-        if (currentVal.length === 0 && ch === 32) {
+        if (pos === 0 && ch === 32) {
             errorSpan.text("*Cannot start with a space!").css("color", "red");
             return false;
         }
 
-        if (ch === 32 && currentVal.slice(-1) === " ") {
-            errorSpan.text("*Cannot have double spaces!").css("color", "red");
+        if (ch === 32 && currentVal.charAt(pos - 1) === " ") {
+            errorSpan.text("*Cannot use double spaces!").css("color", "red");
             return false;
         }
 
@@ -206,19 +239,18 @@ $(document).ready(function () {
     });
 
     /*--------------------------------------
-     * 7. select
+     * 8. select category
      --------------------------------------*/
 
-        $("#exampleselect").on("focusout",function(){
-                v=$(this).val();
-                if(v=="")
-                {
-                    $(this).css("border","2px solid red");
-                }
-            });
-            $("#exampleselect").on("focus",function(){
-                  $(this).css("border","2px solid black");
-            });
+    $("#exampleselect").on("focusout", function () {
+        v = $(this).val();
+        if (v == "") {
+            $(this).css("border", "2px solid red");
+        }
+    });
+    $("#exampleselect").on("focus", function () {
+        $(this).css("border", "2px solid black");
+    });
 
 
     /*--------------------------------------
@@ -257,3 +289,4 @@ $(document).ready(function () {
         }
     });
 });
+
