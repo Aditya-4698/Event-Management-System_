@@ -93,6 +93,17 @@ $(document).ready(function () {
         }
     });
 
+    $(only10digitsfield).on('blur', function () {
+        const currentVal = $(this).val();
+        const errorSpan = $(this).siblings('span');
+
+        if (currentVal.length < 10) {
+            errorSpan.text("*Exactly 10 digits required!").css("color", "red");
+        } else {
+            errorSpan.text("");
+        }
+    });
+
     /*--------------------------------------
      * 4. Pin Code (6 digits only)
      --------------------------------------*/
@@ -122,6 +133,17 @@ $(document).ready(function () {
         }
     });
 
+    $(pin6digits).on('blur', function () {
+        const currentVal = $(this).val();
+        const errorSpan = $(this).siblings('span');
+
+        if (currentVal.length < 6) {
+            errorSpan.text("*Exactly 6 digits required!").css("color", "red");
+        } else {
+            errorSpan.text("");
+        }
+    });
+
     /*--------------------------------------
      * 5. Aadhar (12 digits only)
      --------------------------------------*/
@@ -148,6 +170,17 @@ $(document).ready(function () {
         } else {
             errorSpan.text("*Only digits allowed!").css("color", "red");
             return false;
+        }
+    });
+
+    $(adhar12digits).on('blur', function () {
+        const currentVal = $(this).val();
+        const errorSpan = $(this).siblings('span');
+
+        if (currentVal.length < 12) {
+            errorSpan.text("*Exactly 12 digits required!").css("color", "red");
+        } else {
+            errorSpan.text("");
         }
     });
 
@@ -181,6 +214,16 @@ $(document).ready(function () {
         }
     });
 
+    $(cost).on('blur', function () {
+        const currentVal = $(this).val();
+        const errorSpan = $(this).siblings('span');
+
+        if (currentVal.length < 10) {
+            errorSpan.text("*Exactly 10 digits required!").css("color", "red");
+        } else {
+            errorSpan.text("");
+        }
+    });
 
     /*--------------------------------------
      * 6. Address
@@ -234,72 +277,74 @@ $(document).ready(function () {
      --------------------------------------*/
 
     $("#submit").on("click", function (e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    let isValid = true;
-    let firstInvalidField = null;
+        let isValid = true;
+        let firstInvalidField = null;
 
-    $(mandatoryFields).each(function () {
-        const input = $(this);
-        const value = input.val().trim();
-        const errorSpan = input.siblings('span');
+        $(mandatoryFields).each(function () {
+            const input = $(this);
+            const value = input.val().trim();
+            const errorSpan = input.siblings('span');
 
-        errorSpan.text("");
-        if (value === "" || value === "Field is mandatory") {
-            errorSpan.text("*Field is mandatory").css({
-                "color": "red","font-size": "13px","font-weight": "light"
-            });
-
-            input
-                .removeClass("success")
-                .addClass("error")
-                .css({"border": "1px solid red","color": "red"
+            errorSpan.text("");
+            if (value === "" || value === "Field is mandatory") {
+                errorSpan.text("*Field is mandatory").css({
+                    "color": "red", "font-size": "13px", "font-weight": "light"
                 });
 
+                input
+                    .removeClass("success")
+                    .addClass("error")
+                    .css({
+                        "border": "1px solid red", "color": "red"
+                    });
+
+                if (!firstInvalidField) {
+                    firstInvalidField = input;
+                }
+
+                isValid = false;
+            } else {
+
+                input
+                    .removeClass("error")
+                    .addClass("success")
+                    .css({
+                        "border": "1px solid green", "color": "green"
+                    });
+            }
+        });
+
+        const selectField = $("#exampleselect");
+        if (selectField.val() === "") {
+            selectField
+                .removeClass("success")
+                .addClass("error")
+                .css("border", "1px solid red");
+
             if (!firstInvalidField) {
-                firstInvalidField = input;
+                firstInvalidField = selectField;
             }
 
             isValid = false;
         } else {
-  
-            input
+            selectField
                 .removeClass("error")
                 .addClass("success")
-                .css({"border": "1px solid green","color": "green"
-                });
+                .css("border", "1px solid green");
+        }
+
+        if (firstInvalidField) {
+            firstInvalidField.focus();
+        }
+        if (isValid) {
+            alert("Form submitted successfully!");
+            $("#myForm").submit();
+        } else {
+            console.log("Validation failed, form not submitted");
         }
     });
-
-    const selectField = $("#exampleselect");
-    if (selectField.val() === "") {
-        selectField
-            .removeClass("success")
-            .addClass("error")
-            .css("border", "1px solid red");
-
-        if (!firstInvalidField) {
-            firstInvalidField = selectField;
-        }
-
-        isValid = false;
-    } else {
-        selectField
-            .removeClass("error")
-            .addClass("success")
-            .css("border", "1px solid green");
-    }
-
-    if (firstInvalidField) {
-        firstInvalidField.focus();
-    }
-    if (isValid) {
-        alert("Form submitted successfully!");
-        $("#myForm").submit();
-    } else {
-        console.log("Validation failed, form not submitted");
-    }
-});
 
 });
 
