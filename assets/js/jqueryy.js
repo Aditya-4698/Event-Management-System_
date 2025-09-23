@@ -35,30 +35,35 @@ $(document).ready(function () {
      --------------------------------------*/
 
     $(alphabetOnlyFields).on("keydown", function (e) {
+        const $this = $(this);
         const ch = e.which;
         const pos = this.selectionStart;
-        const currentVal = $(this).val();
-        const errorSpan = $(this).siblings('span');
-        errorSpan.text("");
+        const currentVal = $this.val();
+
+        $this.next('span').text("");
 
         if (pos === 0 && ch === 32) {
-            errorSpan.text("*Cannot start with a space!").css("color", "red");
+            $this.next('span').text("*Cannot start with a space!").css("color", "red");
             return false;
         }
 
         if (ch === 32 && currentVal.charAt(pos - 1) === " ") {
-            errorSpan.text("*Cannot have double spaces!").css("color", "red");
+            $this.next('span').text("*Cannot have double spaces!").css("color", "red");
             return false;
         }
 
         const controlKeys = [8, 9, 13, 37, 38, 39, 40, 46];
+
+
         if ((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch === 32 || controlKeys.includes(ch)) {
             return true;
         } else {
-            errorSpan.text("*Only alphabets and space allowed!").css("color", "red");
+
+            $this.next('span').text("*Only alphabets and space allowed!").css("color", "red");
             return false;
         }
     });
+
 
 
     /*--------------------------------------
@@ -153,7 +158,7 @@ $(document).ready(function () {
      * 4. Capacity (8 digits only)
      --------------------------------------*/
     $(capacity).on('keydown', function (e) {
-        const $this = $(this); 
+        const $this = $(this);
         const currentVal = $this.val();
         const key = e.key;
 
