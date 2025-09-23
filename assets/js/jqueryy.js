@@ -41,19 +41,16 @@ $(document).ready(function () {
         const errorSpan = $(this).siblings('span');
         errorSpan.text("");
 
-        // Prevent starting with space
         if (pos === 0 && ch === 32) {
             errorSpan.text("*Cannot start with a space!").css("color", "red");
             return false;
         }
 
-        // Prevent double spaces
         if (ch === 32 && currentVal.charAt(pos - 1) === " ") {
             errorSpan.text("*Cannot have double spaces!").css("color", "red");
             return false;
         }
 
-        // Allowed keys
         const controlKeys = [8, 9, 13, 37, 38, 39, 40, 46];
         if ((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch === 32 || controlKeys.includes(ch)) {
             return true;
@@ -68,162 +65,232 @@ $(document).ready(function () {
      * 3. Phone Numbers (10 digits only)
      --------------------------------------*/
     $(only10digitsfield).on('keydown', function (e) {
-        let ch = e.which;
-        const currentVal = $(this).val();
-        const errorSpan = $(this).siblings('span');
-        errorSpan.text("");
+        const $this = $(this);
+        const currentVal = $this.val();
+        const key = e.key;
 
-        if (currentVal.length === 0 && (ch === 32 || ch === 48)) {
-            errorSpan.text("*Cannot start with a space or 0!").css("color", "red");
+        $this.next('span').text("");
+
+        const controlKeys = ["Backspace", "Tab", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Delete"];
+
+        if (controlKeys.includes(key)) return true;
+
+        if (currentVal.length === 0 && key === " ") {
+            $this.next('span').text("*Cannot start with a space!").css("color", "red");
             return false;
         }
 
-        const controlKeys = [8, 9, 37, 38, 39, 40, 46];
-        if (controlKeys.includes(ch)) return true;
-
-        if (ch >= 48 && ch <= 57) {
-            if (currentVal.length >= 10) {
-                errorSpan.text("*Maximum 10 digits allowed!").css("color", "red");
-                return false;
-            }
-            return true;
-        } else {
-            errorSpan.text("*Only digits allowed!").css("color", "red");
+        if (!/^[0-9]$/.test(key)) {
+            $this.next('span').text("*Only digits allowed!").css("color", "red");
             return false;
         }
+
+        if (currentVal.length >= 10) {
+            $this.next('span').text("*Maximum 10 digits allowed!").css("color", "red");
+            return false;
+        }
+
+        return true;
     });
 
     $(only10digitsfield).on('blur', function () {
-        const currentVal = $(this).val();
-        const errorSpan = $(this).siblings('span');
+        const $this = $(this);
+        const currentVal = $this.val();
 
-        if (currentVal.length < 10) {
-            errorSpan.text("*Exactly 10 digits required!").css("color", "red");
+        if (!/^\d{10}$/.test(currentVal)) {
+            $this.next('span').text("*Exactly 10 digits required!").css("color", "red");
         } else {
-            errorSpan.text("");
+            $this.next('span').text("");
         }
     });
+
 
     /*--------------------------------------
      * 4. Pin Code (6 digits only)
      --------------------------------------*/
     $(pin6digits).on('keydown', function (e) {
-        let ch = e.which;
-        const currentVal = $(this).val();
-        const errorSpan = $(this).siblings('span');
-        errorSpan.text("");
+        const $this = $(this); // cache current input
+        const currentVal = $this.val();
+        const key = e.key;
 
-        if (currentVal.length === 0 && ch === 32) {
-            errorSpan.text("*Cannot start with a space!").css("color", "red");
+        $this.next('span').text("");
+
+        const controlKeys = ["Backspace", "Tab", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Delete"];
+
+        if (controlKeys.includes(key)) return true;
+
+        if (currentVal.length === 0 && key === " ") {
+            $this.next('span').text("*Cannot start with a space!").css("color", "red");
             return false;
         }
 
-        const controlKeys = [8, 9, 37, 38, 39, 40, 46];
-        if (controlKeys.includes(ch)) return true;
-
-        if (ch >= 48 && ch <= 57) {
-            if (currentVal.length >= 6) {
-                errorSpan.text("*Maximum 6 digits allowed!").css("color", "red");
-                return false;
-            }
-            return true;
-        } else {
-            errorSpan.text("*Only digits allowed!").css("color", "red");
+        if (!/^[0-9]$/.test(key)) {
+            $this.next('span').text("*Only digits allowed!").css("color", "red");
             return false;
         }
+
+        if (currentVal.length >= 6) {
+            $this.next('span').text("*Maximum 6 digits allowed!").css("color", "red");
+            return false;
+        }
+
+        return true;
     });
 
     $(pin6digits).on('blur', function () {
-        const currentVal = $(this).val();
-        const errorSpan = $(this).siblings('span');
+        const $this = $(this);
+        const currentVal = $this.val();
 
-        if (currentVal.length < 6) {
-            errorSpan.text("*Exactly 6 digits required!").css("color", "red");
+
+        if (!/^\d{6}$/.test(currentVal)) {
+            $this.next('span').text("*Exactly 6 digits required!").css("color", "red");
         } else {
-            errorSpan.text("");
+            $this.next('span').text("");
         }
     });
 
     /*--------------------------------------
+     * 4. Capacity (8 digits only)
+     --------------------------------------*/
+    $(capacity).on('keydown', function (e) {
+        const $this = $(this); 
+        const currentVal = $this.val();
+        const key = e.key;
+
+        $this.next('span').text("");
+
+        const controlKeys = ["Backspace", "Tab", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Delete"];
+
+        if (controlKeys.includes(key)) return true;
+
+        if (currentVal.length === 0 && key === " ") {
+            $this.next('span').text("*Cannot start with a space!").css("color", "red");
+            return false;
+        }
+
+        if (!/^[0-9]$/.test(key)) {
+            $this.next('span').text("*Only digits allowed!").css("color", "red");
+            return false;
+        }
+
+        if (currentVal.length >= 8) {
+            $this.next('span').text("*Maximum 8 digits allowed!").css("color", "red");
+            return false;
+        }
+
+        return true;
+    });
+
+    $(capacity).on('blur', function () {
+        const $this = $(this);
+        const currentVal = $this.val();
+
+
+        if (!/^\d{8}$/.test(currentVal)) {
+            $this.next('span').text("*Exactly 8 digits required!").css("color", "red");
+        } else {
+            $this.next('span').text("");
+        }
+    });
+
+
+    /*--------------------------------------
      * 5. Aadhar (12 digits only)
      --------------------------------------*/
+
     $(adhar12digits).on('keydown', function (e) {
-        let ch = e.which;
-        const currentVal = $(this).val();
-        const errorSpan = $(this).siblings('span');
-        errorSpan.text("");
+        const $this = $(this);
+        const currentVal = $this.val();
+        const key = e.key;
 
-        if (currentVal.length === 0 && ch === 32) {
-            errorSpan.text("*Cannot start with a space!").css("color", "red");
+
+        $this.next('span').text("");
+
+        const controlKeys = ["Backspace", "Tab", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Delete"];
+
+
+        if (controlKeys.includes(key)) return true;
+
+
+        if (currentVal.length === 0 && key === " ") {
+            $this.next('span').text("*Cannot start with a space!").css("color", "red");
             return false;
         }
 
-        const controlKeys = [8, 9, 37, 38, 39, 40, 46];
-        if (controlKeys.includes(ch)) return true;
 
-        if (ch >= 48 && ch <= 57) {
-            if (currentVal.length >= 12) {
-                errorSpan.text("*Maximum 12 digits allowed!").css("color", "red");
-                return false;
-            }
-            return true;
-        } else {
-            errorSpan.text("*Only digits allowed!").css("color", "red");
+        if (!/^[0-9]$/.test(key)) {
+            $this.next('span').text("*Only digits allowed!").css("color", "red");
             return false;
         }
+
+
+        if (currentVal.length >= 12) {
+            $this.next('span').text("*Maximum 12 digits allowed!").css("color", "red");
+            return false;
+        }
+
+        return true;
     });
 
     $(adhar12digits).on('blur', function () {
-        const currentVal = $(this).val();
-        const errorSpan = $(this).siblings('span');
+        const $this = $(this);
+        const currentVal = $this.val();
 
-        if (currentVal.length < 12) {
-            errorSpan.text("*Exactly 12 digits required!").css("color", "red");
+
+        if (!/^\d{12}$/.test(currentVal)) {
+            $this.next('span').text("*Exactly 12 digits required!").css("color", "red");
         } else {
-            errorSpan.text("");
+            $this.next('span').text("");
         }
     });
+
+
 
     /*--------------------------------------
      * 6. cost
      --------------------------------------*/
 
     $(cost).on('keydown', function (e) {
-        let ch = e.which;
-        const currentVal = $(this).val();
-        const errorSpan = $(this).siblings('span');
-        errorSpan.text("");
+        const $this = $(this);
+        const currentVal = $this.val();
+        const key = e.key;
 
-        if (currentVal.length === 0 && ch === 32) {
-            errorSpan.text("*Cannot start with a space!").css("color", "red");
+        $this.next('span').text("");
+
+        const controlKeys = ["Backspace", "Tab", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Delete"];
+
+
+        if (controlKeys.includes(key)) return true;
+
+        if (currentVal.length === 0 && key === " ") {
+            $this.next('span').text("*Cannot start with a space!").css("color", "red");
             return false;
         }
 
-        const controlKeys = [8, 9, 37, 38, 39, 40, 46];
-        if (controlKeys.includes(ch)) return true;
-
-        if (ch >= 48 && ch <= 57) {
-            if (currentVal.length >= 10) {
-                errorSpan.text("*Maximum 10 digits allowed!").css("color", "red");
-                return false;
-            }
-            return true;
-        } else {
-            errorSpan.text("*Only digits allowed!").css("color", "red");
+        if (!/^[0-9]$/.test(key)) {
+            $this.next('span').text("*Only digits allowed!").css("color", "red");
             return false;
         }
+
+        if (currentVal.length >= 10) {
+            $this.next('span').text("*Maximum 10 digits allowed!").css("color", "red");
+            return false;
+        }
+
+        return true;
     });
 
     $(cost).on('blur', function () {
-        const currentVal = $(this).val();
-        const errorSpan = $(this).siblings('span');
+        const $this = $(this);
+        const currentVal = $this.val();
 
-        if (currentVal.length < 10) {
-            errorSpan.text("*Exactly 10 digits required!").css("color", "red");
+        if (!/^\d{10}$/.test(currentVal)) {
+            $this.next('span').text("*Exactly 10 digits required!").css("color", "red");
         } else {
-            errorSpan.text("");
+            $this.next('span').text("");
         }
     });
+
 
     /*--------------------------------------
      * 6. Address
