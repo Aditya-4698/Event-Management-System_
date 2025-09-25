@@ -286,17 +286,15 @@
             </nav>
             <div class="container-fluid mt--3">
                 <div class="card shadow">
-
-
                     <div
-                        class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap">
+                        class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap" id="search-show">
                         <h4 class="pt-2 pl-3 text-white" style="font-size: 20px;">Customer Form</h4>
                         <a href="..//examples/customer-add.html" class=" btn-info btn-sm mr-2"
                             style="border-radius: 0px; font-size: 13px;"><i class="bi bi-plus-lg pr-1"></i>Entry New</a>
                     </div>
 
                     <!-- Search Form -->
-                    <div class="card-body border-bottom">
+                    <div class="card-body border-bottom" id="search-hide">
                         <form class="row">
                             <div class="col-md-4">
                                 <label for="validationCustom01">Customer ID</label>
@@ -469,8 +467,13 @@
                         }
                     }
                 });
-
             });
+
+
+            // $("#search-show").click(function(){
+            //     $("#search-hide").slideToggle();
+            // });
+            
         </script>
 
         <!--   Core   -->

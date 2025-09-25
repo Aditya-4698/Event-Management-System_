@@ -418,5 +418,13 @@ $(document).ready(function () {
         }
     });
 
+    /*--------------------------------------
+     * 8. FadeToggle
+     --------------------------------------*/
+
+    $("#search-show").click(function () {
+        $("#search-hide").slideToggle();
+    });
+
 });
 
