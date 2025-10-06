@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     // Field Selectors
-    const mandatoryFields = "#venuename,#address,#dist,#state,#pincode,#contact,#alt_cont,#categname,#sername,#vistname,#custname,#adhar,#eventname,#cost,#capacity,#amt,#balance,#description,#gallery";
+    const mandatoryFields = "#venuename,#address,#dist,#state,#pincode,#contact,#alt_cont,#categname,#sername,#vistname,#custname,#adhar,#eventname,#cost,#capacity,#amt,#balance,#description,#gallery,#date";
     const alphabetOnlyFields = "#venuename,#dist,#state,#categname,#sername,#vistname,#custname,#eventname,#exampleselect";
     const only10digitsfield = "#contact,#alt_cont";
     const pin6digits = "#pincode";
@@ -155,7 +155,7 @@ $(document).ready(function () {
     });
 
     /*--------------------------------------
-     * 4. Capacity (8 digits only)
+     * 4. Capacity (MAX 8 digits)
      --------------------------------------*/
     $(capacity).on('keydown', function (e) {
         const $this = $(this);
@@ -191,11 +191,11 @@ $(document).ready(function () {
         const currentVal = $this.val();
 
 
-        if (!/^\d{8}$/.test(currentVal)) {
-            $this.next('span').text("*Exactly 8 digits required!").css("color", "red");
-        } else {
-            $this.next('span').text("");
-        }
+        // if (!/^\d{8}$/.test(currentVal)) {
+        //     $this.next('span').text("*Exactly 8 digits required!").css("color", "red");
+        // } else {
+        //     $this.next('span').text("");
+        // }
     });
 
 
@@ -416,6 +416,45 @@ $(document).ready(function () {
         } else {
             console.log("Validation failed, form not submitted");
         }
+
+        a = $("#venuename").val()
+        b = $("#address").val()
+        c = $("#dist").val()
+        d = $("#pincode").val()
+        e = $("#state").val()
+        f = $("#contact").val()
+        g = $("#alt_cont").val()
+        h = $("#categname").val()
+        i = $("#sername").val()
+        j = $("#vistname").val()
+        k = $("#custname").val()
+        l = $("#adhar").val()
+        m = $("#eventname").val()
+        n = $("#cost").val()
+        o = $("#capacity").val()
+        p = $("#amt").val()
+        q = $("#balance").val()
+        r = $("#description").val()
+        s = $("#gallery").val()
+        t = $("#date").val()
+
+        $.ajax({
+            url: 'event.py',
+            type: 'POST',
+            data: { venuename: a, address: b, dist: c, pincode: d, state: e, contact: f, alt_cont: g, categname: h, sername: i, vistname: j, custname: k, adhar: l, eventname: m, cost: n, capacity: o, amt: p, balance: q, description: r, gallery: s },
+            success: function (data) {
+                console.log(data);
+            }
+        });
+
+        $.ajax({
+            url: 'category.py',
+            type: 'POST',
+            data: { categname: h, date: t, description: r },
+            success: function (data) {
+                console.log(data);
+            }
+        });
     });
 
     /*--------------------------------------
