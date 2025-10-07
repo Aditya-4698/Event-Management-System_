@@ -296,12 +296,12 @@
                 <!-- <li class="ml-auto"><a href="..//examples/category_add.html" class="btn btn-danger btn-sm "><i class="bi bi-plus-lg"></i>Entry</a>
                 </li> -->
             </div>
-            <div class="card-body">
+            <div class="card-body" id="paymentSection">
                 <form class="needs-validation" novalidate>
                     <div class="form-row mt-3">
                         <div class="col-md-3 mb-3">
                             <label for="validationCustom01">Payment Id</label>
-                            <input type="text" class="form-control" id="validationCustom01"
+                            <input type="text" class="form-control" id="PId"
                                 placeholder="Enter Payment Id" required>
                             <div class="invalid-feedback">
                                 Please provide a valid Event Id.
@@ -309,7 +309,7 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationCustom02">Event Id</label>
-                            <input type="text" class="form-control" id="validationCustom02" placeholder="Enter Event id"
+                            <input type="text" class="form-control" id="EId" placeholder="Enter Event id"
                                 required>
                             <div class="invalid-feedback">
                                 Please provide a valid Event Name.
@@ -335,14 +335,14 @@
                     <div class="form-row mt-3">
                         <div class="col-md-3 mb-3">
                             <label for="validationCustom01">Dues Amount</label>
-                            <input type="text" class="form-control" id="amt" placeholder="" required> <span></span>
+                            <input type="text" class="form-control" id="Damt" placeholder="" required> <span></span>
                             <div class="invalid-feedback">
                                 Please provide a valid Event Id.
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="pay">Pay Mode</label>
-                            <select class="form-control" id="exampleselect">
+                            <select class="form-control" id="mode">
                                 <option selected value="">upi...</option>
                                 <option value="1">Available</option>
                                 <option value="2">Not Available</option>
@@ -350,7 +350,7 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="pay">Payment Status</label>
-                            <select class="form-control" id="exampleselect">
+                            <select class="form-control" id="Status">
                                 <option selected value="">pending...</option>
                                 <option value="1">Available</option>
                                 <option value="2">Not Available</option>
@@ -358,14 +358,14 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="payst">Transaction_date</label>
-                            <input type="date" class="form-control" id="dateField" name="dateField">
+                            <input type="date" class="form-control" id="Tdate" name="dateField">
                         </div>
                     </div>
 
                     <div class="form-row mt-3 justify-content-center text-center">
                         <div class="col-md-3 mb-3">
                             <label for="validationCustom01">Balance</label>
-                            <input type="text" class="form-control" id="amt" placeholder="" required> <span></span>
+                            <input type="text" class="form-control" id="balance" placeholder="" required> <span></span>
                             <div class="invalid-feedback">
                                 Please provide a valid Event Id.
                             </div>

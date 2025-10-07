@@ -286,18 +286,18 @@
         </div>
 
         <!-- Card Body -->
-        <div class="card-body">
+        <div class="card-body" id="serviceSection">
           <!-- Event Form -->
           <form class="needs-validation" novalidate>
             <div class="form-row">
               <div class="col-md-4 mb-3">
                 <label for="validationCustom01">Service ID</label>
-                <input type="text" class="form-control" id="validationCustom01" placeholder="Enter Service ID" required>
+                <input type="text" class="form-control" id="SId" placeholder="Enter Service ID" required>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validationCustom02">Category</label>
                 <!-- Default select -->
-                <select class="form-control" id="exampleselect">
+                <select class="form-control" id="mode" required>
                   <option selected value="">Select category</option>
                   <option value="1">Option 1</option>
                   <option value="2">Option 2</option>
@@ -314,7 +314,7 @@
 
               <div class="col-md-12 mb-3">
                 <label for="validationCustom05">Description</label>
-                <textarea name="" id="address" rows="5" style="resize: none;" class="form-control"
+                <textarea name="" id="description" rows="5" style="resize: none;" class="form-control"
                   placeholder=""></textarea> <span></span>
               </div>
             </div>

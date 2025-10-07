@@ -294,12 +294,12 @@
           <h4 class="pt-2 pl-3 text-white"
             style="font-size: 20px; font-family: Georgia, 'Times New Roman', Times, serif;">Update</h4>
         </div>
-        <div class="card-body">
+        <div class="card-body" id="eventSection">
           <form class="needs-validation" novalidate>
             <div class="form-row mt-3">
               <div class="col-md-6 mb-3">
                 <label for="validationCustom01">Event Id*</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" id="EId">
                 <div class="invalid-feedback">
                   Please provide a valid Event Id.
                 </div>
@@ -316,14 +316,14 @@
             <div class="form-row mt-3">
               <div class="col-md-6 mb-3">
                 <label for="validationCustom01">Customer Id</label>
-                <input type="text" class="form-control" id="validationCustom01" placeholder="Enter Customer Id" required>
+                <input type="text" class="form-control" id="CId" placeholder="Enter Customer Id" required>
                 <div class="invalid-feedback">
                   Please provide a valid Event Id.
                 </div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="validationCustom02">Venue Id</label>
-                <input type="text" class="form-control" placeholder="Enter Event Id"
+                <input type="text" class="form-control" placeholder="Enter Event Id" id="VId"
                   required><br><span></span>
                 <div class="invalid-feedback">
                   Please provide a valid Event Name.
@@ -334,7 +334,7 @@
             <div class="form-row mt-3">
               <div class="col-md-3 mb-3">
                 <label for="validationCustom01">Service Id</label>
-                <input type="text" class="form-control" id="validationCustom01" placeholder="Enter Service Id" required>
+                <input type="text" class="form-control" id="SId" placeholder="Enter Service Id" required>
                 <div class="invalid-feedback">
                   Please provide a valid Event Id.
                 </div>
@@ -349,14 +349,14 @@
 
               <div class="col-md-3 mb-3">
                 <label for="validationCustom02">Event date</label>
-                <input type="date" class="form-control" id="validationCustom02" placeholder="" required>
+                <input type="date" class="form-control" id="Evtdate" placeholder="" required>
                 <div class="invalid-feedback">
                   Please provide a valid Event Name.
                 </div>
               </div>
               <div class="col-md-3 mb-3">
                 <label for="validationCustom02">Start date</label>
-                <input type="date" class="form-control" id="validationCustom02" placeholder="" required>
+                <input type="date" class="form-control" id="Sdate" placeholder="" required>
                 <div class="invalid-feedback">
                   Please provide a valid Event Name.
                 </div>
@@ -366,21 +366,21 @@
             <div class="form-row mt-3">
               <div class="col-md-3 mb-3">
                 <label for="validationCustom01">End date</label>
-                <input type="date" class="form-control" id="validationCustom01" placeholder="Enter Event Id" required>
+                <input type="date" class="form-control" id="Edate" placeholder="Enter Event Id" required>
                 <div class="invalid-feedback">
                   Please provide a valid Event Id.
                 </div>
               </div>
               <div class="col-md-3 mb-3">
                 <label for="validationCustom02">Start Time</label>
-                <input type="time" class="form-control" id="validationCustom02" placeholder="Enter Event Name" required>
+                <input type="time" class="form-control" id="Stime" placeholder="Enter Event Name" required>
                 <div class="invalid-feedback">
                   Please provide a valid Event Name.
                 </div>
               </div>
               <div class="col-md-3 mb-3">
                 <label for="validationCustom02">End time</label>
-                <input type="time" class="form-control" id="validationCustom02" placeholder="Enter Event Name" required>
+                <input type="time" class="form-control" id="Etime" placeholder="Enter Event Name" required>
                 <div class="invalid-feedback">
                   Please provide a valid Event Name.
                 </div>
@@ -398,7 +398,7 @@
               <div class="col-md-12 mb-3">
                 <label for="Description">Description</label>
                 <!-- <input type="text" class="form-control" id="Description" placeholder=""> -->
-                <textarea name="" id="address" rows="3" style="resize: none;" class="form-control"></textarea> <span></span>
+                <textarea name="" id="description" rows="3" style="resize: none;" class="form-control"></textarea> <span></span>
               </div>
 
             </div>

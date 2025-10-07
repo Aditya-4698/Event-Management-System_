@@ -294,13 +294,13 @@
                     
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="card-body" id="feedbackSection">
                     <form class="needs-validation" novalidate>
                         <div class="form-row">
                             <!-- Event Name -->
                             <div class="col-md-4 mb-3">
                                 <label for="eventName">Id</label>
-                                <input type="text" class="form-control" id="eventName" placeholder="Feedback ID"
+                                <input type="text" class="form-control" id="SId" placeholder="Feedback ID"
                                     required>
                                 <div class="invalid-feedback">
                                     Please enter a valid event name.
@@ -310,7 +310,7 @@
                             <!-- Service ID -->
                             <div class="col-md-4 mb-3">
                                 <label for="serviceId">Event ID</label>
-                                <input type="text" class="form-control" id="serviceId" placeholder="Enter Event ID"
+                                <input type="text" class="form-control" id="EId" placeholder="Enter Event ID"
                                     required>
                                 <div class="invalid-feedback">
                                     Please enter a valid service ID.
@@ -318,7 +318,7 @@
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="serviceId">Customer ID</label>
-                                <input type="text" class="form-control" id="serviceId" placeholder="Enter Customer ID"
+                                <input type="text" class="form-control" id="CId" placeholder="Enter Customer ID"
                                     required>
                                 <div class="invalid-feedback">
                                     Please enter a valid service ID.
@@ -333,7 +333,7 @@
                             <!-- Food Name -->
                             <div class="col-md-2 mb-3">
                                 <label for="catering">Rating</label>
-                                <select class="custom-select" id="exampleselect" required>
+                                <select class="custom-select" id="Rating" required>
                                     <option selected value="">Rate...</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -346,7 +346,7 @@
 
                             <div class="col-md-2 mb-3">
                                 <label for="serviceId">Date</label>
-                                <input type="date" class="form-control" id="serviceId" placeholder=""
+                                <input type="date" class="form-control" id="date" placeholder=""
                                     required>
                                 <div class="invalid-feedback">
                                     Please enter a valid service ID.

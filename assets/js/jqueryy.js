@@ -8,7 +8,7 @@ $(document).ready(function () {
     const adhar12digits = "#adhar";
     const capacity = "#capacity";
     const address = "#address,#description";
-    const cost = "#cost,#amt,#balance";
+    const cost = "#cost,#amt,#Damt,#balance";
 
     /*--------------------------------------
      * 1. Mandatory field check
@@ -289,11 +289,11 @@ $(document).ready(function () {
         const $this = $(this);
         const currentVal = $this.val();
 
-        if (!/^\d{10}$/.test(currentVal)) {
-            $this.next('span').text("*Exactly 10 digits required!").css("color", "red");
-        } else {
-            $this.next('span').text("");
-        }
+        // if (!/^\d{10}$/.test(currentVal)) {
+        //     $this.next('span').text("*Exactly 10 digits required!").css("color", "red");
+        // } else {
+        //     $this.next('span').text("");
+        // }
     });
 
 
@@ -348,9 +348,30 @@ $(document).ready(function () {
      * 7.Submit
      --------------------------------------*/
 
+    $(document).ready(function () {
+
+    // ✅ Reusable AJAX Function
+    function sendAjaxRequest(url, data, successCallback, errorCallback, method = "POST") {
+        $.ajax({
+            url: url,
+            type: method,
+            data: data,
+            success: function (response) {
+                console.log("✅ Success from", url, ":", response);
+                if (typeof successCallback === "function") successCallback(response);
+            },
+            error: function (xhr, status, error) {
+                console.error("❌ Error from", url, ":", status, error);
+                if (typeof errorCallback === "function") errorCallback(xhr, status, error);
+            }
+        });
+    }
+
+    // ✅ Form Submit Click Handler
     $("#submit").on("click", function (e) {
         e.preventDefault();
 
+        // ✅ Validation
         let isValid = true;
         let firstInvalidField = null;
 
@@ -360,6 +381,7 @@ $(document).ready(function () {
             const errorSpan = input.siblings('span');
 
             errorSpan.text("");
+
             if (value === "" || value === "Field is mandatory") {
                 errorSpan.text("*Field is mandatory").css({
                     "color": "red", "font-size": "13px", "font-weight": "light"
@@ -368,37 +390,26 @@ $(document).ready(function () {
                 input
                     .removeClass("success")
                     .addClass("error")
-                    .css({
-                        "border": "1px solid red", "color": "red"
-                    });
+                    .css({ "border": "1px solid red", "color": "red" });
 
-                if (!firstInvalidField) {
-                    firstInvalidField = input;
-                }
-
+                if (!firstInvalidField) firstInvalidField = input;
                 isValid = false;
             } else {
-
                 input
                     .removeClass("error")
                     .addClass("success")
-                    .css({
-                        "border": "1px solid green", "color": "green"
-                    });
+                    .css({ "border": "1px solid green", "color": "green" });
             }
         });
 
         const selectField = $("#exampleselect");
-        if (selectField.val() === "") {
+        if (selectField.length && selectField.val() === "") {
             selectField
                 .removeClass("success")
                 .addClass("error")
                 .css("border", "1px solid red");
 
-            if (!firstInvalidField) {
-                firstInvalidField = selectField;
-            }
-
+            if (!firstInvalidField) firstInvalidField = selectField;
             isValid = false;
         } else {
             selectField
@@ -407,55 +418,220 @@ $(document).ready(function () {
                 .css("border", "1px solid green");
         }
 
-        if (firstInvalidField) {
-            firstInvalidField.focus();
-        }
-        if (isValid) {
-            alert("Form submitted successfully!");
-            $("#myForm").submit();
-        } else {
-            console.log("Validation failed, form not submitted");
+        if (firstInvalidField) firstInvalidField.focus();
+
+        if (!isValid) {
+            console.log("Validation failed ❌, form not submitted");
+            return; // stop here
         }
 
-        a = $("#venuename").val()
-        b = $("#address").val()
-        c = $("#dist").val()
-        d = $("#pincode").val()
-        e = $("#state").val()
-        f = $("#contact").val()
-        g = $("#alt_cont").val()
-        h = $("#categname").val()
-        i = $("#sername").val()
-        j = $("#vistname").val()
-        k = $("#custname").val()
-        l = $("#adhar").val()
-        m = $("#eventname").val()
-        n = $("#cost").val()
-        o = $("#capacity").val()
-        p = $("#amt").val()
-        q = $("#balance").val()
-        r = $("#description").val()
-        s = $("#gallery").val()
-        t = $("#date").val()
+    /*--------------------------------------
+    DATA COLLECTION FOR ALL SECTIONS
+     --------------------------------------*/
 
-        $.ajax({
-            url: 'event.py',
-            type: 'POST',
-            data: { venuename: a, address: b, dist: c, pincode: d, state: e, contact: f, alt_cont: g, categname: h, sername: i, vistname: j, custname: k, adhar: l, eventname: m, cost: n, capacity: o, amt: p, balance: q, description: r, gallery: s },
-            success: function (data) {
-                console.log(data);
-            }
-        });
+        let venue = $("#venuename").val(),
+            address = $("#address").val(),
+            dist = $("#dist").val(),
+            pin = $("#pincode").val(),
+            state = $("#state").val(),
+            cont = $("#contact").val(),
+            altcont = $("#alt_cont").val(),
+            catname = $("#categname").val(),
+            sername = $("#sername").val(),
+            visitname = $("#vistname").val(),
+            custname = $("#custname").val(),
+            adhar = $("#adhar").val(),
+            eventname = $("#eventname").val(),
+            cost = $("#cost").val(),
+            capacity = $("#capacity").val(),
+            amt = $("#amt").val(),
+            Damt = $("#Damt").val(),
+            bal = $("#balance").val(),
+            description = $("#description").val(),
+            gallery = $("#gallery").val(),
+            date = $("#date").val(),
+            evtdate = $("#Evtdate").val(),
+            start = $("#Sdate").val(),
+            end = $("#Edate").val(),
+            eventid = $("#EId").val(),
+            custid = $("#CId").val(),
+            venueid = $("#VId").val(),
+            serid = $("#SId").val(),
+            visitid = $("#VistId").val(),
+            stime = $("#Stime").val(),
+            etime = $("#Etime").val();
+            catid = $("#catid").val();  
+            Event_serid = $("#ESId").val();
+            Createdate = $("#Cdate").val();
+            Rating = $("#Rating").val();
+            Status = $("#Status").val();
+            PId = $("#PId").val();
+            Transaction = $("#Tdate").val();
+            mode = $("#mode").val();
 
-        $.ajax({
-            url: 'category.py',
-            type: 'POST',
-            data: { categname: h, date: t, description: r },
-            success: function (data) {
-                console.log(data);
-            }
-        });
+        const eventData = {
+            EId: eventid,
+            eventname: eventname,
+            CId: custid,
+            VId: venueid,
+            SId: serid,
+            cost: cost,
+            Evtdate: evtdate,
+            Sdate: start,
+            Edate: end,
+            capacity: capacity,
+            Stime: stime,
+            Etime: etime,
+            description: description
+        };
+
+        const visitorData = {
+            VistId: visitid,
+            vistname: visitname,
+            address: address,
+            state: state,
+            dist: dist,
+            pincode: pin,
+            contact: cont,
+            alt_cont: altcont,
+            description: description
+        };
+
+        const categoryData = {
+            categname: catname,
+            catid: catid,
+            date: date,
+            description: description
+        };
+
+        const customerdata = {
+            CId: custid,
+            custname: custname,
+            contact: cont,
+            alt_cont: altcont,
+            district: dist,
+            state: state,
+            pincode: pin,
+            address: address,
+            adhar: adhar,
+            gallery: gallery
+        };
+
+        const eventserviceData = {
+            ESId: Event_serid,
+            SId: serid,
+            Cdate: Createdate
+        };
+
+        const feedbackData = {
+            SId: serid,
+            EId: eventid,
+            CId: custid,
+            Rating: Rating, 
+            date: date,
+            address: address
+        };
+
+        const paymentData = {
+            PId: PId,
+            EId: eventid,
+            custname: custname,
+            amt: amt,
+            Damt: Damt,
+            balance: bal,
+            mode: mode,
+            Status: Status,
+            Tdate: Transaction
+        };
+
+        const serviceData = {
+            SId: serid,
+            mode: mode,
+            categname: catname,
+            description: description
+        };
+
+        const venueData = {
+            VId: venueid,
+            venuename: venue,
+            address: address,
+            state: state,
+            dist: dist,
+            pincode: pin,
+            capacity: capacity,
+            contact: cont,
+            alt_cont: altcont,
+            gallery: gallery
+        };
+
+        // ✅ Detect which section you're currently on
+        // Example: check a hidden field, tab id, or form section visibility
+        let activeSection = "";  
+
+        if ($("#eventSection").is(":visible")) {
+            activeSection = "event";
+        } else if ($("#visitorSection").is(":visible")) {
+            activeSection = "visitor";
+        } else if ($("#CategoeySection").is(":visible")) {
+            activeSection = "Category";
+        } else if ($("#customerSection").is(":visible")) {
+            activeSection = "customer";
+        } else if ($("#eventservice").is(":visible")) {
+            activeSection = "eventservice";
+        } else if ($("#feedbackSection").is(":visible")) {
+            activeSection = "feedback";
+        } else if ($("#paymentSection").is(":visible")) {
+            activeSection = "payment";
+        } else if ($("#serviceSection").is(":visible")) {     
+            activeSection = "service";
+        } else if ($("#venueSection").is(":visible")) {
+            activeSection = "venue";
+        }
+
+
+        // ✅ Send data based on active section
+        if (activeSection === "event") {
+            sendAjaxRequest("event.py", eventData, function (response) {
+                alert("✅ Event data submitted successfully!");
+            });
+        } else if (activeSection === "visitor") {
+            sendAjaxRequest("visitor.py", visitorData, function (response) {
+                alert("✅ Visitor data submitted successfully!");
+            });
+        } else if (activeSection === "Category") {
+            sendAjaxRequest("category.py", categoryData, function (response) {
+                alert("✅ category data submitted successfully!");
+            });
+        } else if (activeSection === "customer") {
+            sendAjaxRequest("customer.py", customerdata, function (response) {
+                alert("✅ Customer data submitted successfully!");
+            });
+        } else if (activeSection === "eventservice") {
+            sendAjaxRequest("event_service.py", eventserviceData, function (response) {
+                alert("✅ Event_Service data submitted successfully!");
+            });
+        } else if (activeSection === "feedback") {
+            sendAjaxRequest("feedback.py", feedbackData, function (response) {
+                alert("✅ Feedback data submitted successfully!");
+            });
+        } else if (activeSection === "payment") {
+            sendAjaxRequest("payment.py", paymentData, function (response) {
+                alert("✅ Payment data submitted successfully!");
+            });
+        } else if (activeSection === "service") {     
+            sendAjaxRequest("service.py", serviceData, function (response) {
+                alert("✅ Service data submitted successfully!");
+            });
+        } else if (activeSection === "venue") {         
+            sendAjaxRequest("venue.py", venueData, function (response) {
+                alert("✅ Venue data submitted successfully!");
+            });
+        }
+         else {
+            console.log("⚠️ No active section detected — no data sent");
+        }
     });
+});
 
     /*--------------------------------------
      * 8. FadeToggle
