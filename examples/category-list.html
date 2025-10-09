@@ -280,7 +280,7 @@
         </nav>
 
         <div class="container-fluid mt--3">
-            <div class="card shadow">
+            <div class="card shadow" id="">
 
                 <!-- Card Header -->
                 <div class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap" id="search-show">
@@ -291,8 +291,8 @@
                 </div>
 
                 <!-- Search Form -->
-                <div class="card-body border-bottom" id="categorylistsection">
-                    <form class="row g-3">
+                <div class="card-body border-bottom" id="search-hide">
+                    <form class="row g-3" id="CategorylistSection">
                         <!-- Category Name -->
                         <div class="col-md-4">
                             <label for="categoryName" class="form-label fw-bold">Category Name*</label>
@@ -303,14 +303,14 @@
                         <!-- Category ID -->
                         <div class="col-md-4">
                             <label for="categoryId" class="form-label fw-bold">Category ID</label>
-                            <input type="text" id="categoryId" class="form-control" placeholder="Enter Category ID">
+                            <input type="text" id="catid" class="form-control" placeholder="Enter Category ID">
                         </div>
 
                         <!-- Buttons -->
                         <div class="col-md-4 d-flex align-items-end justify-content-end">
                             <div class="d-flex flex-wrap w-100 justify-content-end" style="gap: 10px;">
                                 <!-- Search Button -->
-                                <button type="submit" class="btn btn-warning">
+                                <button type="submit" class="btn btn-warning" id="submit">
                                     <i class="bi bi-search"></i> Search
                                 </button>
 

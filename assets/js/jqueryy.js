@@ -318,7 +318,7 @@ $(document).ready(function () {
             return false;
         }
 
-        const controlKeys = [8, 9, 37, 38, 39, 40, 46];
+        const controlKeys = [8, 9, 37, 38, 39, 40, 46,188];
         if (controlKeys.includes(ch)) return true;
 
         if ((ch >= 48 && ch <= 57) || (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch === 32 || ch === 44 || ch === 46 || ch === 45 || ch === 47 || ch === 35) {
@@ -487,6 +487,12 @@ $(document).ready(function () {
             description: description
         };
 
+        const eventlistData = {
+            EId: eventid,
+            venuename: venue,
+            sername: sername,
+        };
+
         const visitorData = {
             VistId: visitid,
             vistname: visitname,
@@ -496,6 +502,12 @@ $(document).ready(function () {
             pincode: pin,
             contact: cont,
             alt_cont: altcont,
+            description: description
+        };
+
+        const visitorlistData = {
+            VistId: visitid,
+            vistname: visitname,
             description: description
         };
 
@@ -524,7 +536,23 @@ $(document).ready(function () {
             gallery: gallery
         };
 
+        const customerlistdata = {
+            CId: custid,
+            custname: custname,
+            district: dist,
+            address: address,
+            state: state,
+            pincode: pin,
+            contact: cont,
+        };
+
         const eventserviceData = {
+            ESId: Event_serid,
+            SId: serid,
+            Cdate: Createdate
+        };
+
+        const eventservicelistData = {
             ESId: Event_serid,
             SId: serid,
             Cdate: Createdate
@@ -539,6 +567,11 @@ $(document).ready(function () {
             address: address
         };
 
+        const feedbacklistData = {
+            eventname: eventname,
+            custname: custname
+        };
+
         const paymentData = {
             PId: PId,
             EId: eventid,
@@ -551,11 +584,24 @@ $(document).ready(function () {
             Tdate: Transaction
         };
 
+        const paymentlistData = {
+            PId: PId,
+            EId: eventid,
+            custname: custname,
+            Tdate: Transaction
+        };
+
         const serviceData = {
             SId: serid,
             mode: mode,
             categname: catname,
             description: description
+        }; 
+
+        const servicelistData = {
+            SId: serid,
+            mode: mode,
+            sername: sername
         };
 
         const venueData = {
@@ -570,6 +616,11 @@ $(document).ready(function () {
             alt_cont: altcont,
             gallery: gallery
         };
+        const venueListData = {
+            VId: venueid,
+            venuename: venue,
+            address: address
+        };
 
         // ✅ Detect which section you're currently on
         // Example: check a hidden field, tab id, or form section visibility
@@ -577,22 +628,38 @@ $(document).ready(function () {
 
         if ($("#eventSection").is(":visible")) {
             activeSection = "event";
+        } else if ($("#eventlistSection").is(":visible")) {
+            activeSection = "eventlist";
         } else if ($("#visitorSection").is(":visible")) {
             activeSection = "visitor";
+        } else if ($("#visitorlistSection").is(":visible")) {
+            activeSection = "visitorlist";
         } else if ($("#CategorySection").is(":visible")) {
             activeSection = "Category";
         } else if ($("#customerSection").is(":visible")) {
             activeSection = "customer";
+        } else if ($("#customerlistSection").is(":visible")) {
+            activeSection = "customerlist";
         } else if ($("#eventservice").is(":visible")) {
             activeSection = "eventservice";
+        } else if ($("#eventservicelist").is(":visible")) {
+            activeSection = "eventservicelist";
         } else if ($("#feedbackSection").is(":visible")) {
             activeSection = "feedback";
+        } else if ($("#feedbacklistSection").is(":visible")) {
+            activeSection = "feedbacklist";
         } else if ($("#paymentSection").is(":visible")) {
             activeSection = "payment";
+        } else if ($("#paymentlistSection").is(":visible")) {
+            activeSection = "paymentlist";
         } else if ($("#serviceSection").is(":visible")) {     
             activeSection = "service";
+            } else if ($("#servicelistSection").is(":visible")) {     
+            activeSection = "servicelist";
         } else if ($("#venueSection").is(":visible")) {
             activeSection = "venue";
+        } else if ($("#venuelistSection").is(":visible")) {
+            activeSection = "venuelist";
         } else if ($("#CategorylistSection").is(":visible")) {
             activeSection = "Categorylist";
         }
@@ -604,9 +671,17 @@ $(document).ready(function () {
             sendAjaxRequest("event.py", eventData, function (data) {
                 alert("✅ Event data submitted successfully!");
             });
+        } else if (activeSection === "eventlist") {
+            sendAjaxRequest("eventlist.py", eventlistData, function (data) {
+                alert("✅ Eventlist data submitted successfully!");
+            });
         } else if (activeSection === "visitor") {
             sendAjaxRequest("visitor.py", visitorData, function (data) {
                 alert("✅ Visitor data submitted successfully!");
+            });
+        } else if (activeSection === "visitorlist") {
+            sendAjaxRequest("visitorlist.py", visitorlistData, function (data) {
+                alert("✅ Visitorlist data submitted successfully!");
             });
         } else if (activeSection === "Category") {
             sendAjaxRequest("category.py", categoryData, function (data) {
@@ -620,25 +695,49 @@ $(document).ready(function () {
             sendAjaxRequest("customer.py", customerdata, function (data) {
                 alert("✅ Customer data submitted successfully!");
             });
+        } else if (activeSection === "customerlist") {
+            sendAjaxRequest("customerlist.py", customerlistdata, function (data) {
+                alert("✅ Customerlist data submitted successfully!");
+            });
         } else if (activeSection === "eventservice") {
             sendAjaxRequest("event_service.py", eventserviceData, function (data) {
                 alert("✅ Event_Service data submitted successfully!");
+            });
+        } else if (activeSection === "eventservicelist") {
+            sendAjaxRequest("event_servicelist.py", eventservicelistData, function (data) {
+                alert("✅ Event_ServiceList data submitted successfully!");
             });
         } else if (activeSection === "feedback") {
             sendAjaxRequest("feedback.py", feedbackData, function (data) {
                 alert("✅ Feedback data submitted successfully!");
             });
+        } else if (activeSection === "feedbacklist") {
+            sendAjaxRequest("feedbacklist.py", feedbacklistData, function (data) {
+                alert("✅ Feedbacklist data submitted successfully!");
+            });
         } else if (activeSection === "payment") {
             sendAjaxRequest("payment.py", paymentData, function (data) {
                 alert("✅ Payment data submitted successfully!");
+            });
+        } else if (activeSection === "paymentlist") {
+            sendAjaxRequest("paymentlist.py", paymentlistData, function (data) {
+                alert("✅ Paymentlist data submitted successfully!");
             });
         } else if (activeSection === "service") {     
             sendAjaxRequest("service.py", serviceData, function (data) {
                 alert("✅ Service data submitted successfully!");
             });
+        } else if (activeSection === "servicelist") {     
+            sendAjaxRequest("servicelist.py", servicelistData, function (data) {
+                alert("✅ Servicelist data submitted successfully!");
+            });
         } else if (activeSection === "venue") {         
             sendAjaxRequest("venue.py", venueData, function (data) {
                 alert("✅ Venue data submitted successfully!");
+            });
+        } else if (activeSection === "venuelist") {
+            sendAjaxRequest("venuelist.py", venueListData, function (data) {
+                alert("✅ Venuelist data submitted successfully!");
             });
         }
          else { 
