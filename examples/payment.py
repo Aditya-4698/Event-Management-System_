@@ -1,13 +1,24 @@
 #!C:\Users\adity\AppData\Local\Programs\Python\Python39\python.exe
 print("Content-Type: text/html\r\n\r\n")    
 import cgi
+import mysql.connector
+con=mysql.connector.connect(user="Aditya",password="Aditya@123",host="localhost",database="payment")
+cur=con.cursor()
+
 f=cgi.FieldStorage()
-print(f.getvalue("PId"))
-print(f.getvalue("EId"))
-print(f.getvalue("custname"))
-print(f.getvalue("amt"))
-print(f.getvalue("Damt"))
-print(f.getvalue("mode"))
-print(f.getvalue("Status"))
-print(f.getvalue("Tdate"))  
-print(f.getvalue("balance"))
+url="insert into paymentadd(payment_id,event_id,customer_name,paid_amount,dues_amount,pay_mode,payment_status,transaction_date,balance) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+try:
+    print(f.getvalue("PId"))
+    print(f.getvalue("EId"))
+    print(f.getvalue("custname"))
+    print(f.getvalue("amt"))
+    print(f.getvalue("Damt"))
+    print(f.getvalue("mode"))
+    print(f.getvalue("Status"))
+    print(f.getvalue("Tdate"))  
+    print(f.getvalue("balance"))
+    cur.execute(url,(f.getvalue("PId"),f.getvalue("EId"),f.getvalue("custname"),f.getvalue("amt"),f.getvalue("Damt"),f.getvalue("mode"),f.getvalue("Status"),f.getvalue("Tdate"),f.getvalue("balance")))
+    con.commit()
+    print("Record inserted")
+except Exception as e:
+    print("Error:",e)

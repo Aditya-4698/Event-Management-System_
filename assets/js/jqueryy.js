@@ -349,16 +349,15 @@ $(document).ready(function () {
      --------------------------------------*/
 
     $(document).ready(function () {
-
-    // ✅ Reusable AJAX Function
+    // ✅ AJAX Function
     function sendAjaxRequest(url, data, successCallback, errorCallback, method = "POST") {
         $.ajax({
             url: url,
             type: method,
             data: data,
-            success: function (response) {
-                console.log("✅ Success from", url, ":", response);
-                if (typeof successCallback === "function") successCallback(response);
+            success: function (data) {
+                console.log("✅ Success from", url, ":", data);
+                if (typeof successCallback === "function") successCallback(data);
             },
             error: function (xhr, status, error) {
                 console.error("❌ Error from", url, ":", status, error);
@@ -366,6 +365,8 @@ $(document).ready(function () {
             }
         });
     }
+
+    
 
     // ✅ Form Submit Click Handler
     $("#submit").on("click", function (e) {
@@ -375,7 +376,8 @@ $(document).ready(function () {
         let isValid = true;
         let firstInvalidField = null;
 
-        $(mandatoryFields).each(function () {
+       $(mandatoryFields).filter(":visible").each(function () {
+
             const input = $(this);
             const value = input.val().trim();
             const errorSpan = input.siblings('span');
@@ -504,6 +506,11 @@ $(document).ready(function () {
             description: description
         };
 
+        const categorylistData = {
+            catid: catid,
+            categname: catname,
+        };
+
         const customerdata = {
             CId: custid,
             custname: custname,
@@ -572,7 +579,7 @@ $(document).ready(function () {
             activeSection = "event";
         } else if ($("#visitorSection").is(":visible")) {
             activeSection = "visitor";
-        } else if ($("#CategoeySection").is(":visible")) {
+        } else if ($("#CategorySection").is(":visible")) {
             activeSection = "Category";
         } else if ($("#customerSection").is(":visible")) {
             activeSection = "customer";
@@ -586,48 +593,55 @@ $(document).ready(function () {
             activeSection = "service";
         } else if ($("#venueSection").is(":visible")) {
             activeSection = "venue";
+        } else if ($("#CategorylistSection").is(":visible")) {
+            activeSection = "Categorylist";
         }
+
 
 
         // ✅ Send data based on active section
         if (activeSection === "event") {
-            sendAjaxRequest("event.py", eventData, function (response) {
+            sendAjaxRequest("event.py", eventData, function (data) {
                 alert("✅ Event data submitted successfully!");
             });
         } else if (activeSection === "visitor") {
-            sendAjaxRequest("visitor.py", visitorData, function (response) {
+            sendAjaxRequest("visitor.py", visitorData, function (data) {
                 alert("✅ Visitor data submitted successfully!");
             });
         } else if (activeSection === "Category") {
-            sendAjaxRequest("category.py", categoryData, function (response) {
+            sendAjaxRequest("category.py", categoryData, function (data) {
                 alert("✅ category data submitted successfully!");
             });
+        } else if (activeSection === "Categorylist") {
+            sendAjaxRequest("categorylist.py", categorylistData, function (data) {
+                alert("✅ Categorylist data submitted successfully!");
+            });
         } else if (activeSection === "customer") {
-            sendAjaxRequest("customer.py", customerdata, function (response) {
+            sendAjaxRequest("customer.py", customerdata, function (data) {
                 alert("✅ Customer data submitted successfully!");
             });
         } else if (activeSection === "eventservice") {
-            sendAjaxRequest("event_service.py", eventserviceData, function (response) {
+            sendAjaxRequest("event_service.py", eventserviceData, function (data) {
                 alert("✅ Event_Service data submitted successfully!");
             });
         } else if (activeSection === "feedback") {
-            sendAjaxRequest("feedback.py", feedbackData, function (response) {
+            sendAjaxRequest("feedback.py", feedbackData, function (data) {
                 alert("✅ Feedback data submitted successfully!");
             });
         } else if (activeSection === "payment") {
-            sendAjaxRequest("payment.py", paymentData, function (response) {
+            sendAjaxRequest("payment.py", paymentData, function (data) {
                 alert("✅ Payment data submitted successfully!");
             });
         } else if (activeSection === "service") {     
-            sendAjaxRequest("service.py", serviceData, function (response) {
+            sendAjaxRequest("service.py", serviceData, function (data) {
                 alert("✅ Service data submitted successfully!");
             });
         } else if (activeSection === "venue") {         
-            sendAjaxRequest("venue.py", venueData, function (response) {
+            sendAjaxRequest("venue.py", venueData, function (data) {
                 alert("✅ Venue data submitted successfully!");
             });
         }
-         else {
+         else { 
             console.log("⚠️ No active section detected — no data sent");
         }
     });
@@ -640,6 +654,5 @@ $(document).ready(function () {
     $("#search-show").click(function () {
         $("#search-hide").slideToggle();
     });
-
 });
 
