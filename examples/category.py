@@ -14,6 +14,6 @@ try:
     print(f.getvalue("description"))
     cur.execute(url,(f.getvalue("catid"),f.getvalue("categname"),f.getvalue("date"),f.getvalue("description")))
     con.commit()
-    print("Record inserted")
+    print(1)
 except Exception as e:
     print("Error:",e)

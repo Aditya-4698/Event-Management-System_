@@ -278,7 +278,8 @@
             <div class="card shadow">
 
 
-                <div class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap" id="search-show">
+                <div class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap"
+                    id="search-show">
                     <h4 class="pt-2 pl-3 text-white" style="font-size: 20px;">Event</h4>
                     <a href="..//examples/Events-add.html" class=" btn-info btn-sm mr-2"
                         style="border-radius: 0px; font-size: 13px;"><i class="bi bi-plus-lg pr-1"></i>Entry New</a>
@@ -290,8 +291,7 @@
                         <div class="col-md-4">
 
                             <label for="validationCustom01">Event ID</label>
-                            <input type="text" class="form-control" id="EId"
-                                placeholder="Enter Event ID">
+                            <input type="text" class="form-control" id="EId" placeholder="Enter Event ID">
 
                         </div>
 
@@ -299,13 +299,13 @@
 
                             <label for="validationCustom01">Venue Name</label>
                             <input type="text" class="form-control" id="venuename" placeholder="Enter Venue Name">
-                            <span></span>
+
                         </div>
 
                         <div class="col-md-4">
 
-                            <label for="validationCustom01">Service name</label>
-                            <input type="text" class="form-control" id="sername" placeholder="Enter Service name">
+                            <label for="validationCustom01">Service Id</label>
+                            <input type="text" class="form-control" id="SId" placeholder="Enter Service Id">
                             <span></span>
                         </div>
                     </form>
@@ -324,14 +324,12 @@
         <!-- Page content -->
         <div class="container-fluid mt-4">
             <div class="card shadow">
-
-
-
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover  mb-0">
+                <div class="card-body p-0">
+                    <div class="table-responsive" style="overflow-x:auto; max-width:100%;">
+                        <div id="res"></div>
+                        <!-- <table class="table table-hover  mb-0">
                         <thead class="bg-dark">
                             <tr class="text-right">
-                                <th scope="col" style="font-size: 11px; color: white;">#</th>
                                 <th scope="col" style="font-size: 11px; color: white;">Event_Id</th>
                                 <th scope="col" style="font-size: 11px; color: white;">Event_Name</th>
                                 <th scope="col" style="font-size: 11px; color: white;">Venue_Name</th>
@@ -345,7 +343,6 @@
                         </thead>
                         <tbody>
                             <tr class="text-right">
-                                <th scope="row">1</th>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -398,10 +395,14 @@
                                 </td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table> -->
+                    </div>
                 </div>
             </div>
         </div>
+        <script>
+            localStorage.clear()
+        </script>
 
         <!--   Core   -->
         <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
@@ -418,6 +419,7 @@
                     application: "argon-dashboard-free"
                 });
         </script>
+
 </body>
 
 </html>

@@ -98,8 +98,9 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a class="" href="./index.html">
-        <img src="../assets/img/brand/logo.PNG" class="" alt="..."style="width: 150px; height:90px !important;">
-      </a>
+                                <img src="../assets/img/brand/logo.PNG" class="" alt="..."
+                                    style="width: 150px; height:90px !important;">
+                            </a>
                         </div>
                         <div class="col-6 collapse-close">
                             <button type="button" class="navbar-toggler" data-toggle="collapse"
@@ -185,14 +186,14 @@
                             <h3> Feedback</h3>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link  active " href="../examples/profile.html">
                             <i class="ni ni-single-02 text-yellow"></i>
                             <h3>Profile</h3>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link" href="../examples/login.html">
                             <i class="ni ni-key-25 text-info"></i>
@@ -218,7 +219,7 @@
                         href="../index.html">Services</a> -->
                     <!-- Form -->
                     <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-                        
+
                     </form>
                     <!-- User -->
                     <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -288,19 +289,21 @@
                 <div class="card shadow">
 
                     <!-- Card Header -->
-                    <div
-                        class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap" id="search-show">
+                    <div class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap"
+                        id="search-show">
                         <h4 class="text-center text-white pl-3 pt-2" style="font-size:20px;">Event Services Form</h4>
                         <a href="../examples/event_service-add.html"> <button class="btn btn-info btn-sm mr-2"
                                 style="border-radius: 0%;"><i class="bi bi-plus-lg text-white pr-1"></i> Entry
-                                NEW</button></a>                    </div>
+                                NEW</button></a>
+                    </div>
 
                     <!-- Search Form -->
                     <div class="card-body border-bottom" id="search-hide">
                         <form class="row" id="eventservicelist">
                             <div class="col-md-4">
                                 <label for="validationCustom01">Event_service id</label>
-                                <input type="text" class="form-control" placeholder="Search by Event Service ID" id="ESId">
+                                <input type="text" class="form-control" placeholder="Search by Event Service ID"
+                                    id="ESId">
                             </div>
 
                             <div class="col-md-4">
@@ -315,8 +318,8 @@
                         </form>
                         <form class="row mt-3">
                             <div class="col-md-12 d-flex justify-content-center ">
-                                <button type="submit" class="btn btn-success btn-sm " style="height:fit-content;"id="submit"><i
-                                        class="bi bi-search pr-1"></i>SEARCH</button>
+                                <button type="submit" class="btn btn-success btn-sm " style="height:fit-content;"
+                                    id="submit"><i class="bi bi-search pr-1"></i>SEARCH</button>
                                 <button type="reset" class="btn btn-danger btn-sm  " style="height:fit-content"><i
                                         class="bi bi-arrow-clockwise pr-1"></i>REFRESH</button>
                             </div>
@@ -333,9 +336,10 @@
 
                     <!-- Card Body -->
                     <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover  mb-0">
-                                <thead class="bg-dark" style="color:white;">
+                        <div class="table-responsive" style="overflow-x:auto; max-width:100%;">
+                            <div id="res"></div>
+                            <!-- <table class="table table-striped table-hover  mb-0"> -->
+                            <!-- <thead class="bg-dark" style="color:white;">
                                     <tr class="text-center">
                                         <th style="font-size:11px;">#</th>
                                         <th style="font-size:11px;">Event Service ID</th>
@@ -380,7 +384,7 @@
                                         <td></td>
 
                                         <td>
-                                            <a href="..//examples/event_service-update.html"><button
+                                            <a href="../examples/event_service-update.html"><button
                                                     class="btn btn-success btn-sm mx-1"><i
                                                         class="bi bi-pencil-square pr-1"></i>Update</button></a>
                                             <button class="btn btn-danger btn-sm"><i
@@ -388,10 +392,9 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table> -->
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -436,6 +439,10 @@
                     token: "ee6fab19c5a04ac1a32a645abde4613a",
                     application: "argon-dashboard-free"
                 });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            localStorage.clear()
         </script>
 </body>
 

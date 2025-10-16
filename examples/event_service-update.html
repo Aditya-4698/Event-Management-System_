@@ -161,7 +161,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link " href="../examples/Event-list.html">
-             <i class="bi bi-boombox"></i>
+              <i class="bi bi-boombox"></i>
               <h3> Events</h3>
             </a>
           </li>
@@ -183,14 +183,14 @@
               <h3> Feedback</h3>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a class="nav-link  active " href="../examples/profile.html">
               <i class="ni ni-single-02 text-yellow"></i>
               <h3>Profile</h3>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a class="nav-link" href="../examples/login.html">
               <i class="ni ni-key-25 text-info"></i>
@@ -210,7 +210,7 @@
         <!-- <h1 style="color: white; font-family: Georgia, 'Times New Roman', Times, serif; font-weight: lighter;">Events</h1> -->
         <!-- Form -->
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-          
+
         </form>
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -287,14 +287,13 @@
         </div>
 
         <!-- Card Body -->
-        <div class="card-body" id="eventservice">
+        <div class="card-body" id="eventserviceupdate">
           <!-- Event Form -->
           <form class="needs-validation" novalidate>
             <div class="form-row">
               <div class="col-md-4 mb-3">
                 <label for="validationCustom01">Event_Service ID</label>
-                <input type="text" class="form-control" id="ESId" placeholder="Enter Event_Service ID"
-                  required>
+                <input type="text" class="form-control" id="ESId" placeholder="Enter Event_Service ID" required>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validationCustom01">Service ID</label>
@@ -302,13 +301,13 @@
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validationCustom03">Created Date</label>
-                <input type="date" class="form-control" id="Cdate" placeholder="Enter created date"
-                  required>
+                <input type="date" class="form-control" id="Cdate" placeholder="Enter created date" required>
               </div>
             </div>
 
             <div class="text-center">
-              <button type="submit" class="btn btn-success "id="submit"><i class="bi bi-pencil-square pr-1"></i>Update</button>
+              <button type="submit" class="btn btn-success " id="submit"><i
+                  class="bi bi-pencil-square pr-1"></i>Update</button>
               <button type="submit" class="btn btn-danger px-4"><i class="bi bi-arrow-clockwise pr-1"></i>Reset</button>
             </div>
           </form>
@@ -362,6 +361,17 @@
         application: "argon-dashboard-free"
       });
   </script>
+  <script>
+    $(document).ready(function () {
+      const ESId = localStorage.getItem('ESId');
+      const serid = localStorage.getItem('SId');
+      const Createdate = localStorage.getItem('Cdate');
+      $('#ESId').val(ESId);
+      $('#SId').val(serid);
+      $('#Cdate').val(Createdate);
+    });
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

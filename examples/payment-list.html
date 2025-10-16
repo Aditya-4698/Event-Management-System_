@@ -97,8 +97,9 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a class="" href="./index.html">
-        <img src="../assets/img/brand/logo.PNG" class="" alt="..."style="width: 150px; height:90px !important;">
-      </a>
+                                <img src="../assets/img/brand/logo.PNG" class="" alt="..."
+                                    style="width: 150px; height:90px !important;">
+                            </a>
                         </div>
                         <div class="col-6 collapse-close">
                             <button type="button" class="navbar-toggler" data-toggle="collapse"
@@ -184,7 +185,7 @@
                             <h3> Feedback</h3>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link  active " href="../examples/profile.html">
                             <i class="ni ni-single-02 text-yellow"></i>
@@ -218,7 +219,7 @@
                     <!-- Form -->
                     <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
                         <div class="form-group mb-0">
-                           
+
                         </div>
                     </form>
                     <!-- User -->
@@ -289,8 +290,8 @@
                 <div class="card shadow">
 
 
-                    <div
-                        class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap" id="search-show">
+                    <div class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap"
+                        id="search-show">
                         <h4 class="pt-2 pl-3 text-white" style="font-size: 20px;">Payment Details</h4>
                         <a href="..//examples/payment-add.html" class=" btn-info btn-sm mr-2"
                             style="border-radius: 0px; font-size: 13px;"><i class="bi bi-plus-lg pr-1"></i>Entry New</a>
@@ -301,19 +302,17 @@
                         <form class="row" id="paymentlistSection">
                             <div class="col-md-3">
                                 <label for="validationCustom01">Payment ID</label>
-                                <input type="text" class="form-control" id="PId"
-                                    placeholder="Enter Service ID">
+                                <input type="text" class="form-control" id="PId" placeholder="Enter Service ID">
                             </div>
                             <div class="col-md-3">
                                 <label for="validationCustom01">Event ID</label>
-                                <input type="text" class="form-control" id="EId"
-                                    placeholder="Enter Service ID">
+                                <input type="text" class="form-control" id="EId" placeholder="Enter Service ID">
                             </div>
 
                             <div class="col-md-3">
 
                                 <label for="validationCustom01">Customer Name</label>
-                                <input type="text" class="form-control" id="custname" placeholder=""> <span></span>
+                                <input type="text" class="form-control" id="custname" placeholder="">
                             </div>
                             <div class="col-md-3">
 
@@ -324,7 +323,7 @@
                         </form>
                         <form class="row mt-3">
                             <div class="col-md-12 d-flex justify-content-center ">
-                                <button type="submit" class="btn btn-success btn-sm"id="submit"><i
+                                <button type="submit" class="btn btn-success btn-sm" id="submit"><i
                                         class="bi bi-search pr-1"></i>SEARCH</button>
                                 <button type="reset" class="btn btn-danger btn-sm "><i
                                         class="bi bi-arrow-clockwise pr-1"></i>REFRESH</button>
@@ -337,79 +336,72 @@
 
             <div class="container-fluid mt-4">
                 <div class="card shadow">
-
-
-
                     <!-- Card Body -->
                     <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover  mb-0">
-                                <thead class="bg-dark" style="color:white;">
-                                    <tr class="text-center">
-                                        <th style="font-size:11px;">#</th>
-                                        <th style="font-size:11px;">Payment ID</th>
-                                        <th style="font-size:11px;">Event id</th>
-                                        <th style="font-size:11px;">Customer Name</th>
-                                        <th style="font-size:11px;">Paid Amount</th>
-                                        <th style="font-size:11px;">Pay Mode</th>
-                                        <!-- <th style="font-size:11px;">Paid Amount</th> -->
-                                        <th style="font-size:11px;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="text-center">
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                        <div class="table-responsive" style="overflow-x:auto; max-width:100%;">
+                            <div id="res"></div>
+                            <!-- <table class="table table-striped table-hover  mb-0">
+                            <thead class="bg-dark" style="color:white;">
+                                <tr class="text-center">
+                                    <th style="font-size:11px;">Payment ID</th>
+                                    <th style="font-size:11px;">Event id</th>
+                                    <th style="font-size:11px;">Customer Name</th>
+                                    <th style="font-size:11px;">Paid Amount</th>
+                                    <th style="font-size:11px;">Pay Mode</th>
+                                    <th style="font-size:11px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-center">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <a href="..//examples/payment-update.html"><button
+                                                class="btn btn-success btn-sm mx-1"><i
+                                                    class="bi bi-pencil-square pr-1"></i>Update</button></a>
+                                        <button class="btn btn-danger btn-sm"><i
+                                                class="bi bi-trash3-fill pr-1"></i>Delete</button>
+                                    </td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td>2</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
 
-                                        <td>
-                                            <a href="..//examples/payment-update.html"><button
-                                                    class="btn btn-success btn-sm mx-1"><i
-                                                        class="bi bi-pencil-square pr-1"></i>Update</button></a>
-                                            <button class="btn btn-danger btn-sm"><i
-                                                    class="bi bi-trash3-fill pr-1"></i>Delete</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                    <td>
+                                        <a href="..//examples/payment-update.html"><button
+                                                class="btn btn-success btn-sm mx-1"><i
+                                                    class="bi bi-pencil-square pr-1"></i>Update</button></a>
+                                        <button class="btn btn-danger btn-sm"><i
+                                                class="bi bi-trash3-fill pr-1"></i>Delete</button>
+                                    </td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td>3</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
 
-                                        <td>
-                                            <a href="..//examples/payment-update.html"><button
-                                                    class="btn btn-success btn-sm mx-1"><i
-                                                        class="bi bi-pencil-square pr-1"></i>Update</button></a>
-                                            <button class="btn btn-danger btn-sm"><i
-                                                    class="bi bi-trash3-fill pr-1"></i>Delete</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td>3</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-
-                                        <td>
-                                            <a href="..//examples/payment-update.html"><button
-                                                    class="btn btn-success btn-sm mx-1"><i
-                                                        class="bi bi-pencil-square pr-1"></i>Update</button></a>
-                                            <button class="btn btn-danger btn-sm"><i
-                                                    class="bi bi-trash3-fill pr-1"></i>Delete</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    <td>
+                                        <a href="..//examples/payment-update.html"><button
+                                                class="btn btn-success btn-sm mx-1"><i
+                                                    class="bi bi-pencil-square pr-1"></i>Update</button></a>
+                                        <button class="btn btn-danger btn-sm"><i
+                                                class="bi bi-trash3-fill pr-1"></i>Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> -->
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -454,6 +446,9 @@
                     token: "ee6fab19c5a04ac1a32a645abde4613a",
                     application: "argon-dashboard-free"
                 });
+        </script>
+        <script>
+            localStorage.clear()
         </script>
 </body>
 

@@ -21,7 +21,7 @@ try:
     print(f.getvalue("contact"))
     print(f.getvalue("alt_cont"))   
     print(f.getvalue("gallery"))
-    cur.execute(url,(f.getvalue("VId"),f.getvalue("venuename"),f.getvalue("address"),f.getvalue("state"),f.getvalue("dist"),f.getvalue("pincode"),f.getvalue("max_capacity"),f.getvalue("contact"),f.getvalue("alt_cont"),f.getvalue("gallery")))
+    cur.execute(url,(f.getvalue("VId"),f.getvalue("venuename"),f.getvalue("address"),f.getvalue("state"),f.getvalue("dist"),f.getvalue("pincode"),f.getvalue("capacity"),f.getvalue("contact"),f.getvalue("alt_cont"),f.getvalue("gallery")))
     con.commit()
     print("Record inserted")
 except Exception as e:

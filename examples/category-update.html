@@ -302,13 +302,14 @@
                 </li> -->
             </div>
             <!-- Card Body -->
-            <div class="card-body" id="CategorySection">
-                <form class="needs-validation" novalidate>
+            <div class="card-body" id="CategoryupdateSection">
+                <form class="needs-validation" novalidate action="category-update.py" method="post">
+
                     <div class="form-row">
                         <!-- Event Name -->
                         <div class="col-md-4 mb-3">
                             <label for="eventName">Category Id</label>
-                            <input type="text" class="form-control" id="" placeholder="" required>
+                            <input type="text" class="form-control" id="catid" placeholder="" required>
                             <div class="invalid-feedback">
                                 Please enter a valid event name.
                             </div>
@@ -377,6 +378,20 @@
                 application: "argon-dashboard-free"
             });
     </script>
+    <script>
+      $(document).ready(function () {
+        const catid = localStorage.getItem('catid');
+        const categname = localStorage.getItem('categname');
+        const date = localStorage.getItem('date');
+        const description = localStorage.getItem('description');
+        $('#catid').val(catid);
+        $('#categname').val(categname);
+        $('#date').val(date);
+        $('#description').val(description);
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>

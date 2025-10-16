@@ -98,8 +98,9 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a class="" href="./index.html">
-        <img src="../assets/img/brand/logo.PNG" class="" alt="..."style="width: 150px; height:90px !important;">
-      </a>
+                                <img src="../assets/img/brand/logo.PNG" class="" alt="..."
+                                    style="width: 150px; height:90px !important;">
+                            </a>
                         </div>
                         <div class="col-6 collapse-close">
                             <button type="button" class="navbar-toggler" data-toggle="collapse"
@@ -183,7 +184,7 @@
                             <h3> Feedback</h3>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link  active " href="../examples/profile.html">
                             <i class="ni ni-single-02 text-yellow"></i>
@@ -281,7 +282,8 @@
         <div class="container-fluid mt--3">
             <div class="card shadow">
 
-                <div class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap" id="search-show">
+                <div class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap"
+                    id="search-show">
                     <h4 class="pt-2 pl-3 text-white"
                         style="font-size: 20px; font-family: Georgia, 'Times New Roman', Times, serif;">Feedback</h4>
                     <a href="..//examples/feedback-add.html" class=" btn-info btn-sm mr-2"
@@ -293,20 +295,22 @@
                         <!-- Category Name -->
                         <div class="col-md-4">
                             <label for="categoryName" class="form-label fw-bold">Event Name</label>
-                            <input type="text" id="eventname" class="form-control" placeholder="Enter Event Name"> <span></span>
+                            <input type="text" id="eventname" class="form-control" placeholder="Enter Event Name">
+                           
                         </div>
 
                         <!-- Category ID -->
                         <div class="col-md-4">
                             <label for="categoryId" class="form-label fw-bold">Customer Name</label>
-                            <input type="text" id="custname" class="form-control" placeholder="Enter Customer Name"> <span></span>
+                            <input type="text" id="custname" class="form-control" placeholder="Enter Customer Name">
+                            
                         </div>
 
                         <!-- Buttons -->
                         <div class="col-md-4 d-flex align-items-end justify-content-end">
                             <div class="d-flex flex-wrap w-100 justify-content-end" style="gap: 10px;">
                                 <!-- Search Button -->
-                                <button type="submit" class="btn btn-warning"id="submit">
+                                <button type="submit" class="btn btn-warning" id="submit">
                                     <i class="bi bi-search"></i> Search
                                 </button>
 
@@ -330,25 +334,25 @@
                 </div> -->
 
                         <div class="card-body p-0">
-                            <table class="table  table-hover mb-0">
+                            <div class="table-responsive" style="overflow-x:auto; max-width:100%;">
+                                <div id="res"></div>
+                                <!-- <table class="table  table-hover mb-0">
                                 <thead class="bg-dark">
                                     <tr class="text-right text-center" style="font-size:20px;">
-                                        <th scope="col" style="font-size: 11px; color: white;">#</th>
-                                        <th scope="col" style="font-size: 11px; color: white;">Event Id</th>
+                                        <th scope="col" style="font-size: 11px; color: white;">Feedback Id</th>
+                                        <th scope="col" style="font-size: 11px; color: white;">Event Name</th>
                                         <th scope="col" style="font-size: 11px; color: white;">Customer Name</th>
                                         <th scope="col" style="font-size: 11px; color: white;">Rating</th>
                                         <th scope="col" style="font-size: 11px; color: white;">Feedback</th>
-                                        <!-- <th scope="col" style="font-size: 11px; color: white;" class="text-center">Actions</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="text-right">
-                                        <th scope="row">1</th>
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-
+                                        <td></td>
                                     </tr>
                                     <tr class="text-right">
                                         <th scope="row">2</th>
@@ -364,11 +368,10 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-
-
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -388,6 +391,9 @@
                     token: "ee6fab19c5a04ac1a32a645abde4613a",
                     application: "argon-dashboard-free"
                 });
+        </script>
+        <script>
+            localStorage.clear()
         </script>
 </body>
 

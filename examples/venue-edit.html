@@ -292,7 +292,7 @@
 
 
                 <!-- Card Body -->
-                <div class="card-body" id="venueSection">
+                <div class="card-body" id="venueupdateSection">
                     <form>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -373,6 +373,22 @@
                     application: "argon-dashboard-free"
                 });
         </script>
+        <script>
+        $(document).ready(function () {
+            // Retrieve from localStorage
+            $('#VId').val(localStorage.getItem('VId'));
+            $('#venuename').val(localStorage.getItem('venuename'));
+            $('#address').val(localStorage.getItem('address'));
+            $('#state').val(localStorage.getItem('state'));
+            $('#dist').val(localStorage.getItem('dist'));
+            $('#pincode').val(localStorage.getItem('pincode'));
+            $('#capacity').val(localStorage.getItem('capacity'));
+            $('#contact').val(localStorage.getItem('contact'));
+            $('#alt_cont').val(localStorage.getItem('alt_cont'));
+            $('#gallery').val(localStorage.getItem('gallery'));
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

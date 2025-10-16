@@ -152,7 +152,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link " href="../examples/customer-list.html">
-             <i class="bi bi-person"></i>
+              <i class="bi bi-person"></i>
               <h3>Customers</h3>
             </a>
           </li>
@@ -181,14 +181,14 @@
               <h3> Feedback</h3>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a class="nav-link  active " href="../examples/profile.html">
               <i class="ni ni-single-02 text-yellow"></i>
               <h3>Profile</h3>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a class="nav-link" href="../examples/login.html">
               <i class="ni ni-key-25 text-info"></i>
@@ -215,7 +215,7 @@
           <!-- Form -->
           <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <div class="form-group mb-0">
-              
+
             </div>
           </form>
           <!-- User -->
@@ -286,7 +286,8 @@
         <div class="card shadow">
 
 
-          <div class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap" id="search-show">
+          <div class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap"
+            id="search-show">
             <h4 class="pt-2 pl-3 text-white" style="font-size: 20px;">Service Form</h4>
             <a href="..//examples/services-add.html" class=" btn-info btn-sm mr-2"
               style="border-radius: 0px; font-size: 13px;"><i class="bi bi-plus-lg pr-1"></i>Entry New</a>
@@ -304,7 +305,7 @@
 
               <div class="col-md-4">
 
-                <label for="validationCustom01">Service category</label>
+                <label for="validationCustom01">Category</label>
                 <select class="form-control" id="mode">
                   <option selected value="">Select category</option>
                   <option value="1">Option 1</option>
@@ -315,13 +316,14 @@
 
               <div class="col-md-4">
 
-                <label for="validationCustom01">Service name</label>
-                <input type="text" class="form-control" id="sername" placeholder="Enter Service name"> <span></span>
+                <label for="validationCustom01">Event name</label>
+                <input type="text" class="form-control" id="eventname" placeholder="Enter Service name"> 
               </div>
             </form>
             <form class="row mt-3">
               <div class="col-md-12 d-flex justify-content-center ">
-                <button type="submit" class="btn btn-success btn-sm"id="submit"><i class="bi bi-search pr-1"></i>SEARCH</button>
+                <button type="submit" class="btn btn-success btn-sm" id="submit"><i
+                    class="bi bi-search pr-1"></i>SEARCH</button>
                 <button type="reset" class="btn btn-danger btn-sm "><i
                     class="bi bi-arrow-clockwise pr-1"></i>REFRESH</button>
               </div>
@@ -333,40 +335,22 @@
 
       <div class="container-fluid mt-4">
         <div class="card shadow">
-
-
-
           <!-- Card Body -->
           <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table table-striped table-hover  mb-0">
+            <div class="table-responsive" style="overflow-x:auto; max-width:100%;">
+              <div id="res"></div>
+              <!-- <table class="table table-striped table-hover  mb-0">
                 <thead class="bg-dark" style="color:white;">
                   <tr class="text-center">
-                    <th style="font-size:11px;">#</th>
+
                     <th style="font-size:11px;">Service ID</th>
                     <th style="font-size:11px;">Category</th>
-                    <th style="font-size:11px;">Name</th>
                     <th style="font-size:11px;">Description</th>
                     <th style="font-size:11px;">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="text-center">
-                    <td>1</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-
-                    <td>
-                      <a href="..//examples/services-update.html"><button class="btn btn-success btn-sm mx-1"><i
-                            class="bi bi-pencil-square pr-1"></i>Update</button></a>
-                      <button class="btn btn-danger btn-sm"><i class="bi bi-trash3-fill pr-1"></i>Delete</button>
-                    </td>
-                  </tr>
-                  <tr class="text-center">
-                    <td>2</td>
-                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -378,8 +362,17 @@
                     </td>
                   </tr>
                   <tr class="text-center">
-                    <td>3</td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+
+                    <td>
+                      <a href="..//examples/services-update.html"><button class="btn btn-success btn-sm mx-1"><i
+                            class="bi bi-pencil-square pr-1"></i>Update</button></a>
+                      <button class="btn btn-danger btn-sm"><i class="bi bi-trash3-fill pr-1"></i>Delete</button>
+                    </td>
+                  </tr>
+                  <tr class="text-center">
                     <td></td>
                     <td></td>
                     <td></td>
@@ -391,15 +384,14 @@
                     </td>
                   </tr>
                 </tbody>
-              </table>
+              </table> -->
             </div>
           </div>
-
         </div>
       </div>
 
     </div>
-    <script>
+    <!-- <script>
       document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.btn-warning').forEach(btn => {
           btn.addEventListener('click', function () {
@@ -423,7 +415,7 @@
         });
 
       });
-    </script>
+    </script> -->
 
     <!--   Core   -->
     <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
@@ -440,6 +432,9 @@
           application: "argon-dashboard-free"
         });
     </script>
+    <script>
+            localStorage.clear()
+        </script>
 </body>
 
 </html>

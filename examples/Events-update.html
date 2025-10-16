@@ -184,7 +184,7 @@
               <h3> Feedback</h3>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a class="nav-link  active " href="../examples/profile.html">
               <i class="ni ni-single-02 text-yellow"></i>
@@ -294,18 +294,18 @@
           <h4 class="pt-2 pl-3 text-white"
             style="font-size: 20px; font-family: Georgia, 'Times New Roman', Times, serif;">Update</h4>
         </div>
-        <div class="card-body" id="eventSection">
+        <div class="card-body" id="eventupdateSection">
           <form class="needs-validation" novalidate>
             <div class="form-row mt-3">
               <div class="col-md-6 mb-3">
-                <label for="validationCustom01">Event Id*</label>
+                <label for="validationCustom01">Event Id</label>
                 <input type="text" class="form-control" id="EId">
                 <div class="invalid-feedback">
                   Please provide a valid Event Id.
                 </div>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="validationCustom02">Event Name*</label>
+                <label for="validationCustom02">Event Name</label>
                 <input type="text" class="form-control" id="eventname"> <span></span>
                 <div class="invalid-feedback">
                   Please provide a valid Event Name.
@@ -323,8 +323,7 @@
               </div>
               <div class="col-md-6 mb-3">
                 <label for="validationCustom02">Venue Id</label>
-                <input type="text" class="form-control" placeholder="Enter Event Id" id="VId"
-                  required><br><span></span>
+                <input type="text" class="form-control" placeholder="Enter Event Id" id="VId" required><br><span></span>
                 <div class="invalid-feedback">
                   Please provide a valid Event Name.
                 </div>
@@ -387,7 +386,8 @@
               </div>
               <div class="col-md-3 mb-3">
                 <label for="validationCustom02">Max Participant</label>
-                <input type="text" class="form-control" id="capacity" placeholder="Enter Event Name" required> <span></span>
+                <input type="text" class="form-control" id="capacity" placeholder="Enter Event Name" required>
+                <span></span>
                 <div class="invalid-feedback">
                   Please provide a valid Event Name.
                 </div>
@@ -398,13 +398,15 @@
               <div class="col-md-12 mb-3">
                 <label for="Description">Description</label>
                 <!-- <input type="text" class="form-control" id="Description" placeholder=""> -->
-                <textarea name="" id="description" rows="3" style="resize: none;" class="form-control"></textarea> <span></span>
+                <textarea name="" id="description" rows="3" style="resize: none;" class="form-control"></textarea>
+                <span></span>
               </div>
 
             </div>
 
             <div class="text-center">
-              <button type="submit" class="btn btn-success px-4"id="submit"><i class="bi bi-arrow-bar-up pr-1"></i>Update</button>
+              <button type="submit" class="btn btn-success px-4" id="submit"><i
+                  class="bi bi-arrow-bar-up pr-1"></i>Update</button>
               <button type="submit" class="btn btn-danger px-4"><i
                   class="bi bi-arrow-clockwise pr-1"></i>Refresh</button>
             </div>
@@ -416,26 +418,7 @@
     <!-- <div class="text-center"><button class="btn bg-gradient-info" type="submit">Submit</button></div> -->
     </form>
 
-    <script>
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function (form) {
-            form.addEventListener('submit', function (event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
-      })();
-    </script>
+
 
     <!-- Footer -->
     <!-- Footer -->
@@ -457,6 +440,26 @@
         application: "argon-dashboard-free"
       });
   </script>
+  <script>
+    $(document).ready(function () {
+      // Retrieve from localStorage
+      $('#EId').val(localStorage.getItem('EId'));
+      $('#eventname').val(localStorage.getItem('eventname'));
+      $('#CId').val(localStorage.getItem('CId'));
+      $('#VId').val(localStorage.getItem('VId'));
+      $('#SId').val(localStorage.getItem('SId'));
+      $('#cost').val(localStorage.getItem('cost'));
+      $('#Evtdate').val(localStorage.getItem('Evtdate'));
+      $('#Sdate').val(localStorage.getItem('Sdate'));
+      $('#Edate').val(localStorage.getItem('Edate'));
+      $('#Stime').val(localStorage.getItem('Stime'));
+      $('#Etime').val(localStorage.getItem('Etime'));
+      $('#capacity').val(localStorage.getItem('capacity'));
+      $('#description').val(localStorage.getItem('description'));
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

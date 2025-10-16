@@ -98,8 +98,9 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a class="" href="./index.html">
-        <img src="../assets/img/brand/logo.PNG" class="" alt="..."style="width: 150px; height:90px !important;">
-      </a>
+                                <img src="../assets/img/brand/logo.PNG" class="" alt="..."
+                                    style="width: 150px; height:90px !important;">
+                            </a>
                         </div>
                         <div class="col-6 collapse-close">
                             <button type="button" class="navbar-toggler" data-toggle="collapse"
@@ -156,7 +157,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="../examples/customer-add.html">
-                           <i class="bi bi-person"></i>
+                            <i class="bi bi-person"></i>
                             <h3>Customers</h3>
                         </a>
                     </li>
@@ -185,14 +186,14 @@
                             <h3> Feedback</h3>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link  active " href="../examples/profile.html">
                             <i class="ni ni-single-02 text-yellow"></i>
                             <h3>Profile</h3>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link" href="../examples/login.html">
                             <i class="ni ni-key-25 text-info"></i>
@@ -209,9 +210,9 @@
         <!-- Navbar -->
         <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
             <div class="container-fluid">
-                
+
                 <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-                
+
                 </form>
                 <!-- User -->
                 <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -288,18 +289,19 @@
                 </div>
 
                 <!-- Card Body -->
-                <div class="card-body" id="customerSection">
+                <div class="card-body" id="customerupdateSection">
                     <!-- Event Form -->
                     <form class="needs-validation" novalidate>
                         <div class="form-row">
                             <div class="col-md-3 mb-3">
                                 <label for="validationCustom01">Customer ID</label>
-                                <input type="text" class="form-control" id="validationCustom01"
+                                <input type="text" class="form-control" id="CId"
                                     placeholder="Enter customer ID" required>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="validationCustom02">Customer Name</label>
-                                <input type="text" class="form-control" id="custname" placeholder="Enter Customer name" required>
+                                <input type="text" class="form-control" id="custname" placeholder="Enter Customer name"
+                                    required>
                                 <span></span>
 
                             </div>
@@ -358,7 +360,7 @@
                         </div>
 
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success px-4"id="submit"><i
+                            <button type="submit" class="btn btn-success px-4" id="submit"><i
                                     class="bi bi-pencil-square pr-1"></i>Update</button>
                             <button type="submit" class="btn btn-danger px-4"><i
                                     class="bi bi-arrow-clockwise pr-1"></i>Reset</button>
@@ -414,6 +416,32 @@
                 application: "argon-dashboard-free"
             });
     </script>
+    <script>
+        $(document).ready(function () {
+            const CId = localStorage.getItem('CId');
+            const custname = localStorage.getItem('custname');
+            const contact = localStorage.getItem('contact');
+            const alt_cont = localStorage.getItem('alt_cont');
+            const dist = localStorage.getItem('dist');
+            const state = localStorage.getItem('state');
+            const pincode = localStorage.getItem('pincode');
+            const address = localStorage.getItem('address');
+            const adhar = localStorage.getItem('adhar');
+            const gallery = localStorage.getItem('gallery');
+            $('#CId').val(CId);
+            $('#custname').val(custname);
+            $('#contact').val(contact);
+            $('#alt_cont').val(alt_cont);
+            $('#dist').val(dist);
+            $('#state').val(state);
+            $('#pincode').val(pincode);
+            $('#address').val(address);
+            $('#adhar').val(adhar);
+            $('#gallery').val(gallery);
+        });
+    </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
-</html> update
+</html> 

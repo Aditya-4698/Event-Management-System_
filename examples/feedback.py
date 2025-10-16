@@ -6,15 +6,15 @@ con=mysql.connector.connect(user="Aditya",password="Aditya@123",host="localhost"
 cur=con.cursor()
 
 f=cgi.FieldStorage()
-url="insert into feedbackadd(feedback_id,event_id,customer_id,rating,date,comment) values(%s,%s,%s,%s,%s,%s)"
+url="insert into feedbackadd(feedback_id,event_name,customer_name,rating,date,comment) values(%s,%s,%s,%s,%s,%s)"
 try:
-    print(f.getvalue("SId" ))
-    print(f.getvalue("EId"))
-    print(f.getvalue("CId"))
+    print(f.getvalue("FId" ))
+    print(f.getvalue("eventname"))
+    print(f.getvalue("custname"))
     print(f.getvalue("Rating"))
     print(f.getvalue("date"))
     print(f.getvalue("address"))
-    cur.execute(url,(f.getvalue("SId"),f.getvalue("EId"),f.getvalue("CId"),f.getvalue("Rating"),f.getvalue("date"),f.getvalue("address")))
+    cur.execute(url,(f.getvalue("FId"),f.getvalue("eventname"),f.getvalue("custname"),f.getvalue("Rating"),f.getvalue("date"),f.getvalue("address")))
     con.commit()
     print("Record inserted")
 except Exception as e:
