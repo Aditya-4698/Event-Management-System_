@@ -25,21 +25,29 @@ f=cgi.FieldStorage()
 #     con.commit()
 #     print("Record inserted")
 # except Exception as e:
-#     print("Error:",e)   
-VId=(f.getvalue("VId"))
-venuename=(f.getvalue("venuename"))
-address=(f.getvalue("address"))
-state=(f.getvalue("state"))
-dist=(f.getvalue("dist"))
-pincode=(f.getvalue("pincode"))
-capacity=(f.getvalue("capacity"))
-contact=(f.getvalue("contact"))
-alt_cont=(f.getvalue("alt_cont"))
-gallery=(f.getvalue("gallery"))
+#     print("Error:",e)  
+v=f.getvalue('t')
 try:
-    url="update venueadd set venue_id=\'"+str(VId)+"\',venue_name=\'"+str(venuename)+"\',address=\'"+str(address)+"\',state=\'"+str(state)+"\',district=\'"+str(dist)+"\',pincode=\'"+str(pincode)+"\',max_capacity=\'"+str(capacity)+"\',contact=\'"+str(contact)+"\',alternate_contact=\'"+str(alt_cont)+"\',gallery=\'"+str(gallery)+"\' where venue_id=\'"+str(VId)+"\';"
-    cur.execute(url)
-    con.commit()
-    print("Record updated successfully")
+    if v=='updete':
+        VId=(f.getvalue("VId"))
+        venuename=(f.getvalue("venuename"))
+        address=(f.getvalue("address"))
+        state=(f.getvalue("state"))
+        dist=(f.getvalue("dist"))
+        pincode=(f.getvalue("pincode"))
+        capacity=(f.getvalue("capacity"))
+        contact=(f.getvalue("contact"))
+        alt_cont=(f.getvalue("alt_cont"))
+        gallery=(f.getvalue("gallery"))
+
+        url="update venueadd set venue_id=\'"+str(VId)+"\',venue_name=\'"+str(venuename)+"\',address=\'"+str(address)+"\',state=\'"+str(state)+"\',district=\'"+str(dist)+"\',pincode=\'"+str(pincode)+"\',max_capacity=\'"+str(capacity)+"\',contact=\'"+str(contact)+"\',alternate_contact=\'"+str(alt_cont)+"\',gallery=\'"+str(gallery)+"\' where venue_id=\'"+str(VId)+"\';"
+        cur.execute(url)
+        con.commit()
+        print("Record updated successfully")
+    else:
+        url="delete from venueadd where venue_id=\'"+f.getvalue('t1')+"\'"
+        cur.execute(url)
+        con.commit()
+        print("Record Successfully Deleted")
 except Exception as e:
     print("Error:",e)

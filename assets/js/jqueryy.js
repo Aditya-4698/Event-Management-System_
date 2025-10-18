@@ -344,7 +344,7 @@ $(document).ready(function () {
         $(this).css("border", "2px solid black");
     });
 
-    
+
     /*--------------------------------------
      * 9.Submit
      --------------------------------------*/
@@ -431,65 +431,65 @@ $(document).ready(function () {
 
             $(document).ready(function () {
 
-    $("#searchBtn").click(function (e) {
-        e.preventDefault();
+                $("#searchBtn").click(function (e) {
+                    e.preventDefault();
 
-        // All field IDs
-        const fields = {
-            venueid: $("#venueid").val().trim(),
-            venuename: $("#venuename").val().trim(),
-            city: $("#city").val().trim(),
-            categoryid: $("#categoryid").val().trim(),
-            categoryname: $("#categoryname").val().trim(),
-            serviceid: $("#serviceid").val().trim(),
-            category: $("#category").val().trim(),
-            eventname: $("#eventname").val().trim()
-        };
+                    // All field IDs
+                    const fields = {
+                        venueid: $("#venueid").val().trim(),
+                        venuename: $("#venuename").val().trim(),
+                        city: $("#city").val().trim(),
+                        categoryid: $("#categoryid").val().trim(),
+                        categoryname: $("#categoryname").val().trim(),
+                        serviceid: $("#serviceid").val().trim(),
+                        category: $("#category").val().trim(),
+                        eventname: $("#eventname").val().trim()
+                    };
 
-        // ✅ Check if all fields are empty
-        const allEmpty = Object.values(fields).every(v => v === "");
-        if (allEmpty) {
-            Swal.fire({
-                icon: "warning",
-                title: "Please enter at least one search field!",
-                timer: 2000,
-                showConfirmButton: false
-            });
-            return false;
-        }
+                    // ✅ Check if all fields are empty
+                    const allEmpty = Object.values(fields).every(v => v === "");
+                    if (allEmpty) {
+                        Swal.fire({
+                            icon: "warning",
+                            title: "Please enter at least one search field!",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        return false;
+                    }
 
-        // ✅ Priority: If venueid filled, ignore others
-        let dataToSend = {};
-        if (fields.venueid !== "") {
-            dataToSend = { venueid: fields.venueid };
-        } else {
-            // else send all non-empty fields
-            for (let key in fields) {
-                if (fields[key] !== "") {
-                    dataToSend[key] = fields[key];
-                }
-            }
-        }
+                    // ✅ Priority: If venueid filled, ignore others
+                    let dataToSend = {};
+                    if (fields.venueid !== "") {
+                        dataToSend = { venueid: fields.venueid };
+                    } else {
+                        // else send all non-empty fields
+                        for (let key in fields) {
+                            if (fields[key] !== "") {
+                                dataToSend[key] = fields[key];
+                            }
+                        }
+                    }
 
-        // ✅ AJAX call for search
-        $.ajax({
-            url: "venue-search.py",  // <-- apni Python file ka naam yahan likho
-            method: "POST",
-            data: dataToSend,
-            success: function (data) {
-                $("#searchResults").html(data); // <-- search result div ID
-            },
-            error: function () {
-                Swal.fire({
-                    icon: "error",
-                    title: "Search failed!",
-                    text: "Something went wrong while searching."
+                    // ✅ AJAX call for search
+                    $.ajax({
+                        url: "venue-search.py",  // <-- apni Python file ka naam yahan likho
+                        method: "POST",
+                        data: dataToSend,
+                        success: function (data) {
+                            $("#searchResults").html(data); // <-- search result div ID
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Search failed!",
+                                text: "Something went wrong while searching."
+                            });
+                        }
+                    });
                 });
-            }
-        });
-    });
 
-});
+            });
 
 
             /*--------------------------------------
@@ -822,13 +822,45 @@ $(document).ready(function () {
             if (activeSection === "event") {
                 sendAjaxRequest("event.py", eventData, function (data) {
                     // console.log(data);
-                    alert("✅ Event data submitted successfully!");
+                    // alert("✅ Event data submitted successfully!");
+                    data = data.trim();
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Event Inserted!",
+                            text: "The record was successfully Inserted.",
+                            timer: 2000,
+                            icon: "success"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Inserting Failed",
+                            icon: "error",
+                            showConfirmButton: false
+                        });
+                    }
                 });
 
             } else if (activeSection === "eventupdate") {
                 sendAjaxRequest("Event-update.py", eventupdateData, function (data) {
                     // Trim whitespace in case Python adds newlines
-                    console.log(data)
+                    // console.log(data)
+                    data = data.trim();
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Update Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Category Updated!",
+                            text: "The record was successfully Updated.",
+                            icon: "success"
+                        });
+                    }
                 });
             } else if (activeSection === "eventlist") {
                 sendAjaxRequest("eventlist.py", eventlistData, function (data) {
@@ -836,6 +868,12 @@ $(document).ready(function () {
                     // console.log(data);
 
                     // alert("✅ Eventlist data submitted successfully!");
+                    if (data == 1)
+                        Swal.fire({
+                            title: "submitted",
+                            icon: "success",
+                            draggable: true
+                        });
                     $('.update').click(function (e) {
                         // console.log('kjhg');
 
@@ -871,34 +909,74 @@ $(document).ready(function () {
 
                         window.location.href = "Events-update.html"
                     });
+                    $('.delete').click(function (e) {
+                        e.preventDefault();
+                        $(this).closest('tr').remove();
+                        d = $(this).closest('tr')
+                        $.ajax({
+                            method: "POST",
+                            url: "Event-update.py",
+                            data: {
+                                't': 'delete',
+                                't1': d.find("td:eq(0)").text()
+
+                            },
+                            success: function (data) {
+                                console.log(data)
+                                // if(data=="Record successfully deleted")
+                            }
+                        });
+
+                    });
                 });
             } else if (activeSection === "visitor") {
                 sendAjaxRequest("visitor.py", visitorData, function (data) {
-                    alert("✅ Visitor data submitted successfully!");
+                    // alert("✅ Visitor data submitted successfully!");
+                    data = data.trim();
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Inserting Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Visitor Inserted!",
+                            text: "The record was successfully Inserted.",
+                            icon: "success"
+                        });
+                    }
                 });
             } else if (activeSection === "visitorlist") {
                 sendAjaxRequest("visitorlist.py", visitorlistData, function (data) {
                     $('#res').html(data);
-                    alert("✅ Visitorlist data submitted successfully!");
+                    // alert("✅ Visitorlist data submitted successfully!");
+                    if (data == 1)
+                        Swal.fire({
+                            title: "submitted",
+                            icon: "success",
+                            draggable: true
+                        });
                 });
             } else if (activeSection === "Categoryupdate") {
                 sendAjaxRequest("category-update.py", categoryupdateData, function (data) {
                     // Trim whitespace in case Python adds newlines
                     data = data.trim();
 
-                    if (parseInt(data) === 1) {
+                    if (parseInt(data.trim()) === 1) {
                         Swal.fire({
-                            title: "Category Updated!",
-                            text: "The record was successfully updated.",
-                            icon: "success",
+                            title: "Update Failed",
+                            icon: "error",
                             timer: 2000,
                             showConfirmButton: false
                         });
                     } else {
                         Swal.fire({
-                            title: "Update Failed!",
-                            text: "No matching record found or server error.",
-                            icon: "error"
+                            title: "Category Updated!",
+                            text: "The record was successfully Updated.",
+                            icon: "success"
                         });
                     }
                 });
@@ -931,24 +1009,66 @@ $(document).ready(function () {
 
                         window.location.href = "category-update.html"
                     });
-                    // $('.delete').on('click',function(){
-                    //     $.ajax({
-                    //         method:"POST",
-                    //         url="category-update.py",
-                    //         data:{
-                    //             't':delete
-                    //         }
-                    //     })
-                    // })
+                    $('.delete').click(function (e) {
+                        e.preventDefault();
+                        $(this).closest('tr').remove();
+                        d = $(this).closest('tr')
+                        $.ajax({
+                            method: "POST",
+                            url: "category-update.py",
+                            data: {
+                                't': 'delete',
+                                't1': d.find("td:eq(0)").text()
+
+                            },
+                            success: function (data) {
+                                console.log(data)
+                                // if(data=="Record successfully deleted")
+                            }
+                        });
+
+                    });
                 });
             } else if (activeSection === "Category") {
                 sendAjaxRequest("category.py", categoryData, function (data) {
-                    alert("✅ Customer data submitted successfully!");
+                    // alert("✅ Customer data submitted successfully!");
+                    //  data = data.trim();
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Insert Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Category Inserted!",
+                            text: "The record was successfully Inserted.",
+                            icon: "success"
+                        });
+                    }
                 });
             }
             else if (activeSection === "customer") {
                 sendAjaxRequest("customer.py", customerdata, function (data) {
-                    alert("✅ Customer data submitted successfully!");
+                    // alert("✅ Customer data submitted successfully!");
+                    data = data.trim();
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Inserting Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Customer Inserted!",
+                            text: "The record was successfully Inserted.",
+                            icon: "success"
+                        });
+                    }
                 });
             } else if (activeSection === "customerlist") {
                 sendAjaxRequest("customerlist.py", customerlistdata, function (data) {
@@ -983,7 +1103,27 @@ $(document).ready(function () {
                         localStorage.setItem('address', address);
                         localStorage.setItem('adhar', adhar);
                         localStorage.setItem('gallery', gallery);
+
                         window.location.href = "customer-update.html"
+                    });
+                     $('.delete').click(function (e) {
+                        e.preventDefault();
+                        $(this).closest('tr').remove();
+                        d = $(this).closest('tr')
+                        $.ajax({
+                            method: "POST",
+                            url: "customer-update.py",
+                            data: {
+                                't': 'delete',
+                                't1': d.find("td:eq(0)").text()
+
+                            },
+                            success: function (data) {
+                                console.log(data)
+                                // if(data=="Record successfully deleted")
+                            }
+                        });
+
                     });
                 });
             } else if (activeSection === "customerupdate") {
@@ -992,23 +1132,38 @@ $(document).ready(function () {
                     data = data.trim();
                     if (parseInt(data) === 1) {
                         Swal.fire({
-                            title: "Customer Updated!",
-                            text: "The record was successfully updated.",
+                            title: "Customer Updated Failed!",
                             icon: "success",
                             timer: 2000,
                             showConfirmButton: false
                         });
                     } else {
                         Swal.fire({
-                            title: "Update Failed!",
-                            text: "No matching record found or server error.",
+                            title: "Customer Updated!",
+                            text: "The record was successfully updated.",
                             icon: "error"
                         });
                     }
                 });
             } else if (activeSection === "eventservice") {
                 sendAjaxRequest("event_service.py", eventserviceData, function (data) {
-                    alert("✅ Event_Service data submitted successfully!");
+                    // alert("✅ Event_Service data submitted successfully!");
+                    data = data.trim();
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Inserting Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            title: " Inserted!",
+                            text: "The record was successfully Inserted.",
+                            icon: "success"
+                        });
+                    }
                 });
             } else if (activeSection === "eventservicelist") {
                 sendAjaxRequest("event_servicelist.py", eventservicelistData, function (data) {
@@ -1035,6 +1190,26 @@ $(document).ready(function () {
 
                         window.location.href = "event_service-update.html"
                     });
+
+                    $('.delete').click(function (e) {
+                        e.preventDefault();
+                        $(this).closest('tr').remove();
+                        d = $(this).closest('tr')
+                        $.ajax({
+                            method: "POST",
+                            url: "event_service-update.py",
+                            data: {
+                                't': 'delete', 
+                                't1': d.find("td:eq(0)").text()
+
+                            },
+                            success: function (data) {
+                                console.log(data)
+                                // if(data=="Record successfully deleted")
+                            }
+                        });
+
+                    });
                 });
             } else if (activeSection === "eventserviceupdate") {
                 sendAjaxRequest("event_service-update.py", eventserviceupdateData, function (data) {
@@ -1042,16 +1217,15 @@ $(document).ready(function () {
                     data = data.trim();
                     if (parseInt(data) === 1) {
                         Swal.fire({
-                            title: "Event_Service Updated!",
-                            text: "The record was successfully updated.",
+                            title: " Failed!",
                             icon: "success",
                             timer: 2000,
                             showConfirmButton: false
                         });
                     } else {
                         Swal.fire({
-                            title: "Update Failed!",
-                            text: "No matching record found or server error.",
+                            title: "Updated!",
+                            text: "The record was successfully updated.",
                             icon: "error"
                         });
                     }
@@ -1060,32 +1234,86 @@ $(document).ready(function () {
 
             } else if (activeSection === "feedback") {
                 sendAjaxRequest("feedback.py", feedbackData, function (data) {
-                    alert("✅ Feedback data submitted successfully!");
+                    // alert("✅ Feedback data submitted successfully!");
+                    data = data.trim();
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Inserting Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Feedback Inserted!",
+                            text: "The record was successfully Inserted.",
+                            icon: "success"
+                        });
+                    }
                 });
             } else if (activeSection === "feedbacklist") {
                 sendAjaxRequest("feedbacklist.py", feedbacklistData, function (data) {
-                    console.log(data);
+                    // console.log(data);
                     $('#res').html(data);
-                    alert("✅ Feedbacklist data submitted successfully!");
+                    // alert("✅ Feedbacklist data submitted successfully!");
+                    if (data == 1)
+                        Swal.fire({
+                            title: "submitted",
+                            icon: "success",
+                            draggable: true
+                        });
                 });
             } else if (activeSection === "payment") {
                 sendAjaxRequest("payment.py", paymentData, function (data) {
-                    alert("✅ Payment data submitted successfully!");
+                    // alert("✅ Payment data submitted successfully!");
+                    data = data.trim();
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Inserting Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Payment Inserted!",
+                            text: "The record was successfully Inserted.",
+                            icon: "success"
+                        });
+                    }
                 });
             } else if (activeSection === "paymentupdate") {
                 sendAjaxRequest("payment-update.py", paymentupdateData, function (data) {
                     // console.log(data)
                     data = data.trim();
-                    if (data === "1") {
-                        Swal.fire("⚠️ Failed!", "No matching record found or error.", "error");
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Update Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
                     } else {
-                        Swal.fire("✅ Updated!", "Service updated successfully!", "success");
+                        Swal.fire({
+                            title: "Payment Updated!",
+                            text: "The record was successfully Updated.",
+                            icon: "success"
+                        });
                     }
                 });
             } else if (activeSection === "paymentlist") {
                 sendAjaxRequest("paymentlist.py", paymentlistData, function (data) {
                     $('#res').html(data);
-                    alert("✅ Paymentlist data submitted successfully!");
+                    // alert("✅ Paymentlist data submitted successfully!");
+                    if (data == 1)
+                        Swal.fire({
+                            title: "submitted",
+                            icon: "success",
+                            draggable: true
+                        });
                     $('.update').click(function (e) {
                         // console.log('kjhg');
 
@@ -1114,24 +1342,75 @@ $(document).ready(function () {
 
                         window.location.href = "payment-update.html"
                     });
+                    $('.delete').click(function (e) {
+                        e.preventDefault();
+                        $(this).closest('tr').remove();
+                        d = $(this).closest('tr')
+                        $.ajax({
+                            method: "POST",
+                            url: "payment-update.py",
+                            data: {
+                                't': 'delete',
+                                't1': d.find("td:eq(0)").text()
+
+                            },
+                            success: function (data) {
+                                console.log(data)
+                                // if(data=="Record successfully deleted")
+                            }
+                        });
+
+                    });
                 });
             } else if (activeSection === "service") {
                 sendAjaxRequest("service.py", serviceData, function (data) {
-                    alert("✅ Service data submitted successfully!");
+                    // alert("✅ Service data submitted successfully!");
+                    data = data.trim();
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Inserting Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Service Inserted!",
+                            text: "The record was successfully Inserted.",
+                            icon: "success"
+                        });
+                    }
                 });
             } else if (activeSection === "serviceupdate") {
                 sendAjaxRequest("service-update.py", serviceupdateData, function (data) {
                     data = data.trim();
-                    if (data === "1") {
-                        Swal.fire("⚠️ Failed!", "No matching record found or error.", "error");
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Update Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
                     } else {
-                        Swal.fire("✅ Updated!", "Service updated successfully!", "success");
+                        Swal.fire({
+                            title: "Service Updated!",
+                            text: "The record was successfully Updated.",
+                            icon: "success"
+                        });
                     }
                 });
             } else if (activeSection === "servicelist") {
                 sendAjaxRequest("servicelist.py", servicelistData, function (data) {
                     $('#res').html(data);
                     // alert("✅ Servicelist data submitted successfully!");
+                    if (data == 1)
+                        Swal.fire({
+                            title: "submitted",
+                            icon: "success",
+                            draggable: true
+                        });
                     $('.update').click(function (e) {
                         // console.log('kjhg');
 
@@ -1151,20 +1430,65 @@ $(document).ready(function () {
 
                         window.location.href = "services-update.html"
                     });
+                    $('.delete').click(function (e) {
+                        e.preventDefault();
+                        $(this).closest('tr').remove();
+                        d = $(this).closest('tr')
+                        $.ajax({
+                            method: "POST",
+                            url: "service-update.py",
+                            data: {
+                                't': 'delete',
+                                't1': d.find("td:eq(0)").text()
+
+                            },
+                            success: function (data) {
+                                console.log(data)
+                                // if(data=="Record successfully deleted")
+                            }
+                        });
+
+                    });
                 });
             } else if (activeSection === "venue") {
                 sendAjaxRequest("venue.py", venueData, function (data) {
-                    alert("✅ Venue data submitted successfully!");
+                    // alert("✅ Venue data submitted successfully!");
+                    data = data.trim();
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Inserting Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Venue Inserted!",
+                            text: "The record was successfully Inserted.",
+                            icon: "success"
+                        });
+                    }
                 });
             } else if (activeSection === "venueupdate") {
                 sendAjaxRequest("venue-update.py", venueupdateData, function (data) {
                     // $('#res').html(data);
                     // console.log(data);
-                     data = data.trim();
-                    if (data === "1") {
-                        Swal.fire("⚠️ Failed!", "No matching record found or error.", "error");
+                    data = data.trim();
+
+                    if (parseInt(data.trim()) === 1) {
+                        Swal.fire({
+                            title: "Update Failed",
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
                     } else {
-                        Swal.fire("✅ Updated!", "Service updated successfully!", "success");
+                        Swal.fire({
+                            title: "Venue Updated!",
+                            text: "The record was successfully Updated.",
+                            icon: "success"
+                        });
                     }
                 });
             } else if (activeSection === "venuelist") {
@@ -1172,6 +1496,12 @@ $(document).ready(function () {
                     // console.log(data);
                     $('#res').html(data);
                     // alert("✅ Venuelist data submitted successfully!");
+                    if (data == 1)
+                        Swal.fire({
+                            title: "submitted",
+                            icon: "success",
+                            draggable: true
+                        });
                     $('.update').click(function (e) {
                         // console.log('kjhg');
 
@@ -1187,7 +1517,7 @@ $(document).ready(function () {
                         const contact = $(this).attr('data-contact');
                         const alt_cont = $(this).attr('data-alt_cont');
                         const gallery = $(this).attr('data-gallery');
-                       
+
                         // Save them in localStorage
                         localStorage.setItem('VId', VId);
                         localStorage.setItem('venuename', venuename);
@@ -1202,29 +1532,32 @@ $(document).ready(function () {
 
                         window.location.href = "venue-edit.html"
                     });
+                    $('.delete').click(function (e) {
+                        e.preventDefault(); 
+                        $(this).closest('tr').remove();
+                        d = $(this).closest('tr')
+                        $.ajax({
+                            method: "POST",
+                            url: "venue-update.py",
+                            data: {
+                                't': 'delete', 
+                                't1': d.find("td:eq(0)").text()
+
+                            },
+                            success: function (data) {
+                                console.log(data)
+                                // if(data=="Record successfully deleted")
+                            }
+                        });
+
+                    });
                 });
-            }
-            else {
+            } else {
                 console.log("⚠️ No active section detected — no data sent");
             }
         });
     });
 
-    // $("#search1").on("click",function(e){
-    //         // console.log("abc")
-    //         e.preventDefault(); 
-    //          $.ajax({
-    //              method:"POST",
-    //              url: "category-update.py",
-    //              data:{
-    //                   'catname': $('#categname').val(),
-    //                   'catid': $('#catid').val(),
-    //              },
-    //              success:function(data){
-    //                console.log(data);
-    //              }
-    //         });
-    //        });
 
     /*--------------------------------------
      * 8. FadeToggle

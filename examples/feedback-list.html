@@ -296,14 +296,14 @@
                         <div class="col-md-4">
                             <label for="categoryName" class="form-label fw-bold">Event Name</label>
                             <input type="text" id="eventname" class="form-control" placeholder="Enter Event Name">
-                           
+
                         </div>
 
                         <!-- Category ID -->
                         <div class="col-md-4">
                             <label for="categoryId" class="form-label fw-bold">Customer Name</label>
                             <input type="text" id="custname" class="form-control" placeholder="Enter Customer Name">
-                            
+
                         </div>
 
                         <!-- Buttons -->
@@ -394,6 +394,34 @@
         </script>
         <script>
             localStorage.clear()
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            $(document).ready(function () {
+                $("#submit").on("click", function (e) {
+                    e.preventDefault(); // stop the form from submitting for now
+
+                    const eventname = $("#eventname").val().trim();
+                    const custname = $("#custname").val().trim();
+
+                    if (eventname === "" && custname === "") {
+                        Swal.fire({
+                            title: "Please enter details!",
+                            text: "Enter Detail before searching.",
+                            icon: "warning",
+                            confirmButtonColor: "#6c63ff"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Searching...",
+                            text: "Fetching Events data, please wait.",
+                            icon: "info",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            });
         </script>
 </body>
 

@@ -312,7 +312,7 @@
                             <div class="col-md-4">
 
                                 <label for="validationCustom01">Purpose</label>
-                                <input type="text" class="form-control" id="description" placeholder=""> 
+                                <input type="text" class="form-control" id="description" placeholder="">
                             </div>
 
 
@@ -419,6 +419,35 @@
                     token: "ee6fab19c5a04ac1a32a645abde4613a",
                     application: "argon-dashboard-free"
                 });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+            $(document).ready(function () {
+                $("#submit").on("click", function (e) {
+                    e.preventDefault(); // stop the form from submitting for now
+
+                    const visitid = $("#VistId").val().trim();
+                    const visitname = $("#vistname").val().trim();
+                    const Purpose = $("#description").val().trim();
+
+                    if (visitid === "" && visitname === "" && Purpose === "" ) {
+                        Swal.fire({
+                            title: "Please enter details!",
+                            text: "Enter Detail before searching.",
+                            icon: "warning",
+                            confirmButtonColor: "#6c63ff"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Searching...",
+                            text: "Fetching Payment details, please wait.",
+                            icon: "info",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            });
         </script>
 </body>
 

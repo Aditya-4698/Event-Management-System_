@@ -317,7 +317,7 @@
               <div class="col-md-4">
 
                 <label for="validationCustom01">Event name</label>
-                <input type="text" class="form-control" id="eventname" placeholder="Enter Service name"> 
+                <input type="text" class="form-control" id="eventname" placeholder="Enter Service name">
               </div>
             </form>
             <form class="row mt-3">
@@ -433,7 +433,36 @@
         });
     </script>
     <script>
-            localStorage.clear()
+      localStorage.clear()
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+            $(document).ready(function () {
+                $("#submit").on("click", function (e) {
+                    e.preventDefault(); // stop the form from submitting for now
+
+                    const SId = $("#SId").val().trim();
+                    const mode = $("#mode").val().trim();
+                    const eventname = $("#eventname").val().trim();
+
+                    if (SId === "" && mode === "" && eventname === "") {
+                        Swal.fire({
+                            title: "Please enter details!",
+                            text: "Enter Detail before searching.",
+                            icon: "warning",
+                            confirmButtonColor: "#6c63ff"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Searching...",
+                            text: "Fetching Service details, please wait.",
+                            icon: "info",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            });
         </script>
 </body>
 

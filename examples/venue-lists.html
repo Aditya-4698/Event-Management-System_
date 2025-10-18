@@ -302,14 +302,14 @@
                         <div class="col-md-4">
 
                             <label for="validationCustom01">Venue Name</label>
-                            <input type="text" class="form-control" id="venuename" placeholder="Enter Venue Name"> 
+                            <input type="text" class="form-control" id="venuename" placeholder="Enter Venue Name">
                         </div>
 
                         <div class="col-md-4">
 
                             <label for="validationCustom01">City</label>
                             <input type="text" class="form-control" id="address" placeholder="Enter Service name">
-                            
+
                         </div>
                     </form>
                     <form class="row mt-3">
@@ -420,6 +420,35 @@
         </script>
         <script>
             localStorage.clear()
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+            $(document).ready(function () {
+                $("#submit").on("click", function (e) {
+                    e.preventDefault(); // stop the form from submitting for now
+
+                    const VId = $("#VId").val().trim();
+                    const venuename = $("#venuename").val().trim();
+                    const city = $("#address").val().trim();
+
+                    if (VId === "" && venuename === "" && city === "" ) {
+                        Swal.fire({
+                            title: "Please enter details!",
+                            text: "Enter Detail before searching.",
+                            icon: "warning",
+                            confirmButtonColor: "#6c63ff"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Searching...",
+                            text: "Fetching Venue details, please wait.",
+                            icon: "info",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            });
         </script>
 </body>
 

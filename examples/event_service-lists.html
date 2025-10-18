@@ -444,6 +444,34 @@
         <script>
             localStorage.clear()
         </script>
+        <script>
+            $(document).ready(function () {
+                $("#submit").on("click", function (e) {
+                    e.preventDefault(); // stop the form from submitting for now
+
+                    const eventservice = $("#ESId").val().trim();
+                    const ServiceId = $("#SId").val().trim();
+                    const Cdate = $("#Cdate").val().trim();
+
+                    if (eventservice === "" && ServiceId === "" && Cdate === "") {
+                        Swal.fire({
+                            title: "Please enter details!",
+                            text: "Enter Detail before searching.",
+                            icon: "warning",
+                            confirmButtonColor: "#6c63ff"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Searching...",
+                            text: "Fetching Eventservice data, please wait.",
+                            icon: "info",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            });
+        </script>
 </body>
 
 </html>

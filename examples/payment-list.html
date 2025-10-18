@@ -450,6 +450,36 @@
         <script>
             localStorage.clear()
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            $(document).ready(function () {
+                $("#submit").on("click", function (e) {
+                    e.preventDefault(); // stop the form from submitting for now
+
+                    const PId = $("#PId").val().trim();
+                    const EId = $("#EId").val().trim();
+                    const custname = $("#custname").val().trim();
+                    const Tdate = $("#Tdate").val().trim();
+
+                    if (PId === "" && EId === "" && custname === "" && Tdate === "") {
+                        Swal.fire({
+                            title: "Please enter details!",
+                            text: "Enter Detail before searching.",
+                            icon: "warning",
+                            confirmButtonColor: "#6c63ff"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Searching...",
+                            text: "Fetching Payment details, please wait.",
+                            icon: "info",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            });
+        </script>
 </body>
 
 </html>

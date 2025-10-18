@@ -6,21 +6,29 @@ con=mysql.connector.connect(user="Aditya",password="Aditya@123",host="localhost"
 cur=con.cursor()
 
 f=cgi.FieldStorage() 
-
-a=f.getvalue("catid")
-b=f.getvalue("categname")   
-c=f.getvalue("date")
-d=f.getvalue("description")
-print(a)
-print(b)
-print(c)
-print(d)
+v=f.getvalue('t')
 try:
-    url="update categoryadd set category_id= \'"+str(a)+"\',category_name=\'"+str(b)+"\',date=\'"+str(c)+"\',description=\'"+str(d)+"\' where category_id=\'"+str(a)+"\';"
+    if v=='update':
+        a=f.getvalue("catid")
+        b=f.getvalue("categname")   
+        c=f.getvalue("date")
+        d=f.getvalue("description")
+        print(a)
+        print(b)
+        print(c)
+        print(d)
 
-    cur.execute(url)
-    con.commit()
-    # print(url)
+        url="update categoryadd set category_id= \'"+str(a)+"\',category_name=\'"+str(b)+"\',date=\'"+str(c)+"\',description=\'"+str(d)+"\' where category_id=\'"+str(a)+"\';"
+
+        cur.execute(url)
+        con.commit()
+        # print(url)
+    else:
+        url="delete from categoryadd where category_id=\'"+f.getvalue('t1')+"\'"
+        cur.execute(url)
+        con.commit()
+        print("Record Successfully deleted")
+
 except Exception as e:
     print("Error:",e)
 

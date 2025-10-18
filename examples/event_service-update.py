@@ -6,18 +6,26 @@ con=mysql.connector.connect(user="Aditya",password="Aditya@123",host="localhost"
 cur=con.cursor()
 
 f=cgi.FieldStorage()
-Events=f.getvalue("ESId")
-Ser=f.getvalue("SId")
-Create=f.getvalue("Cdate")
-print(Events)
-print(Ser)
-print(Create)
+v=f.getvalue('t')
 try:
-    url="update event_serviceadd set event_serviceid= \'"+str(Events)+"\',service_id=\'"+str(Ser)+"\',date=\'"+str(Create)+"\' where event_serviceid=\'"+str(Events)+"\';"
+    if v=='update':
+        Events=f.getvalue("ESId") 
+        Ser=f.getvalue("SId")
+        Create=f.getvalue("Cdate")
+        print(Events)
+        print(Ser)
+        print(Create)
 
-    cur.execute(url)
-    con.commit()
-    print("1")
-    # print(url)
+        url="update event_serviceadd set event_serviceid= \'"+str(Events)+"\',service_id=\'"+str(Ser)+"\',date=\'"+str(Create)+"\' where event_serviceid=\'"+str(Events)+"\';"
+
+        cur.execute(url)
+        con.commit()
+        # print("1")
+        # print(url)
+    else:
+        url="delete from event_serviceadd where event_service_id=\'"+f.getvalue('t1')+"\'"
+        cur.execute(url)
+        con.commit()
+        print("Record Successfully Deleted")
 except Exception as e:
     print("Error:",e)

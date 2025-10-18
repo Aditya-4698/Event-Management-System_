@@ -419,7 +419,35 @@
                     application: "argon-dashboard-free"
                 });
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            $(document).ready(function () {
+                $("#submit").on("click", function (e) {
+                    e.preventDefault(); // stop the form from submitting for now
 
+                    const eventId = $("#EId").val().trim();
+                    const venuename = $("#venuename").val().trim();
+                    const Serviceid = $("#SId").val().trim();
+
+                    if (eventId === "" && venuename === "" && Serviceid === "") {
+                        Swal.fire({
+                            title: "Please enter details!",
+                            text: "Enter Detail before searching.",
+                            icon: "warning",
+                            confirmButtonColor: "#6c63ff"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Searching...",
+                            text: "Fetching Events data, please wait.",
+                            icon: "info",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            });
+        </script>
 </body>
 
 </html>
