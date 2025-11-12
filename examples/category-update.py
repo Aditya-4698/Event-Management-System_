@@ -23,12 +23,27 @@ try:
         cur.execute(url)
         con.commit()
         # print(url)
-    else:
-        url="delete from categoryadd where category_id=\'"+f.getvalue('t1')+"\'"
-        cur.execute(url)
-        con.commit()
-        print("Record Successfully deleted")
+#     else:
+#         url="delete from categoryadd where category_id=\'"+f.getvalue('t1')+"\'"
+#         cur.execute(url)
+#         con.commit()
+#         print("Record Successfully deleted")
 
+# except Exception as e:
+#     print("Error:",e)
+    elif v == 'delete':
+        a = f.getvalue('t1')
+        cur.execute("DELETE FROM categoryadd WHERE category_id=%s", (a,))
+        con.commit()
+        if cur.rowcount > 0:
+            print("Record Successfully Deleted")
+        else:
+            print("No record deleted — ID not found")
+
+    else:
+        print("Invalid operation")
 except Exception as e:
-    print("Error:",e)
+    print("Error:", e)
+finally:
+    con.close()
 

@@ -22,11 +22,23 @@ try:
 		cur.execute(url)
 		con.commit()
 		print("Record updated successfully")
-	else:
-		url="delete from serviceadd where service_id=\'"+f.getvalue('t1')+"\'"
-		cur.execute(url)
-		con.commit()
-		print("Record Successfully Deleted")
+# 	else:
+# 		url="delete from serviceadd where service_id=\'"+f.getvalue('t1')+"\'"
+# 		cur.execute(url)
+# 		con.commit()
+# 		print("Record Successfully Deleted")
 		
+# except Exception as e:
+# 	print("Error:", e)
+	elif v == 'delete':
+		SId = f.getvalue('t1')
+		cur.execute("DELETE FROM serviceadd WHERE service_id=%s", (SId,))
+		con.commit()
+		if cur.rowcount > 0:
+			print("Record Successfully Deleted")
+		else:
+			print("No record deleted — ID not found")
+	else:
+		print("Invalid operation")
 except Exception as e:
 	print("Error:", e)

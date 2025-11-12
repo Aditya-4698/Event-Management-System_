@@ -10,6 +10,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
     crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <style>
     .main-box {
       height: 100vh;
@@ -41,7 +46,7 @@
   </style>
 </head>
 
-  <body>
+<body>
   <div class="container-fluid main-box align-items-center justify-content-center">
     <div class="row col-lg-6 col-md-12 align-items-center justify-content-center">
       <div class="col-lg-7 col-md-12 text-left text-white input-box" style="border: 1px solid;">
@@ -49,12 +54,12 @@
         <hr>
         <form>
           <div class="pt-2">
-            <label for="email" class="form-control-label text-left">Username or Email</label>
-            <input type="email" class="form-control" id="email" placeholder="" required>
+            <label for="email" class="form-control-label text-left">Username / Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Username / Email" required>
           </div>
           <div class="pt-2">
             <label for="email" class="form-control-label">Password </label>
-            <input type="password" class="form-control" id="email" placeholder="" required>
+            <input type="password"  class="form-control" id="password" placeholder="Password" required>
           </div>
           <div class="pl-4 pt-4">
             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -62,18 +67,83 @@
           </div>
           <div>
             <div>
-              <button type="button" class="btn btn-primary btn-md  pl-4 pr-4 badge-pill text-center">Log in</button>
+              <button type="button" id="submit" class="btn btn-primary btn-md  pl-4 pr-4 badge-pill text-center">Log
+                in</button>
             </div>
           </div>
           <hr>
-          <p class="text-white text-left pl-2"><a href="#!">Forget Password?</a></p>
-          <p class="text-white text-left pl-2">Already have an Account? <a href="../examples/signup.html">Sign In</a></p>
+          <p class="text-white text-left pl-2"><a href="../examples/Forgot_password.html">Forget Password?</a></p>
+          <p class="text-white text-left pl-2">Already have an Account? <a href="../examples/signup.html">Sign In</a>
+          </p>
         </form>
 
       </div>
 
     </div>
   </div>
+
+ 
+  <script>
+$(document).ready(function () {
+  $("#submit").on("click", function (e) {
+    e.preventDefault();
+
+    const email = $("#email").val().trim();
+    const password = $("#password").val().trim();
+
+    if (!email || !password) {
+      Swal.fire("Missing Fields", "Please fill all fields!", "warning");
+      return;
+    }
+
+    $.ajax({
+      url: "login.py",
+      method: "POST",
+      data: { email: email, password: password },
+      success: function (res) {
+        console.log("Server Response:", res);
+
+        if (res.includes("redirect")) {
+          // ✅ Purane user ka data clear karo
+          localStorage.clear();
+
+          // ✅ Backend se name aur email nikaalo
+          const parts = res.split("|");
+          const name = parts[1] ? parts[1].trim() : email.split("@")[0];
+          const mail = parts[2] ? parts[2].trim() : email;
+
+          // ✅ Naya user data save karo
+          const newUserData = {
+            name: name,
+            email: mail
+          };
+          localStorage.setItem("userProfile", JSON.stringify(newUserData));
+
+          Swal.fire({
+            icon: "success",
+            title: "Login Successful!",
+            text: "Redirecting to profile...",
+            showConfirmButton: false,
+            timer: 2000
+          });
+
+          setTimeout(() => window.location.href = "profile.html", 2000);
+        } else if (res.includes("invalid")) {
+          Swal.fire("Login Failed", "Invalid email or password!", "error");
+        } else {
+          Swal.fire("Error", res, "error");
+        }
+      },
+      error: function (xhr, status, err) {
+        Swal.fire("Server Error", err, "error");
+      }
+    });
+  });
+});
+</script>
+
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </body>
 
 </html>

@@ -42,10 +42,23 @@ try:
 		con.commit()
 			# print(1)
 			# print(url)
-	else:
-		url="delete from eventadd where event_id=\'"+f.getvalue('t1')+"\'"
-		cur.execute(url)
+# 	else:
+# 		url="delete from eventadd where event_id=\'"+f.getvalue('t1')+"\'"
+# 		cur.execute(url)
+# 		con.commit()
+# 		print("Record Successfully deleted")
+# except Exception as e:
+# 	print("Error:", e)
+	elif v == 'delete':
+		EId = f.getvalue('t1')
+		cur.execute("DELETE FROM eventadd WHERE event_id=%s", (EId,))
 		con.commit()
-		print("Record Successfully deleted")
+		if cur.rowcount > 0:
+			print("Record Successfully Deleted")
+		else:
+			print("No record deleted — ID not found")
+
+	else:
+		print("Invalid operation")
 except Exception as e:
 	print("Error:", e)

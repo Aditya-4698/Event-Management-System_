@@ -2,12 +2,12 @@ $(document).ready(function () {
 
     // Field Selectors
     const mandatoryFields = "#name,#venuename,#address,#dist,#state,#pincode,#contact,#alt_cont,#categname,#sername,#vistname,#custname,#adhar,#eventname,#cost,#capacity,#amt,#balance,#description,#gallery,#date";
-    const alphabetOnlyFields = "#name,#venuename,#dist,#state,#categname,#sername,#vistname,#custname,#eventname,#exampleselect";
+    const alphabetOnlyFields = "#name,#role,#country,#venuename,#dist,#state,#categname,#sername,#vistname,#custname,#eventname,#exampleselect";
     const only10digitsfield = "#contact,#alt_cont";
     const pin6digits = "#pincode";
     const adhar12digits = "#adhar";
     const capacity = "#capacity";
-    const address = "#address,#description";
+    const address = "#address,#description,#address";
     const cost = "#cost,#amt,#Damt,#balance";
     const emailField = "#email";
 
@@ -344,9 +344,109 @@ $(document).ready(function () {
         $(this).css("border", "2px solid black");
     });
 
+        /*--------------------------------------
+     * 9. Email Validation
+     --------------------------------------*/
+    $(emailField).on('blur', function () {
+        const $this = $(this);
+        const value = $this.val().trim();
+        const errorSpan = $this.next('span');
+        errorSpan.text("");
+
+        // Email Regex Pattern
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (value === "") {
+            errorSpan.text("*Email is required!").css("color", "red");
+            $this.css("border", "1px solid red");
+        } else if (!emailPattern.test(value)) {
+            errorSpan.text("*Invalid email format!").css("color", "red");
+            $this.css("border", "1px solid red");
+        } else {
+            errorSpan.text("");
+            $this.css("border", "1px solid green");
+        }
+    });
+
+    $(emailField).on('focus', function () {
+        $(this).css("border", "1px solid black");
+        $(this).next('span').text("");
+    });
+
 
     /*--------------------------------------
-     * 9.Submit
+     * 10. Password Validation
+     --------------------------------------*/
+    const passwordField = "#password"; 
+
+    $(passwordField).on('blur', function () {
+        const $this = $(this);
+        const value = $this.val().trim();
+        const errorSpan = $this.next('span');
+        errorSpan.text("");
+
+        // At least 8 characters, one uppercase, one lowercase, one digit, one special character
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/;
+
+        if (value === "") {
+            errorSpan.text("*Password is required!").css("color", "red");
+            $this.css("border", "1px solid red");
+        } else if (!passwordPattern.test(value)) {
+            errorSpan.html("*Password must have:<br>- At least 8 characters<br>- One uppercase letter<br>- One lowercase letter<br>- One number<br>- One special character")
+                .css("color", "red");
+            $this.css("border", "1px solid red");
+        } else {
+            errorSpan.text("");
+            $this.css("border", "1px solid green");
+        }
+    });
+
+    $(passwordField).on('focus', function () {
+        $(this).css("border", "1px solid black");
+        $(this).next('span').text("");
+    });
+
+
+    /*--------------------------------------
+        * 11.Refresh/Clear All Fields
+        --------------------------------------*/
+
+    $("#refresh").on("click", function (e) {
+        e.preventDefault();
+
+        // Optional confirmation before clearing
+        if (!confirm("Do you really want to refresh and clear all data?")) {
+            return;
+        }
+
+        // Clear all mandatory field styles and error messages
+        $(mandatoryFields).filter(":visible").each(function () {
+            const input = $(this);
+            const errorSpan = input.siblings("span");
+
+            // Clear text, color, and border
+            input.val("")
+                .removeClass("error success")
+                .css({ "border": "", "color": "" });
+
+            // Clear error messages
+            errorSpan.text("");
+        });
+
+        // Optional: reset entire form if you have a <form> tag
+        $("form")[0].reset();
+
+        // Optional: clear any stored session/local data
+        sessionStorage.clear();
+        localStorage.clear();
+
+        alert("All fields have been cleared!");
+    });
+
+
+
+    /*--------------------------------------
+     * 12.Submit
      --------------------------------------*/
 
     $(document).ready(function () {
@@ -437,13 +537,13 @@ $(document).ready(function () {
                     // All field IDs
                     const fields = {
                         venueid: $("#venueid").val().trim(),
-                        venuename: $("#venuename").val().trim(),
-                        city: $("#city").val().trim(),
-                        categoryid: $("#categoryid").val().trim(),
-                        categoryname: $("#categoryname").val().trim(),
-                        serviceid: $("#serviceid").val().trim(),
-                        category: $("#category").val().trim(),
-                        eventname: $("#eventname").val().trim()
+                        // venuename: $("#venuename").val().trim(),
+                        // city: $("#city").val().trim(),
+                        // categoryid: $("#categoryid").val().trim(),
+                        // categoryname: $("#categoryname").val().trim(),
+                        // serviceid: $("#serviceid").val().trim(),
+                        // category: $("#category").val().trim(),
+                        // eventname: $("#eventname").val().trim()
                     };
 
                     // ✅ Check if all fields are empty
@@ -473,11 +573,11 @@ $(document).ready(function () {
 
                     // ✅ AJAX call for search
                     $.ajax({
-                        url: "venue-search.py",  // <-- apni Python file ka naam yahan likho
+                        url: "venue-search.py",
                         method: "POST",
                         data: dataToSend,
                         success: function (data) {
-                            $("#searchResults").html(data); // <-- search result div ID
+                            $("#searchResults").html(data);
                         },
                         error: function () {
                             Swal.fire({
@@ -527,15 +627,15 @@ $(document).ready(function () {
                 visitid = $("#VistId").val(),
                 stime = $("#Stime").val(),
                 etime = $("#Etime").val();
-            catid = $("#catid").val();
-            Event_serid = $("#ESId").val();
-            Createdate = $("#Cdate").val();
-            Rating = $("#Rating").val();
-            Status = $("#Status").val();
-            PId = $("#PId").val();
-            Transaction = $("#Tdate").val();
-            mode = $("#mode").val();
-            feedbackid = $("#FId").val();
+                catid = $("#catid").val();
+                Event_serid = $("#ESId").val();
+                Createdate = $("#Cdate").val();
+                Rating = $("#Rating").val();
+                Status = $("#Status").val();
+                PId = $("#PId").val();
+                Transaction = $("#Tdate").val();
+                mode = $("#mode").val();
+                feedbackid = $("#FId").val();
 
             const eventData = {
                 EId: eventid,
@@ -856,7 +956,7 @@ $(document).ready(function () {
                         });
                     } else {
                         Swal.fire({
-                            title: "Category Updated!",
+                            title: "Events Updated!",
                             text: "The record was successfully Updated.",
                             icon: "success"
                         });
@@ -1106,7 +1206,7 @@ $(document).ready(function () {
 
                         window.location.href = "customer-update.html"
                     });
-                     $('.delete').click(function (e) {
+                    $('.delete').click(function (e) {
                         e.preventDefault();
                         $(this).closest('tr').remove();
                         d = $(this).closest('tr')
@@ -1199,7 +1299,7 @@ $(document).ready(function () {
                             method: "POST",
                             url: "event_service-update.py",
                             data: {
-                                't': 'delete', 
+                                't': 'delete',
                                 't1': d.find("td:eq(0)").text()
 
                             },
@@ -1533,14 +1633,14 @@ $(document).ready(function () {
                         window.location.href = "venue-edit.html"
                     });
                     $('.delete').click(function (e) {
-                        e.preventDefault(); 
+                        e.preventDefault();
                         $(this).closest('tr').remove();
                         d = $(this).closest('tr')
                         $.ajax({
                             method: "POST",
                             url: "venue-update.py",
                             data: {
-                                't': 'delete', 
+                                't': 'delete',
                                 't1': d.find("td:eq(0)").text()
 
                             },

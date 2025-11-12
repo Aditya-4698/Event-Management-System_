@@ -17,16 +17,31 @@ try:
 		mode=(f.getvalue("mode"))
 		Status=(f.getvalue("Status"))
 		Tdate=(f.getvalue("Tdate"))
-		balance=(f.getvalue("balance"))
+		balance=(f.getvalue("balance"))		
 
 		url="update paymentadd set payment_id=\'"+str(PId)+"\',event_id=\'"+str(EId)+"\',customer_name=\'"+str(custname)+"\',paid_amount=\'"+str(amt)+"\',dues_amount=\'"+str(Damt)+"\',pay_mode=\'"+str(mode)+"\',payment_status=\'"+str(Status)+"\',transaction_date=\'"+str(Tdate)+"\',balance=\'"+str(balance)+"\' where payment_id=\'"+str(PId)+"\'"
 		cur.execute(url)
 		con.commit()
 		print("Record updated successfully")
-	else:
-		url="delete from paymentadd where payment_id=\'"+f.getvalue('t1')+"\'"
-		cur.execute(url)
+# 	else:
+# 		url="delete from paymentadd where payment_id=\'"+f.getvalue('t1')+"\'"
+# 		cur.execute(url)
+# 		con.commit()
+# 		print("Record Successfully deleted")
+# except Exception as e:
+# 	print("Error:",e)
+	elif v == 'delete':
+		PId = f.getvalue('t1')
+		cur.execute("DELETE FROM paymentadd WHERE payment_id=%s", (PId,))
 		con.commit()
-		print("Record Successfully deleted")
+		if cur.rowcount > 0:
+			print("Record Successfully Deleted")
+		else:
+			print("No record deleted — ID not found")
+
+	else:
+		print("Invalid operation")
 except Exception as e:
-	print("Error:",e)
+	print("Error:", e)
+finally:
+	con.close()
