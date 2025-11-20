@@ -210,7 +210,7 @@
 
   <!-- JS Section -->
 
-  <script>
+  <!-- <script>
     $(document).ready(function () {
 
       // ✅ PASSWORD VALIDATION (on blur)
@@ -332,9 +332,9 @@
         });
       });
     });
-    $(document).ready(function () {
-      $("#submit").on("click", function (e) {
-        e.preventDefault();
+    // $(document).ready(function () {
+    //   $("#submit").on("click", function (e) {
+    //     e.preventDefault();
 
         const name = $("#name").val().trim();
         const email = $("#email").val().trim();
@@ -373,12 +373,142 @@
           timer: 2000,
         });
     window.location.href = "profile.html"; // redirect to profile
-
+        
         
 
-      });
+      // });
+    // });
+  </script> -->
+<script>
+$(document).ready(function () {
+
+  // ✅ PASSWORD VALIDATION (on blur)
+  const passwordField = "#password";
+  const confirmField = "#Confirm";
+
+  $(passwordField).on("blur", function () {
+    const $this = $(this);
+    const value = $this.val().trim();
+    const errorSpan = $this.next("span");
+    errorSpan.text("");
+
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/;
+
+    if (value === "") {
+      errorSpan.text("*Password is required!").css("color", "red");
+      $this.css("border", "1px solid red");
+    } else if (!passwordPattern.test(value)) {
+      errorSpan
+        .html(
+          "*Password must have:<br>- At least 8 characters<br>- One uppercase letter<br>- One lowercase letter<br>- One number<br>- One special character"
+        )
+        .css("color", "red");
+      $this.css("border", "1px solid red");
+    } else {
+      errorSpan.text("Looks good ✓").css("color", "limegreen");
+      $this.css("border", "1px solid green");
+    }
+  });
+
+  // ✅ Confirm password check
+  $(confirmField).on("blur", function () {
+    const confirm = $(this).val().trim();
+    const password = $(passwordField).val().trim();
+    const errorSpan = $(this).next("span");
+    errorSpan.text("");
+
+    if (confirm === "") {
+      errorSpan.text("*Please confirm your password!").css("color", "red");
+      $(this).css("border", "1px solid red");
+    } else if (confirm !== password) {
+      errorSpan.text("*Passwords do not match!").css("color", "red");
+      $(this).css("border", "1px solid red");
+    } else {
+      errorSpan.text("Matched ✓").css("color", "limegreen");
+      $(this).css("border", "1px solid green");
+    }
+  });
+
+  $(passwordField + "," + confirmField).on("focus", function () {
+    $(this).css("border", "1px solid black");
+    $(this).next("span").text("");
+  });
+
+  // ✅ SIGNUP BUTTON AJAX
+  $("#submit").on("click", function (e) {
+    e.preventDefault();
+
+    const name = $("#name").val().trim();
+    const email = $("#email").val().trim();
+    const password = $("#password").val().trim();
+    const confirm = $("#Confirm").val().trim();
+    const terms = $("#terms").is(":checked");
+
+    const emailPattern =
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!name || !email || !password || !confirm) {
+      Swal.fire("Missing Fields", "All fields are required!", "warning");
+      return;
+    }
+    if (!emailPattern.test(email)) {
+      Swal.fire("Invalid Email", "Please enter a valid email address.", "error");
+      return;
+    }
+    if (password.length < 8) {
+      Swal.fire(
+        "Weak Password",
+        "Password must be at least 8 characters long.",
+        "error"
+      );
+      return;
+    }
+    if (password !== confirm) {
+      Swal.fire("Mismatch", "Passwords do not match!", "error");
+      return;
+    }
+    if (!terms) {
+      Swal.fire("Terms Required", "You must agree to the Terms & Conditions.", "warning");
+      return;
+    }
+
+    // ✅ AJAX to Python backend
+    $.ajax({
+      url: "signup.py",
+      method: "POST",
+      data: { name, email, password },
+      success: function (res) {
+        console.log("Server:", res);
+
+        if (res.includes("redirect") || res.trim() === "1") {
+          // ✅ Store user data in localStorage (important)
+          localStorage.setItem("userProfile", JSON.stringify({ name, email }));
+
+          Swal.fire({
+            icon: "success",
+            title: "Sign-up Successful!",
+            text: "Redirecting to your profile...",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+
+          setTimeout(() => {
+            window.location.href = "profile.html";
+          }, 2000);
+        } else if (res.includes("exists")) {
+          Swal.fire("Oops!", "This email is already registered!", "error");
+        } else {
+          Swal.fire("Error", res, "error");
+        }
+      },
+      error: function () {
+        Swal.fire("Server Error", "Backend not responding!", "error");
+      },
     });
-  </script>
+  });
+});
+</script>
 
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -282,7 +282,7 @@
             <h1 class="display-2 text-white">Hello,Aditya</h1>
             <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your
               work and manage your projects or assigned tasks</p>
-            <a href="#!" class="btn btn-info">Edit profile</a>
+            <!-- <a href="#!" class="btn btn-info">Edit profile</a> -->
           </div>
         </div>
       </div>
@@ -309,12 +309,26 @@
                     <div class="card-profile-image col-lg-6 pt-3">
                       <h6 class="heading-small text-xl mb-4">User information</h6>
                     </div>
-                    <div class="card-profile-image col-lg-6">
-                      <a href="#">
-                        <img src="../assets/img/theme/team-1-800x800.jpg" class="rounded-circle"
-                          style="width: 210px; height:210px !important;">
-                      </a>
+                    <div class="card-profile-image col-lg-6 text-center">
+                      <label for="profilePic" style="cursor: pointer; position: relative; display: inline-block;">
+                        <img src="../assets/img/theme/team-1-800x800.jpg" id="previewImg" class="rounded-circle border"
+                          style="width: 210px; height: 210px; object-fit: cover;">
+                        <input type="file" id="profilePic" accept="image/*" style="display: none;"
+                          onchange="previewImage(event)">
+                        <div
+                          style="position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.5); color: white; font-size: 14px; padding: 5px 0; border-radius: 0 0 50% 50%;">
+
+                        </div>
+                      </label>
                     </div>
+
+                    <script>
+                      function previewImage(event) {
+                        const img = document.getElementById('previewImg');
+                        img.src = URL.createObjectURL(event.target.files[0]);
+                      }
+                    </script>
+
                   </div>
                   <div class="row ">
                     <div class="col-lg-6 pt-5">
@@ -472,7 +486,7 @@ $(document).ready(function() {
   });
 });
 </script> -->
-  <script>
+  <!-- <script>
     $(document).ready(function () {
       // Load data from Python using cookie
       $.ajax({
@@ -534,32 +548,30 @@ $(document).ready(function() {
     });
   </script>
   <script>
-    // $(document).ready(function () {
-
-    // ✅ When "Save" button clicked
     $(document).ready(function () {
       $("#submit").click(function (e) {
         e.preventDefault();
 
-        // collect data from fields (safe)
+        // ✅ Collect data from form
         const profileData = {
           name: $("#name").val()?.trim() || "",
           email: $("#email").val()?.trim() || "",
           contact: $("#contact").val()?.trim() || "",
           role: $("#role").val()?.trim() || "",
           address: $("#address").val()?.trim() || "",
-          state: $("#state").val()?.trim() || "",
+          state: $("#state").val()?.trim() || "",       // match backend field
           country: $("#country").val()?.trim() || "",
           pincode: $("#pincode").val()?.trim() || "",
           about: $("#about").val()?.trim() || ""
         };
 
+        // ✅ Validate required fields
         if (!profileData.name || !profileData.contact) {
           Swal.fire("⚠️ Missing Fields", "Please fill Name and Contact!", "warning");
           return;
         }
 
-        // send to backend
+        // ✅ Send AJAX to backend
         $.ajax({
           url: "profile_save.py",
           type: "POST",
@@ -570,9 +582,9 @@ $(document).ready(function() {
 
             if (r === "1") {
               Swal.fire("✅ Success", "Profile saved successfully!", "success");
-              // } else if (r === "0") {
-              //   Swal.fire("⚠️ Login Required", "Please login again!", "warning");
-              //   setTimeout(() => window.location.href = "login.html", 1500);
+            } else if (r === "0") {
+              Swal.fire("⚠️ Login Required", "Please login again!", "warning");
+              setTimeout(() => window.location.href = "login.html", 1500);
             } else {
               Swal.fire("❌ Error", r, "error");
             }
@@ -583,9 +595,154 @@ $(document).ready(function() {
         });
       });
     });
-
-    // });
   </script>
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        url: "profile_fetch.py",
+        type: "GET",
+        dataType: "json",
+        success: function (res) {
+          if (res.status === 1) {
+            const profile = res.profile;
+
+            $("#name").val(profile.Name || "");
+            $("#email").val(profile.Email || "");
+            $("#contact").val(profile.Contact || "");
+            $("#role").val(profile.Role || "");
+            $("#address").val(profile.Address || "");
+            $("#state").val(profile.State || ""); // make sure your DB has State column
+            $("#country").val(profile.Country || "");
+            $("#pincode").val(profile.Pincode || "");
+            $("#about").val(profile.About || "");
+          } else if (res.status === 0) {
+            Swal.fire("⚠️ Login Required", "Please login first!", "warning");
+            setTimeout(() => window.location.href = "login.html", 1000);
+          } else if (res.status === "error") {
+            Swal.fire("❌ Error", res.message, "error");
+          }
+        },
+        error: function (xhr, status, err) {
+          Swal.fire("Server Error", err, "error");
+        }
+      });
+      
+    });
+
+  </script>
+<script>
+  function previewImage(event) {
+    const img = document.getElementById('previewImg');
+    img.src = URL.createObjectURL(event.target.files[0]);
+  } -->
+  <!-- </script> -->
+ <script>
+$(document).ready(function () {
+
+  // ================================
+  // STEP 1: Load local user (from signup/login)
+  // ================================
+  const localUser = JSON.parse(localStorage.getItem("userProfile") || "null");
+
+  if (!localUser) {
+    console.log("⚠️ No local user data, checking server cookie...");
+  } else {
+    // Prefill quick info
+    $("#name").val(localUser.name || "");
+    $("#email").val(localUser.email || "");
+    $(".display-2.text-white").text("Hello, " + (localUser.name || "User"));
+    $(".font-weight-bold").text(localUser.name || "User");
+  }
+
+  // ================================
+  // STEP 2: Load from backend (cookie session)
+  // ================================
+  $.ajax({
+    url: "profile_fetch.py",
+    type: "GET",
+    dataType: "json",
+    success: function (res) {
+      if (res.status === 1 && res.profile) {
+        const p = res.profile;
+        // Fill all fields
+        $("#name").val(p.Name || "");
+        $("#email").val(p.Email || "");
+        $("#contact").val(p.Contact || "");
+        $("#role").val(p.Role || "");
+        $("#address").val(p.Address || "");
+        $("#state").val(p.State || "");
+        $("#country").val(p.Country || "");
+        $("#pincode").val(p.Pincode || "");
+        $("#about").val(p.About || "");
+      } else if (res.status === 0) {
+        // Cookie missing → fallback to localStorage
+        if (!localUser) {
+          Swal.fire("⚠️ Login Required", "Please login first!", "warning");
+          setTimeout(() => window.location.href = "login.html", 1200);
+        }
+      } else if (res.status === "error") {
+        console.error("Backend Error:", res.message);
+      }
+    },
+    error: function () {
+      console.warn("⚠️ Server not reachable, using localStorage only.");
+    }
+  });
+
+  // ================================
+  // STEP 3: Save Profile
+  // ================================
+  $("#submit").click(function (e) {
+    e.preventDefault();
+
+    const profileData = {
+      name: $("#name").val()?.trim() || "",
+      email: $("#email").val()?.trim() || "",
+      contact: $("#contact").val()?.trim() || "",
+      role: $("#role").val()?.trim() || "",
+      address: $("#address").val()?.trim() || "",
+      state: $("#state").val()?.trim() || "",
+      country: $("#country").val()?.trim() || "",
+      pincode: $("#pincode").val()?.trim() || "",
+      about: $("#about").val()?.trim() || ""
+    };
+
+    if (!profileData.name || !profileData.email) {
+      Swal.fire("⚠️ Missing Fields", "Name and Email are required!", "warning");
+      return;
+    }
+
+    $.ajax({
+      url: "profile_save.py",
+      type: "POST",
+      data: profileData,
+      success: function (res) {
+        const r = res.trim();
+        if (r === "1") {
+          // ✅ Update localStorage immediately
+          localStorage.setItem("userProfile", JSON.stringify({
+            name: profileData.name,
+            email: profileData.email
+          }));
+
+          Swal.fire("✅ Success", "Profile saved successfully!", "success");
+        } else if (r === "0") {
+          Swal.fire("⚠️ Session Expired", "Please login again", "warning");
+          setTimeout(() => window.location.href = "login.html", 1500);
+        } else {
+          Swal.fire("❌ Error", r, "error");
+        }
+      },
+      error: function (xhr, status, err) {
+        Swal.fire("Server Error", err, "error");
+      }
+    });
+  });
+});
+</script>
+
+
+
 
 </body>
 

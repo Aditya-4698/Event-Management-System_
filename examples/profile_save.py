@@ -15,10 +15,11 @@ if not email:
 form = cgi.FieldStorage()
 data = {
     "name": form.getvalue("name", "").strip(),
+    "email": form.getvalue("email", "").strip(),
     "contact": form.getvalue("contact", "").strip(),
     "role": form.getvalue("role", "").strip(),
     "address": form.getvalue("address", "").strip(),
-    "city": form.getvalue("city", "").strip(),
+    "state": form.getvalue("state", "").strip(),
     "country": form.getvalue("country", "").strip(),
     "pincode": form.getvalue("pincode", "").strip(),
     "about": form.getvalue("about", "").strip()
@@ -38,30 +39,30 @@ try:
     exists = cur.fetchone()
 
     if exists:
-        # ✅ Update
+        # ✅ Update (comma before WHERE removed)
         cur.execute("""
             UPDATE profilesection 
-            SET Name=%s,Email=%s, Contact=%s, Role=%s, Address=%s,
-                City=%s, Country=%s, Pincode=%s, About=%s
+            SET Name=%s, Email=%s, Contact=%s, Role=%s, Address=%s,
+                State=%s, Country=%s, Pincode=%s, About=%s
             WHERE LOWER(TRIM(Email))=%s
         """, (
-            data["name"],data["email"], data["contact"], data["role"], data["address"],
-            data["city"], data["country"], data["pincode"], data["about"], email
+            data["name"], data["email"], data["contact"], data["role"], data["address"],
+            data["state"], data["country"], data["pincode"], data["about"], email
         ))
     else:
         # ✅ Insert
         cur.execute("""
             INSERT INTO profilesection 
-            (Name, Email, Contact, Role, Address, City, Country, Pincode, About)
+            (Name, Email, Contact, Role, Address, State, Country, Pincode, About)
             VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
         """, (
             data["name"], data["email"], data["contact"], data["role"],
-            data["address"], data["city"], data["country"],
+            data["address"], data["state"], data["country"],
             data["pincode"], data["about"]
         ))
 
     con.commit()
-    print("1")
+    print("1")  # success
 
 except Exception as e:
     print("Error:", str(e))
