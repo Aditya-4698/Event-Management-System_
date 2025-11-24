@@ -40,8 +40,28 @@
       display: flex;
       align-items: center;
       gap: 15px;
-      margin-left: -12%;
+      margin-left: 0;
+      /* FIXED */
     }
+
+    /* Tablet */
+    @media (max-width: 768px) {
+      .head img {
+        width: 150px;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      .head {
+        justify-content: center;
+      }
+
+      .head img {
+        width: 130px;
+      }
+    }
+
 
     .head img {
       width: 180px;
@@ -50,10 +70,10 @@
 
     .t2 {
       width: 100%;
-      max-width: 450px;
-      margin-top: 30px;
-      padding: 20px;
-      border-radius: 20px;
+      max-width: 400px;
+      margin-top: 20px;
+      padding: 15px 20px;
+      border-radius: 15px;
       backdrop-filter: blur(4px);
       border: 1px solid white;
     }
@@ -61,7 +81,7 @@
     .t2 h2 {
       text-align: center;
       color: white;
-      font-size: 40px;
+      font-size: 28px;
       margin-bottom: 10px;
     }
 
@@ -74,7 +94,7 @@
 
     .form-group {
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 13px;
     }
 
     .form-group i {
@@ -86,7 +106,8 @@
     }
 
     input[type="text"],
-    input[type="password"] {
+    input[type="password"],
+    select {
       width: 100%;
       height: 45px;
       padding-left: 45px;
@@ -96,7 +117,7 @@
       border-bottom-right-radius: 8px;
       background-color: gainsboro;
       box-shadow: 0px 0px 20px purple;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .terms {
@@ -153,6 +174,18 @@
       font-size: 25px;
       color: white;
     }
+
+    .logo-container {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      z-index: 1000;
+    }
+
+    .logo-container img {
+      width: 150px;
+      height: auto;
+    }
   </style>
 </head>
 
@@ -187,6 +220,16 @@
       <input type="password" id="Confirm" placeholder="Confirm Password">
     </div>
 
+    <!-- NEW ROLE DROPDOWN -->
+    <div class="form-group">
+      <i class="fa-solid fa-user-shield fa-lg"></i>
+      <select id="role">
+        <option value="">Select Role</option>
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+
     <div class="terms">
       <input type="checkbox" id="terms">
       <label for="terms">I read and agree to <span>Terms & Conditions</span></label>
@@ -198,7 +241,7 @@
 
     <div class="login-link">
       Already have an account?
-      <a href="../examples/login.html"><span style="font-size: 17px; color: white;">Login</span></a>
+      <a href="login.html"><span style="font-size: 17px; color: white;">Login</span></a>
     </div>
 
     <div class="foot">
@@ -209,7 +252,6 @@
   </div>
 
   <!-- JS Section -->
-
   <!-- <script>
     $(document).ready(function () {
 
@@ -332,112 +374,7 @@
         });
       });
     });
-    // $(document).ready(function () {
-    //   $("#submit").on("click", function (e) {
-    //     e.preventDefault();
 
-        const name = $("#name").val().trim();
-        const email = $("#email").val().trim();
-        const password = $("#password").val().trim();
-        const confirm = $("#Confirm").val().trim();
-        const terms = $("#terms").is(":checked");
-
-        if (!name || !email || !password || !confirm) {
-          Swal.fire("Missing Fields", "All fields are required!", "warning");
-          return;
-        }
-        if (password !== confirm) {
-          Swal.fire("Mismatch", "Passwords do not match!", "error");
-          return;
-        }
-        if (!terms) {
-          Swal.fire("Terms Required", "You must agree to the Terms & Conditions.", "warning");
-          return;
-        }
-
-        // ✅ Store user data locally after validation
-         var userData = {
-        name: $("#name").val(),
-        email: $("#email").val(),
-        password: $("#password").val()
-    };
-
-    // Save in localStorage
-    localStorage.setItem("userProfile", JSON.stringify(userData));
-
-   Swal.fire({
-          icon: "success",
-          title: "Sign-up Successful!",
-          text: "Redirecting to your profile...",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-    window.location.href = "profile.html"; // redirect to profile
-        
-        
-
-      // });
-    // });
-  </script> -->
-<script>
-$(document).ready(function () {
-
-  // ✅ PASSWORD VALIDATION (on blur)
-  const passwordField = "#password";
-  const confirmField = "#Confirm";
-
-  $(passwordField).on("blur", function () {
-    const $this = $(this);
-    const value = $this.val().trim();
-    const errorSpan = $this.next("span");
-    errorSpan.text("");
-
-    const passwordPattern =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/;
-
-    if (value === "") {
-      errorSpan.text("*Password is required!").css("color", "red");
-      $this.css("border", "1px solid red");
-    } else if (!passwordPattern.test(value)) {
-      errorSpan
-        .html(
-          "*Password must have:<br>- At least 8 characters<br>- One uppercase letter<br>- One lowercase letter<br>- One number<br>- One special character"
-        )
-        .css("color", "red");
-      $this.css("border", "1px solid red");
-    } else {
-      errorSpan.text("Looks good ✓").css("color", "limegreen");
-      $this.css("border", "1px solid green");
-    }
-  });
-
-  // ✅ Confirm password check
-  $(confirmField).on("blur", function () {
-    const confirm = $(this).val().trim();
-    const password = $(passwordField).val().trim();
-    const errorSpan = $(this).next("span");
-    errorSpan.text("");
-
-    if (confirm === "") {
-      errorSpan.text("*Please confirm your password!").css("color", "red");
-      $(this).css("border", "1px solid red");
-    } else if (confirm !== password) {
-      errorSpan.text("*Passwords do not match!").css("color", "red");
-      $(this).css("border", "1px solid red");
-    } else {
-      errorSpan.text("Matched ✓").css("color", "limegreen");
-      $(this).css("border", "1px solid green");
-    }
-  });
-
-  $(passwordField + "," + confirmField).on("focus", function () {
-    $(this).css("border", "1px solid black");
-    $(this).next("span").text("");
-  });
-
-  // ✅ SIGNUP BUTTON AJAX
-  $("#submit").on("click", function (e) {
-    e.preventDefault();
 
     const name = $("#name").val().trim();
     const email = $("#email").val().trim();
@@ -445,23 +382,8 @@ $(document).ready(function () {
     const confirm = $("#Confirm").val().trim();
     const terms = $("#terms").is(":checked");
 
-    const emailPattern =
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
     if (!name || !email || !password || !confirm) {
       Swal.fire("Missing Fields", "All fields are required!", "warning");
-      return;
-    }
-    if (!emailPattern.test(email)) {
-      Swal.fire("Invalid Email", "Please enter a valid email address.", "error");
-      return;
-    }
-    if (password.length < 8) {
-      Swal.fire(
-        "Weak Password",
-        "Password must be at least 8 characters long.",
-        "error"
-      );
       return;
     }
     if (password !== confirm) {
@@ -473,17 +395,219 @@ $(document).ready(function () {
       return;
     }
 
-    // ✅ AJAX to Python backend
+    // ✅ Store user data locally after validation
+    var userData = {
+      name: $("#name").val(),
+      email: $("#email").val(),
+      password: $("#password").val()
+    };
+
+    // Save in localStorage
+    localStorage.setItem("userProfile", JSON.stringify(userData));
+
+    Swal.fire({
+      icon: "success",
+      title: "Sign-up Successful!",
+      text: "Redirecting to your profile...",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+    window.location.href = "profile.html"; // redirect to profile
+
+
+
+    // });
+    // });
+  </script> -->
+  <!-- <script>
+    $(document).ready(function () {
+
+      // ✅ PASSWORD VALIDATION (on blur)
+      const passwordField = "#password";
+      const confirmField = "#Confirm";
+
+      $(passwordField).on("blur", function () {
+        const $this = $(this);
+        const value = $this.val().trim();
+        const errorSpan = $this.next("span");
+        errorSpan.text("");
+
+        const passwordPattern =
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/;
+
+        if (value === "") {
+          errorSpan.text("*Password is required!").css("color", "red");
+          $this.css("border", "1px solid red");
+        } else if (!passwordPattern.test(value)) {
+          errorSpan
+            .html(
+              "*Password must have:<br>- At least 8 characters<br>- One uppercase letter<br>- One lowercase letter<br>- One number<br>- One special character"
+            )
+            .css("color", "red");
+          $this.css("border", "1px solid red");
+        } else {
+          errorSpan.text("Looks good ✓").css("color", "limegreen");
+          $this.css("border", "1px solid green");
+        }
+      });
+
+      // ✅ Confirm password check
+      $(confirmField).on("blur", function () {
+        const confirm = $(this).val().trim();
+        const password = $(passwordField).val().trim();
+        const errorSpan = $(this).next("span");
+        errorSpan.text("");
+
+        if (confirm === "") {
+          errorSpan.text("*Please confirm your password!").css("color", "red");
+          $(this).css("border", "1px solid red");
+        } else if (confirm !== password) {
+          errorSpan.text("*Passwords do not match!").css("color", "red");
+          $(this).css("border", "1px solid red");
+        } else {
+          errorSpan.text("Matched ✓").css("color", "limegreen");
+          $(this).css("border", "1px solid green");
+        }
+      });
+
+      $(passwordField + "," + confirmField).on("focus", function () {
+        $(this).css("border", "1px solid black");
+        $(this).next("span").text("");
+      });
+
+      // ✅ SIGNUP BUTTON AJAX
+      $("#submit").on("click", function (e) {
+        e.preventDefault();
+
+        const name = $("#name").val().trim();
+        const email = $("#email").val().trim();
+        const password = $("#password").val().trim();
+        const confirm = $("#Confirm").val().trim();
+        const terms = $("#terms").is(":checked");
+
+        const emailPattern =
+          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!name || !email || !password || !confirm) {
+          Swal.fire("Missing Fields", "All fields are required!", "warning");
+          return;
+        }
+        if (!emailPattern.test(email)) {
+          Swal.fire("Invalid Email", "Please enter a valid email address.", "error");
+          return;
+        }
+        if (password.length < 8) {
+          Swal.fire(
+            "Weak Password",
+            "Password must be at least 8 characters long.",
+            "error"
+          );
+          return;
+        }
+        if (password !== confirm) {
+          Swal.fire("Mismatch", "Passwords do not match!", "error");
+          return;
+        }
+        if (!terms) {
+          Swal.fire("Terms Required", "You must agree to the Terms & Conditions.", "warning");
+          return;
+        }
+
+        // ✅ AJAX to Python backend
+        $.ajax({
+          url: "signup.py",
+          method: "POST",
+          data: { name, email, password },
+          success: function (res) {
+            console.log("Server:", res);
+
+            if (res.includes("redirect") || res.trim() === "1") {
+              // ✅ Store user data in localStorage (important)
+              localStorage.setItem("userProfile", JSON.stringify({ name, email }));
+
+              Swal.fire({
+                icon: "success",
+                title: "Sign-up Successful!",
+                text: "Redirecting to your profile...",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+
+              setTimeout(() => {
+                window.location.href = "profile.html";
+              }, 2000);
+            } else if (res.includes("exists")) {
+              Swal.fire("Oops!", "This email is already registered!", "error");
+            } else {
+              Swal.fire("Error", res, "error");
+            }
+          },
+          error: function () {
+            Swal.fire("Server Error", "Backend not responding!", "error");
+          },
+        });
+      });
+    });
+  </script> -->
+<script>
+  $(document).ready(function () {
+
+  $("#submit").on("click", function (e) {
+    e.preventDefault();
+
+    const name = $("#name").val().trim();
+    const email = $("#email").val().trim();
+    const password = $("#password").val().trim();
+    const confirm = $("#Confirm").val().trim();
+    const role = $("#role").val().trim();
+    const terms = $("#terms").is(":checked");
+
+    // Email pattern
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // Validation
+    if (!name || !email || !password || !confirm || !role) {
+      Swal.fire("Missing Fields", "All fields are required!", "warning");
+      return;
+    }
+    if (!emailPattern.test(email)) {
+      Swal.fire("Invalid Email", "Please enter a valid email address.", "error");
+      return;
+    }
+    if (password.length < 8) {
+      Swal.fire("Weak Password", "Password must be at least 8 characters!", "error");
+      return;
+    }
+    if (password !== confirm) {
+      Swal.fire("Mismatch", "Passwords do not match!", "error");
+      return;
+    }
+    if (!terms) {
+      Swal.fire("Terms Required", "You must agree to the Terms & Conditions.", "warning");
+      return;
+    }
+
+    // --------------- AJAX CALL ------------------
     $.ajax({
       url: "signup.py",
       method: "POST",
-      data: { name, email, password },
+      data: {
+        name: name,
+        email: email,
+        password: password,
+        role: role   // ✔ IMPORTANT
+      },
+
       success: function (res) {
-        console.log("Server:", res);
+        console.log("Server Response:", res);
 
         if (res.includes("redirect") || res.trim() === "1") {
-          // ✅ Store user data in localStorage (important)
-          localStorage.setItem("userProfile", JSON.stringify({ name, email }));
+
+          // Save user info in local storage
+          localStorage.setItem(
+            "userProfile",
+            JSON.stringify({ name, email, role })
+          );
 
           Swal.fire({
             icon: "success",
@@ -496,20 +620,25 @@ $(document).ready(function () {
           setTimeout(() => {
             window.location.href = "profile.html";
           }, 2000);
+
         } else if (res.includes("exists")) {
           Swal.fire("Oops!", "This email is already registered!", "error");
+
         } else {
           Swal.fire("Error", res, "error");
         }
       },
+
       error: function () {
         Swal.fire("Server Error", "Backend not responding!", "error");
-      },
+      }
     });
+    // ---------------------------------------------
+
   });
 });
-</script>
 
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

@@ -2,14 +2,21 @@
 import cgi
 import mysql.connector
 import http.cookies
+import sys
 
-# Read form data
+print("Content-Type: text/plain")  # Always first
+
 form = cgi.FieldStorage()
 email_or_username = form.getvalue("email")
 password = form.getvalue("password")
+role = form.getvalue("role")
+
+if not email_or_username or not password:
+    print()
+    print("invalid")
+    sys.exit()
 
 try:
-    # Database connection
     con = mysql.connector.connect(
         host="localhost",
         user="Aditya",
@@ -18,34 +25,34 @@ try:
     )
     cur = con.cursor(dictionary=True)
 
-    # Login query
-    query = """
-        SELECT * FROM signupdata 
-        WHERE (Username=%s OR Email=%s) AND Password=%s
-    """
-    cur.execute(query, (email_or_username, email_or_username, password))
+    if role:
+        query = "SELECT * FROM signupdata WHERE (username=%s OR email=%s) AND Password=%s AND Role=%s"
+        cur.execute(query, (email_or_username, email_or_username, password, role))
+    else:
+        query = "SELECT * FROM signupdata WHERE (username=%s OR email=%s) AND Password=%s"
+        cur.execute(query, (email_or_username, email_or_username, password))
+
     result = cur.fetchone()
 
     if result:
-
-        # Create cookie
+        # Set cookie
         cookie = http.cookies.SimpleCookie()
-        cookie["user_email"] = result["Email"]
-        cookie["user_email"]["path"] = "/"          # Cookie for all pages
-        cookie["user_email"]["max-age"] = 3600      # 1 hour login session
-
-        # ---------- FIXED HEADER ORDER ----------
-        print(cookie.output())                      # 1) Set-Cookie
-        print("Content-Type: text/plain\r\n")       # 2) Content-Type
-        # ----------------------------------------
+        cookie["user_email"] = result["email"]
+        cookie["user_email"]["path"] = "/"
+        cookie["user_email"]["max-age"] = 3600
+        print(cookie.output())
+        print()  # blank line to separate headers from body
 
         # Send response to JS
-        print(f"redirect|{result['Username']}|{result['Email']}")
-
+        print(f"redirect|{result['username']}|{result['email']}|{result.get('role','')}")
     else:
-        # Invalid login
-        print("Content-Type: text/plain\r\n\r\ninvalid")
+        print()
+        print("invalid")
 
 except Exception as e:
-    # Error case
-    print("Content-Type: text/plain\r\n\r\nError:", e)
+    print()
+    print("Error:", e)
+
+finally:
+    if 'con' in locals():
+        con.close()

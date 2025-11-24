@@ -18,14 +18,13 @@
   <!-- CSS Files -->
   <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 
-  <script src="https://code.jquery.com/jquery-migrate-3.5.0.min.js"></script>
-
-  <script src="../assets/js/jqueryy.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-migrate-3.5.0.min.js"></script> -->
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../assets/js/jqueryy.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
@@ -313,7 +312,8 @@
                       <label for="profilePic" style="cursor: pointer; position: relative; display: inline-block;">
                         <img src="../assets/img/theme/team-1-800x800.jpg" id="previewImg" class="rounded-circle border"
                           style="width: 210px; height: 210px; object-fit: cover;">
-                        <input type="file" id="profilePic" accept="image/*" style="display: none;"
+
+                        <input type="file" id="profilePic" name="profilePic" accept="image/*" style="display: none;"
                           onchange="previewImage(event)">
                         <div
                           style="position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.5); color: white; font-size: 14px; padding: 5px 0; border-radius: 0 0 50% 50%;">
@@ -380,7 +380,7 @@
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-city">State</label>
-                        <input type="text" id="state" class="form-control form-control-alternative" placeholder="City"
+                        <input type="text" id="state" class="form-control form-control-alternative" placeholder="State"
                           value="">
                       </div>
                     </div>
@@ -434,159 +434,149 @@
         application: "argon-dashboard-free"
       });
   </script>
-  <!-- <script>
-$(document).ready(function() {
-  // Load profile data
-  $.ajax({
-    url: "profile_load.py",
-    method: "GET",
-    dataType: "json",
-    success: function(res) {
-      if (!res || res.error) {
-        alert("Please sign up first.");
-        window.location.href = "signup.html";
-      } else {
-        $("#name").val(res.Name || "");
-        $("#email").val(res.Email || "");
-        $("#contact").val(res.Contact || "");
-        $("#role").val(res.Role || "");
-        $("#address").val(res.Address || "");
-        $("#city").val(res.City || "");
-        $("#country").val(res.Country || "");
-        $("#pincode").val(res.Pincode || "");
-        $("#about").val(res.About || "");
-        $(".display-2.text-white").text("Hello, " + (res.Name || "User"));
-      }
-    }
-  });
-
-  // Save profile
-  $(".btn-success").click(function() {
-    $.ajax({
-      url: "profile_save.py",
-      method: "POST",
-      data: {
-        name: $("#name").val(),
-        contact: $("#contact").val(),
-        role: $("#role").val(),
-        address: $("#address").val(),
-        city: $("#city").val(),
-        country: $("#country").val(),
-        pincode: $("#pincode").val(),
-        about: $("#about").val()
-      },
-      success: function(res) {
-        if (res.trim() == "1") {
-          alert("Profile saved successfully!");
-        } else {
-          alert("Error: " + res);
-        }
-      }
-    });
-  });
-});
-</script> -->
-  <!-- <script>
-    $(document).ready(function () {
-      // Load data from Python using cookie
-      $.ajax({
-        url: "load_profile.py",
-        method: "GET",
-        success: function (res) {
-          try {
-            var data = JSON.parse(res);
-            $("#name").val(data.name);
-            $("#email").val(data.email);
-          } catch (e) {
-            alert("Please sign up first!");
-            window.location.href = "signup.html";
-          }
-        }
-      });
-
-      $("#submit").click(function () {
-        alert("Profile data can be saved (connect to profile_save.py)");
-      });
-    });
-    $(document).ready(function () {
-      // Fetch data from localStorage
-      const user = JSON.parse(localStorage.getItem("userProfile"));
-
-      if (!user) {
-        alert("Please signup or login first!");
-        window.location.href = "login.html";
-        return;
-      }
-
-      // Fill profile fields
-      $("#name").val(user.name);
-      $("#email").val(user.email);
-      // Update top heading name
-      $(".display-2.text-white").text("Hello, " + user.name);
-    });
-    $(document).ready(function () {
-      // ✅ Check login status
-      $(".font-weight-bold").text(username);
-      const userData = localStorage.getItem("userProfile");
-
-      if (!userData) {
-        // agar localStorage me user nahi mila to login page pe bhej do
-        Swal.fire({
-          icon: "warning",
-          title: "Session expired",
-          text: "Please login again",
-          showConfirmButton: false,
-          timer: 2000
-        });
-        setTimeout(() => window.location.href = "login.html", 2000);
-      } else {
-        // agar user mila to show data
-        const user = JSON.parse(userData);
-        $("#profileName").text(user.name);
-        $("#profileEmail").text(user.email);
-      }
-    });
-  </script>
   <script>
     $(document).ready(function () {
+
+      // ================================
+      // STEP 1: Load local user (from signup/login)
+      // ================================
+      const localUser = JSON.parse(localStorage.getItem("userProfile") || "null");
+
+      if (!localUser) {
+        console.log("⚠️ No local user data, checking server cookie...");
+      } else {
+        // Prefill quick info
+        $("#name").val(localUser.name || "");
+        $("#email").val(localUser.email || "");
+        $("#role").val(localUser.role || "");
+        $(".display-2.text-white").text("Hello, " + (localUser.name || "User"));
+        $(".font-weight-bold").text(localUser.name || "User");
+      }
+
+      // ================================
+      // STEP 2: Load from backend (cookie session)
+      // ================================
+      $.ajax({
+        url: "profile_fetch.py",
+        type: "GET",
+        dataType: "json",
+        success: function (res) {
+          console.log("Profile fetch response:", res);
+          if (res.status === 1 && res.profile) {
+            const p = res.profile;
+            $("#name").val(p.name || "");
+            $("#email").val(p.Email || "");
+            $("#contact").val(p.contact || "");
+            $("#role").val(p.role || "");
+            $("#address").val(p.address || "");
+            $("#state").val(p.state || "");
+            $("#country").val(p.country || "");
+            $("#pincode").val(p.pincode || "");
+            $("#about").val(p.about || "");
+
+            // IMAGE SET KARNE KA CODE
+            if (p.profile_image) {
+              $("#previewImg").attr("src", p.profile_image);
+            }
+
+          } else if (res.status === 0) {
+            Swal.fire("⚠️ Login Required", "Please login first!", "warning");
+            setTimeout(() => window.location.href = "login.html", 1200);
+          } else if (res.status === "error") {
+            Swal.fire("❌ Server Error", res.message, "error");
+          }
+        },
+        error: function (xhr, status, err) {
+          console.warn("Server not reachable, using localStorage only.", err);
+        }
+      });
+
+      // ================================
+      // STEP 3: Save Profile
+      // ================================
+      // $("#submit").click(function (e) {
+      //   e.preventDefault();
+
+      //   const profileData = {
+      //     name: $("#name").val()?.trim() || "",
+      //     email: $("#email").val()?.trim() || "",
+      //     contact: $("#contact").val()?.trim() || "",
+      //     role: $("#role").val()?.trim() || "",
+      //     address: $("#address").val()?.trim() || "",
+      //     state: $("#state").val()?.trim() || "",
+      //     country: $("#country").val()?.trim() || "",
+      //     pincode: $("#pincode").val()?.trim() || "",
+      //     about: $("#about").val()?.trim() || ""
+
+      //   };
+
+      //   if (!profileData.name || !profileData.email) {
+      //     Swal.fire("⚠️ Missing Fields", "Name and Email are required!", "warning");
+      //     return;
+      //   }
+
+      //   $.ajax({
+      //     url: "profile_save.py",
+      //     type: "POST",
+      //     xhrFields: { withCredentials: true },   // <-- send cookies
+      //     crossDomain: true,                      // <-- allow cookies for CGI
+      //     data: profileData,
+
+      //     success: function (res) {
+      //       const r = res.trim();
+      //       if (r === "1") {
+      //         Swal.fire("✔ Profile Saved", "Your profile is updated!", "success");
+      //       }
+      //       else if (r === "0") {
+      //         Swal.fire("⚠ Session Expired", "Please login again.", "warning");
+      //         setTimeout(() => window.location.href = "login.html", 1500);
+      //       }
+      //       else {
+      //         Swal.fire("Error", r, "error");
+      //       }
+      //     },
+      //     error: function (xhr, status, err) {
+      //       Swal.fire("Server Error", err, "error");
+      //     }
+      //   });
+
+      // });
       $("#submit").click(function (e) {
         e.preventDefault();
 
-        // ✅ Collect data from form
-        const profileData = {
-          name: $("#name").val()?.trim() || "",
-          email: $("#email").val()?.trim() || "",
-          contact: $("#contact").val()?.trim() || "",
-          role: $("#role").val()?.trim() || "",
-          address: $("#address").val()?.trim() || "",
-          state: $("#state").val()?.trim() || "",       // match backend field
-          country: $("#country").val()?.trim() || "",
-          pincode: $("#pincode").val()?.trim() || "",
-          about: $("#about").val()?.trim() || ""
-        };
+        let formData = new FormData();  // ← IMPORTANT
 
-        // ✅ Validate required fields
-        if (!profileData.name || !profileData.contact) {
-          Swal.fire("⚠️ Missing Fields", "Please fill Name and Contact!", "warning");
-          return;
+        formData.append("name", $("#name").val().trim());
+        formData.append("email", $("#email").val().trim());
+        formData.append("contact", $("#contact").val().trim());
+        formData.append("role", $("#role").val().trim());
+        formData.append("address", $("#address").val().trim());
+        formData.append("state", $("#state").val().trim());
+        formData.append("country", $("#country").val().trim());
+        formData.append("pincode", $("#pincode").val().trim());
+        formData.append("about", $("#about").val().trim());
+
+        const file = $("#profilePic")[0].files[0];
+        if (file) {
+          formData.append("profilePic", file);  // ← Image added successfully
         }
 
-        // ✅ Send AJAX to backend
         $.ajax({
           url: "profile_save.py",
           type: "POST",
-          data: profileData,
+          data: formData,
+          contentType: false,  // ← IMPORTANT
+          processData: false,  // ← IMPORTANT
+          xhrFields: { withCredentials: true },
           success: function (res) {
-            console.log("Server Response:", res);
             const r = res.trim();
-
             if (r === "1") {
-              Swal.fire("✅ Success", "Profile saved successfully!", "success");
+              Swal.fire("✔ Saved", "Profile updated!", "success");
             } else if (r === "0") {
-              Swal.fire("⚠️ Login Required", "Please login again!", "warning");
+              Swal.fire("⚠ Session Expired", "Please login again.", "warning");
               setTimeout(() => window.location.href = "login.html", 1500);
             } else {
-              Swal.fire("❌ Error", r, "error");
+              Swal.fire("Error", r, "error");
             }
           },
           error: function (xhr, status, err) {
@@ -594,152 +584,9 @@ $(document).ready(function() {
           }
         });
       });
+
     });
   </script>
-  <script>
-    $(document).ready(function () {
-      $.ajax({
-        url: "profile_fetch.py",
-        type: "GET",
-        dataType: "json",
-        success: function (res) {
-          if (res.status === 1) {
-            const profile = res.profile;
-
-            $("#name").val(profile.Name || "");
-            $("#email").val(profile.Email || "");
-            $("#contact").val(profile.Contact || "");
-            $("#role").val(profile.Role || "");
-            $("#address").val(profile.Address || "");
-            $("#state").val(profile.State || ""); // make sure your DB has State column
-            $("#country").val(profile.Country || "");
-            $("#pincode").val(profile.Pincode || "");
-            $("#about").val(profile.About || "");
-          } else if (res.status === 0) {
-            Swal.fire("⚠️ Login Required", "Please login first!", "warning");
-            setTimeout(() => window.location.href = "login.html", 1000);
-          } else if (res.status === "error") {
-            Swal.fire("❌ Error", res.message, "error");
-          }
-        },
-        error: function (xhr, status, err) {
-          Swal.fire("Server Error", err, "error");
-        }
-      });
-      
-    });
-
-  </script>
-<script>
-  function previewImage(event) {
-    const img = document.getElementById('previewImg');
-    img.src = URL.createObjectURL(event.target.files[0]);
-  } -->
-  <!-- </script> -->
- <script>
-$(document).ready(function () {
-
-  // ================================
-  // STEP 1: Load local user (from signup/login)
-  // ================================
-  const localUser = JSON.parse(localStorage.getItem("userProfile") || "null");
-
-  if (!localUser) {
-    console.log("⚠️ No local user data, checking server cookie...");
-  } else {
-    // Prefill quick info
-    $("#name").val(localUser.name || "");
-    $("#email").val(localUser.email || "");
-    $(".display-2.text-white").text("Hello, " + (localUser.name || "User"));
-    $(".font-weight-bold").text(localUser.name || "User");
-  }
-
-  // ================================
-  // STEP 2: Load from backend (cookie session)
-  // ================================
-  $.ajax({
-    url: "profile_fetch.py",
-    type: "GET",
-    dataType: "json",
-    success: function (res) {
-      if (res.status === 1 && res.profile) {
-        const p = res.profile;
-        // Fill all fields
-        $("#name").val(p.Name || "");
-        $("#email").val(p.Email || "");
-        $("#contact").val(p.Contact || "");
-        $("#role").val(p.Role || "");
-        $("#address").val(p.Address || "");
-        $("#state").val(p.State || "");
-        $("#country").val(p.Country || "");
-        $("#pincode").val(p.Pincode || "");
-        $("#about").val(p.About || "");
-      } else if (res.status === 0) {
-        // Cookie missing → fallback to localStorage
-        if (!localUser) {
-          Swal.fire("⚠️ Login Required", "Please login first!", "warning");
-          setTimeout(() => window.location.href = "login.html", 1200);
-        }
-      } else if (res.status === "error") {
-        console.error("Backend Error:", res.message);
-      }
-    },
-    error: function () {
-      console.warn("⚠️ Server not reachable, using localStorage only.");
-    }
-  });
-
-  // ================================
-  // STEP 3: Save Profile
-  // ================================
-  $("#submit").click(function (e) {
-    e.preventDefault();
-
-    const profileData = {
-      name: $("#name").val()?.trim() || "",
-      email: $("#email").val()?.trim() || "",
-      contact: $("#contact").val()?.trim() || "",
-      role: $("#role").val()?.trim() || "",
-      address: $("#address").val()?.trim() || "",
-      state: $("#state").val()?.trim() || "",
-      country: $("#country").val()?.trim() || "",
-      pincode: $("#pincode").val()?.trim() || "",
-      about: $("#about").val()?.trim() || ""
-    };
-
-    if (!profileData.name || !profileData.email) {
-      Swal.fire("⚠️ Missing Fields", "Name and Email are required!", "warning");
-      return;
-    }
-
-    $.ajax({
-      url: "profile_save.py",
-      type: "POST",
-      data: profileData,
-      success: function (res) {
-        const r = res.trim();
-        if (r === "1") {
-          // ✅ Update localStorage immediately
-          localStorage.setItem("userProfile", JSON.stringify({
-            name: profileData.name,
-            email: profileData.email
-          }));
-
-          Swal.fire("✅ Success", "Profile saved successfully!", "success");
-        } else if (r === "0") {
-          Swal.fire("⚠️ Session Expired", "Please login again", "warning");
-          setTimeout(() => window.location.href = "login.html", 1500);
-        } else {
-          Swal.fire("❌ Error", r, "error");
-        }
-      },
-      error: function (xhr, status, err) {
-        Swal.fire("Server Error", err, "error");
-      }
-    });
-  });
-});
-</script>
 
 
 

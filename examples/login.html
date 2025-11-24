@@ -17,15 +17,17 @@
 
   <style>
     .main-box {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
-      background: url(https://cdn.prod.website-files.com/63d06722a6f6c82db2e3292f/6580ecddedf3ea709ba8b261_AdobeStock_611721674.jpeg)no-repeat center center/cover;
+      align-items: center;
+      justify-content: center;
+      background: url(https://cdn.prod.website-files.com/63d06722a6f6c82db2e3292f/6580ecddedf3ea709ba8b261_AdobeStock_611721674.jpeg) no-repeat center center/cover;
+      position: relative;
     }
 
     .main-box::before {
       content: "";
-      background-color: black;
-      opacity: 0.5;
+      background-color: rgba(0, 0, 0, 0.55);
       position: absolute;
       top: 0;
       left: 0;
@@ -36,109 +38,257 @@
     .input-box {
       border-radius: 10px;
       backdrop-filter: blur(10px);
-
+      background: rgba(255, 255, 255, 0.08);
+      padding: 30px 25px;
+      z-index: 2;
+      width: 100%;
+      max-width: 450px;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     h1 {
-      font-family: Georgia, 'Times New Roman', Times, serif;
-      padding-top: 10%;
+      font-family: Georgia, serif;
+    }
+
+    .logo-container {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      z-index: 3;
+    }
+
+    .logo-container img {
+      width: 130px;
+    }
+
+    /* 🔥 Hover effect (correct place) */
+    p a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    p a:hover {
+      color: #03313a;
+    }
+
+    @media(max-width: 520px) {
+      .input-box {
+        margin-top: 40px;
+      }
+
+      .logo-container img {
+        width: 100px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="container-fluid main-box align-items-center justify-content-center">
-    <div class="row col-lg-6 col-md-12 align-items-center justify-content-center">
-      <div class="col-lg-7 col-md-12 text-left text-white input-box" style="border: 1px solid;">
-        <h1>Log in</h1>
-        <hr>
-        <form>
-          <div class="pt-2">
-            <label for="email" class="form-control-label text-left">Username / Email</label>
-            <input type="email" class="form-control" id="email" placeholder="Username / Email" required>
-          </div>
-          <div class="pt-2">
-            <label for="email" class="form-control-label">Password </label>
-            <input type="password"  class="form-control" id="password" placeholder="Password" required>
-          </div>
-          <div class="pl-4 pt-4">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label for="email" class="form-control-label">Keep me looged in</label>
-          </div>
-          <div>
-            <div>
-              <button type="button" id="submit" class="btn btn-primary btn-md  pl-4 pr-4 badge-pill text-center">Log
-                in</button>
+  <div class="logo-container">
+    <img src="../assets/img/brand/logo.PNG">
+  </div>
+
+  <div class="main-box">
+    <div class="input-box">
+
+      <h1>Log in</h1>
+      <hr>
+
+      <form>
+
+        <div class="pt-2">
+          <label>Login As</label>
+          <select id="role" class="form-control" required>
+            <option value="">Select Role</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <div class="pt-2">
+          <label>Username / Email</label>
+          <input type="email" class="form-control" id="email" placeholder="Username / Email" required>
+        </div>
+
+        <div class="pt-2">
+          <label>Password</label>
+
+          <div class="input-group">
+            <input type="password" class="form-control" id="password" placeholder="Password" required>
+
+            <div class="input-group-append">
+              <span class="input-group-text" id="togglePassword" style="cursor:pointer;">
+                <i class="fa-solid fa-eye" id="eyeIcon"></i>
+              </span>
             </div>
           </div>
-          <hr>
-          <p class="text-white text-left pl-2"><a href="../examples/Forgot_password.html">Forget Password?</a></p>
-          <p class="text-white text-left pl-2">Already have an Account? <a href="../examples/signup.html">Sign In</a>
-          </p>
-        </form>
+        </div>
 
-      </div>
 
+        <div class="pt-3">
+          <input type="checkbox" id="flexCheckDefault">
+          <label>Keep me logged in</label>
+        </div>
+
+        <div class="pt-3">
+          <button type="button" id="submit" class="btn btn-primary btn-block">Log in</button>
+        </div>
+
+        <hr>
+
+        <p><a href="../examples/Forgot_password.html" class="text-white">Forget Password?</a></p>
+        <p>Already have an Account? <a href="Signup.html" class="text-white">Sign In</a></p>
+
+      </form>
     </div>
   </div>
 
- 
-  <script>
-$(document).ready(function () {
-  $("#submit").on("click", function (e) {
-    e.preventDefault();
 
-    const email = $("#email").val().trim();
-    const password = $("#password").val().trim();
+  <!-- <script>
+    $(document).ready(function () {
+      $("#submit").on("click", function (e) {
+        e.preventDefault();
 
-    if (!email || !password) {
-      Swal.fire("Missing Fields", "Please fill all fields!", "warning");
-      return;
-    }
+        const email = $("#email").val().trim();
+        const password = $("#password").val().trim();
 
-    $.ajax({
-      url: "login.py",
-      method: "POST",
-      data: { email: email, password: password },
-      success: function (res) {
-        console.log("Server Response:", res);
-
-        if (res.includes("redirect")) {
-          // ✅ Purane user ka data clear karo
-          localStorage.clear();
-
-          // ✅ Backend se name aur email nikaalo
-          const parts = res.split("|");
-          const name = parts[1] ? parts[1].trim() : email.split("@")[0];
-          const mail = parts[2] ? parts[2].trim() : email;
-
-          // ✅ Naya user data save karo
-          const newUserData = {
-            name: name,
-            email: mail
-          };
-          localStorage.setItem("userProfile", JSON.stringify(newUserData));
-
-          Swal.fire({
-            icon: "success",
-            title: "Login Successful!",
-            text: "Redirecting to profile...",
-            showConfirmButton: false,
-            timer: 2000
-          });
-
-          setTimeout(() => window.location.href = "profile.html", 2000);
-        } else if (res.includes("invalid")) {
-          Swal.fire("Login Failed", "Invalid email or password!", "error");
-        } else {
-          Swal.fire("Error", res, "error");
+        if (!email || !password) {
+          Swal.fire("Missing Fields", "Please fill all fields!", "warning");
+          return;
         }
-      },
-      error: function (xhr, status, err) {
-        Swal.fire("Server Error", err, "error");
-      }
+
+        $.ajax({
+          url: "login.py",
+          method: "POST",
+          data: { email: email, password: password },
+
+          xhrFields: { withCredentials: true },   // ← Most important
+          crossDomain: true,                      // ← Required for localhost cookies
+
+          success: function (res) {
+            console.log("Server Response:", res);
+
+            if (res.includes("redirect")) {
+              localStorage.clear();
+              const parts = res.split("|");
+              const name = parts[1] ? parts[1].trim() : email.split("@")[0];
+              const emailVal = parts[2] ? parts[2].trim() : email;
+
+              const newUserData = { name: name, email: emailVal };
+              localStorage.setItem("userProfile", JSON.stringify(newUserData));
+
+              Swal.fire({
+                icon: "success",
+                title: "Login Successful!",
+                text: "Redirecting to profile...",
+                showConfirmButton: false,
+                timer: 2000
+              });
+
+              setTimeout(() => window.location.href = "profile.html", 2000);
+            }
+            else if (res.includes("invalid")) {
+              Swal.fire("Login Failed", "Invalid email or password!", "error");
+            }
+            else {
+              Swal.fire("Error", res, "error");
+            }
+          },
+          error: function (xhr, status, err) {
+            Swal.fire("Server Error", err, "error");
+          }
+        });
+
+      });
     });
-  });
+  </script> -->
+  <script>
+    $(document).ready(function () {
+      $("#submit").on("click", function (e) {
+        e.preventDefault();
+
+        const email = $("#email").val().trim();
+        const password = $("#password").val().trim();
+        const role = $("#role").val().trim();
+
+        if (!role) {
+          Swal.fire("Missing Role", "Please select a role!", "warning");
+          return;
+        }
+
+        if (!email || !password) {
+          Swal.fire("Missing Fields", "Please fill all fields!", "warning");
+          return;
+        }
+
+        $.ajax({
+          url: "login.py",
+          method: "POST",
+          data: { email: email, password: password, role: role },
+
+          xhrFields: { withCredentials: true },
+          crossDomain: true,
+
+          success: function (res) {
+            console.log("Server Response:", res);
+
+            if (res.includes("redirect")) {
+
+              localStorage.clear();
+
+              const parts = res.split("|");
+              const name = parts[1] ? parts[1].trim() : email.split("@")[0];
+              const emailVal = parts[2] ? parts[2].trim() : email;
+
+              const newUserData = { name: name, email: emailVal, role: role };
+              localStorage.setItem("userProfile", JSON.stringify(newUserData));
+
+              Swal.fire({
+                icon: "success",
+                title: "Login Successful!",
+                text: "Redirecting...",
+                showConfirmButton: false,
+                timer: 2000
+              });
+
+              setTimeout(() => {
+                if (role === "admin") {
+                  window.location.href = "profile.html";
+                } else {
+                  window.location.href = "/themewagon.github.io/theevent/index.html";
+                }
+              }, 2000);
+
+            } else if (res.includes("invalid")) {
+              Swal.fire("Login Failed", "Invalid email or password!", "error");
+            } else {
+              Swal.fire("Error", res, "error");
+            }
+          },
+
+          error: function (xhr, status, err) {
+            Swal.fire("Server Error", err, "error");
+          }
+
+        });
+
+      });
+    });
+  </script>
+<script>
+$("#togglePassword").click(function () {
+  const pass = $("#password");
+  const icon = $("#eyeIcon");
+
+  if (pass.attr("type") === "password") {
+    pass.attr("type", "text");
+    icon.removeClass("fa-eye").addClass("fa-eye-slash");
+  } else {
+    pass.attr("type", "password");
+    icon.removeClass("fa-eye-slash").addClass("fa-eye");
+  }
 });
 </script>
 

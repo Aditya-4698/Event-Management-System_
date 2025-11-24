@@ -666,18 +666,22 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-    $(document).ready(function () {
-      const username = localStorage.getItem("username");
+$(document).ready(function () {
 
-      if (username) {
-        $(".username").text(username);
-        $(".dropdown-header h6").text(`Welcome ${username}!`);
-      } else {
-        // If user is not logged in, redirect to login
+    let user = JSON.parse(localStorage.getItem("userProfile"));
+
+    // If user not logged in → redirect
+    if (!user) {
         window.location.href = "examples/login.html";
-      }
-    });
-  </script>
+        return;
+    }
+
+    // If logged in → show username
+    $(".username").text(user.name);
+    $(".dropdown-header h6").text(`Welcome ${user.name}!`);
+});
+</script>
+
 
 
 

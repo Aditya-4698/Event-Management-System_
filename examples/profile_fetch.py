@@ -1,14 +1,18 @@
 # #!C:\Users\adity\AppData\Local\Programs\Python\Python39\python.exe
-# print("Content-Type: application/json\r\n\r\n")
+# print("Content-Type: application/json")
+# print()
 
-# import cgi, mysql.connector, http.cookies, os, json, sys
+# import mysql.connector, http.cookies, os, json, sys
 
-# # Get cookie
-# cookie = http.cookies.SimpleCookie(os.environ.get("HTTP_COOKIE"))
-# email = cookie["user_email"].value.strip().lower() if "user_email" in cookie else None
+# try:
+#     cookie = http.cookies.SimpleCookie(os.environ.get("HTTP_COOKIE", ""))
+#     email = cookie["user_email"].value.strip().strip('"').lower() if "user_email" in cookie else None
+# except Exception as e:
+#     print(json.dumps({"status": "error", "message": "Cookie error: " + str(e)}))
+#     sys.exit()
 
 # if not email:
-#     print(json.dumps({"status": 0}))  # not logged in
+#     print(json.dumps({"status": 0, "message": "No email found"}))
 #     sys.exit()
 
 # try:
@@ -20,18 +24,28 @@
 #     )
 #     cur = con.cursor(dictionary=True)
 
-#     # Fetch profile
 #     cur.execute("""
-#         SELECT Name, Email, Contact, Role, Address, State, Country, Pincode, About 
-#         FROM profilesection 
+#         SELECT Name, Email, Contact, Role, Address, State, Country, Pincode, About
+#         FROM profilesection
 #         WHERE LOWER(TRIM(Email))=%s
 #     """, (email,))
-#     profile = cur.fetchone()
+    
+#     row = cur.fetchone()
 
-#     if profile is None:
-#         profile = {"Name":"", "Email":"", "Contact":"", "Role":"", "Address":"", "State":"", "Country":"", "Pincode":"", "About":""}
+#     if not row:
+#         row = {
+#             "Name": "",
+#             "Email": email,
+#             "Contact": "",
+#             "Role": "",
+#             "Address": "",
+#             "State": "",
+#             "Country": "",
+#             "Pincode": "",
+#             "About": ""
+#         }
 
-#     print(json.dumps({"status": 1, "profile": profile}))
+#     print(json.dumps({"status": 1, "profile": row}))
 
 # except Exception as e:
 #     print(json.dumps({"status": "error", "message": str(e)}))
@@ -41,25 +55,30 @@
 #         con.close()
 #     except:
 #         pass
-#!C:\Users\adity\AppData\Local\Programs\Python\Python39\python.exe
-print("Content-Type: application/json\r\n\r\n")
 
-import cgi, mysql.connector, http.cookies, os, json, sys
+#!C:\Users\aditya\AppData\Local\Programs\Python\Python39\python.exe
+print("Content-Type: application/json")
+print()
 
-cookie = http.cookies.SimpleCookie(os.environ.get("HTTP_COOKIE"))
-email = None
+import mysql.connector, http.cookies, os, json, sys
 
-if "user_email" in cookie:
-    # ✅ remove extra quotes if any
-    email = cookie["user_email"].value.strip().strip('"').lower()
-else:
-    form = cgi.FieldStorage()
-    email = form.getfirst("email", "").strip().lower()
-
-if not email:
-    print(json.dumps({"status": 0, "message": "No valid email found"}))
+# -----------------------------
+# Step 1: Read cookie
+# -----------------------------
+try:
+    cookie = http.cookies.SimpleCookie(os.environ.get("HTTP_COOKIE", ""))
+    email = cookie["user_email"].value.strip().strip('"').lower() if "user_email" in cookie else None
+except Exception as e:
+    print(json.dumps({"status": "error", "message": "Cookie error: " + str(e)}))
     sys.exit()
 
+if not email:
+    print(json.dumps({"status": 0, "message": "No email found"}))
+    sys.exit()
+
+# -----------------------------
+# Step 2: Fetch profile
+# -----------------------------
 try:
     con = mysql.connector.connect(
         host="localhost",
@@ -70,14 +89,18 @@ try:
     cur = con.cursor(dictionary=True)
 
     cur.execute("""
-        SELECT Name, Email, Contact, Role, Address, State, Country, Pincode, About 
-        FROM profilesection 
-        WHERE LOWER(TRIM(Email))=%s
+        SELECT Name, Email, Contact, Role, Address, State, Country, Pincode, About,Profile_image
+        FROM profilesection
+        WHERE LOWER(TRIM(Email))=Lower(%s)
     """, (email,))
-    profile = cur.fetchone()
+    
+    row = cur.fetchone()
 
-    if profile is None:
-        profile = {
+    # -----------------------------
+    # Step 3: Fallback if no row
+    # -----------------------------
+    if not row:
+        row = {
             "Name": "",
             "Email": email,
             "Contact": "",
@@ -86,16 +109,20 @@ try:
             "State": "",
             "Country": "",
             "Pincode": "",
-            "About": ""
+            "About": "",
+            "profile_image":""
         }
 
-    print(json.dumps({"status": 1, "profile": profile}))
+    # -----------------------------
+    # Step 4: Normalize keys to lowercase
+    # -----------------------------
+    row = {k.lower(): v for k, v in row.items()}
+
+    print(json.dumps({"status": 1, "profile": row}))
 
 except Exception as e:
     print(json.dumps({"status": "error", "message": str(e)}))
 
 finally:
-    try:
+    if 'con' in locals():
         con.close()
-    except:
-        pass

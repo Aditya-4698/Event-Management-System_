@@ -1,54 +1,40 @@
 #!C:\Users\adity\AppData\Local\Programs\Python\Python39\python.exe
-# print("Content-Type: text/html\r\n\r\n")    
-# import cgi
-# import mysql.connector
+import cgi
+import mysql.connector
+import http.cookies
 
-# con=mysql.connector.connect(user="Aditya",password="Aditya@123",host="localhost",database="signup")
-# cur=con.cursor()
-# # print(con)
-
-# f=cgi.FieldStorage()
-
-# url="insert into signupdata(Username,Email,Password) values(%s,%s,%s)"
-# try:
-#     print(f.getvalue("name"))
-#     print(f.getvalue("email"))
-#     print(f.getvalue("password"))
-    
-#     cur.execute(url,(f.getvalue("name"),f.getvalue("email"),f.getvalue("password")))
-#     con.commit()
-#     print("Record inserted")
-# except Exception as e:
-#     print("Error:",e)   
-
-
-#!C:\Users\adity\AppData\Local\Programs\Python\Python39\python.exe
-#!C:\Users\adity\AppData\Local\Programs\Python\Python39\python.exe
-#!C:\Users\adity\AppData\Local\Programs\Python\Python39\python.exe
-print("Content-Type: text/html\r\n")
-
-import cgi, mysql.connector, http.cookies
+print("Content-Type: text/plain")
 
 form = cgi.FieldStorage()
 name = form.getvalue("name")
 email = form.getvalue("email")
 password = form.getvalue("password")
-
-con = mysql.connector.connect(host="localhost", user="Aditya", password="Aditya@123", database="signup")
-cur = con.cursor()
+role = form.getvalue("role")      # <-- NEW (role receive)
 
 try:
-    cur.execute("INSERT INTO signupdata (Username, Email, Password) VALUES (%s,%s,%s)", (name, email, password))
+    con = mysql.connector.connect(
+        host="localhost",
+        user="Aditya",
+        password="Aditya@123",
+        database="signup"
+    )
+    cur = con.cursor()
+
+    # ---- Insert with role ----
+    query = "INSERT INTO signupdata (Username, Email, Password, Role) VALUES (%s,%s,%s,%s)"
+    cur.execute(query, (name, email, password, role))
     con.commit()
 
-    # create cookie
+    # ---- Create cookie ----
     cookie = http.cookies.SimpleCookie()
     cookie["user_email"] = email
     cookie["user_email"]["path"] = "/"
-    print(cookie.output())
+    cookie["user_email"]["max-age"] = 3600
 
-    # tell JS to redirect
-    print("\r\nredirect")
+    print(cookie.output())  # Set-Cookie
+    print()                 # Blank line for header ending
+    print("redirect")       # Tell JS to redirect
 
 except Exception as e:
+    print()
     print("Error:", e)
