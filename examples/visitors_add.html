@@ -55,8 +55,9 @@
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="../assets/img/theme/team-1-800x800.jpg
-">
+                <img alt="Image placeholder" class="profile-img" src="../assets/img/theme/team-1-800x800.jpg">
+                <span class="user-name"></span>
+
               </span>
             </div>
           </a>
@@ -72,19 +73,20 @@
               <i class="ni ni-settings-gear-65"></i>
               <span>Settings</span>
             </a>
-            <a href="../examples/profile.html" class="dropdown-item">
+            <a href="http://localhost/Eventcrystal2/themewagon.github.io/theevent/index.html" class="dropdown-item">
               <i class="ni ni-calendar-grid-58"></i>
-              <span>Activity</span>
+              <span>EventCrystal</span>
             </a>
             <a href="../examples/profile.html" class="dropdown-item">
               <i class="ni ni-support-16"></i>
               <span>Support</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#!" class="dropdown-item">
+            <a href="javascript:void(0)" class="dropdown-item" onclick="logoutUser()">
               <i class="ni ni-user-run"></i>
               <span>Logout</span>
             </a>
+
           </div>
         </li>
       </ul>
@@ -190,10 +192,11 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="../examples/login.html">
-              <i class="ni ni-key-25 text-info"></i>
-              <h3>Logout</h3>
+            <a href="javascript:void(0)" class="dropdown-item" onclick="logoutUser()">
+              <i class="ni ni-user-run"></i>
+              <span>Logout</span>
             </a>
+
           </li>
         </ul>
 
@@ -205,10 +208,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-top navbar-expand-md navbar-dark mt--3" id="navbar-main">
       <div class="container-fluid">
-        <!-- Brand -->
-        <!-- <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../index.html">Events</a> -->
-        <!-- <h1 style="color: white; font-family: Georgia, 'Times New Roman', Times, serif; font-weight: lighter;">Events</h1> -->
-        <!-- Form -->
+        
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
           <div class="form-group mb-">
 
@@ -221,11 +221,13 @@
               aria-expanded="false">
               <div class="media align-items-center pt-2">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
+                  <img alt="Image placeholder" class="profile-img" src="../assets/img/theme/team-1-800x800.jpg">
                 </span>
+
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Aditya</span>
+                  <span class="mb-0 text-sm font-weight-bold user-name"></span>
                 </div>
+
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
@@ -240,19 +242,20 @@
                 <i class="ni ni-settings-gear-65"></i>
                 <span>Settings</span>
               </a>
-              <a href="../examples/profile.html" class="dropdown-item">
+              <a href="http://localhost/Eventcrystal2/themewagon.github.io/theevent/index.html" class="dropdown-item">
                 <i class="ni ni-calendar-grid-58"></i>
-                <span>Activity</span>
+                <span>EventCrystal</span>
               </a>
               <a href="../examples/profile.html" class="dropdown-item">
                 <i class="ni ni-support-16"></i>
                 <span>Support</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item">
-                <i class="ni ni-user-run"></i>
+              <a href="javascript:void(0)" class="dropdown-item" onclick="logoutUser()">
+                <i class="ni ni-key-25 text-info"></i>
                 <span>Logout</span>
               </a>
+
             </div>
           </li>
         </ul>
@@ -289,10 +292,6 @@
       <div class="header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap">
         <h4 class="pt-2 pl-3 text-white"
           style="font-size: 20px; font-family: Georgia, 'Times New Roman', Times, serif;">Entry</h4>
-        <!-- <a href="..//examples/category_add.html" class=" btn-warning btn-sm mr-2"
-                        style="border-radius: 0px; font-size: 13px;"><i class="bi bi-plus-lg"></i>Add New</a> -->
-        <!-- <li class="ml-auto"><a href="..//examples/category_add.html" class="btn btn-danger btn-sm "><i class="bi bi-plus-lg"></i>Entry</a>
-                </li> -->
       </div>
       <div class="card-body" id="visitorSection">
         <form class="needs-validation" novalidate>
@@ -431,6 +430,40 @@
       });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const user = JSON.parse(localStorage.getItem("userProfile"));
+
+      if (!user) {
+        window.location.href = "../examples/login.html";
+
+        return;
+      }
+
+      const userName = user.name || user.fullname || user.username || "User";
+      const profileImage = user.avatar || user.image || "../assets/img/theme/team-1-800x800.jpg";
+
+      document.querySelectorAll(".user-name").forEach(el => {
+        el.textContent = userName;
+      });
+
+      // FIXED selector
+      document.querySelectorAll(".profile-img").forEach(img => {
+        img.src = profileImage;
+      });
+    });
+
+    // LOGOUT
+    function logoutUser() {
+      localStorage.removeItem("userProfile");
+      window.location.href = "../examples/login.html";
+    }
+  </script>
+
+
+
+
 
 </body>
 

@@ -67,19 +67,20 @@
               <i class="ni ni-settings-gear-65"></i>
               <span>Settings</span>
             </a>
-            <a href="./examples/profile.html" class="dropdown-item">
+            <a href="http://localhost/Eventcrystal2/themewagon.github.io/theevent/index.html" class="dropdown-item">
               <i class="ni ni-calendar-grid-58"></i>
-              <span>Activity</span>
+              <span>EventCrystal</span>
             </a>
             <a href="./examples/profile.html" class="dropdown-item">
               <i class="ni ni-support-16"></i>
               <span>Support</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#!" class="dropdown-item">
+            <a href="javascript:void(0)" class="dropdown-item" onclick="logoutUser()">
               <i class="ni ni-user-run"></i>
               <span>Logout</span>
             </a>
+
           </div>
         </li>
       </ul>
@@ -184,10 +185,11 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="examples/login.html">
-              <i class="ni ni-key-25 text-info"></i>
-              <h3>Logout</h3>
+            <a href="javascript:void(0)" class="dropdown-item" onclick="logoutUser()">
+              <i class="ni ni-user-run"></i>
+              <span>Logout</span>
             </a>
+
           </li>
         </ul>
         <!-- Divider -->
@@ -245,19 +247,20 @@
                 <i class="ni ni-settings-gear-65"></i>
                 <span>Settings</span>
               </a>
-              <a href="./examples/profile.html" class="dropdown-item">
+              <a href="http://localhost/Eventcrystal2/themewagon.github.io/theevent/index.html" class="dropdown-item">
                 <i class="ni ni-calendar-grid-58"></i>
-                <span>Activity</span>
+                <span>EventCrystal</span>
               </a>
               <a href="./examples/profile.html" class="dropdown-item">
                 <i class="ni ni-support-16"></i>
                 <span>Support</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item">
+              <a href="javascript:void(0)" class="dropdown-item" onclick="logoutUser()">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>
+
             </div>
           </li>
         </ul>
@@ -666,21 +669,36 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-$(document).ready(function () {
+    $(document).ready(function () {
 
-    let user = JSON.parse(localStorage.getItem("userProfile"));
+      let user = JSON.parse(localStorage.getItem("userProfile"));
 
-    // If user not logged in → redirect
-    if (!user) {
+      // If user not logged in → redirect
+      if (!user) {
         window.location.href = "examples/login.html";
         return;
+      }
+
+      // If logged in → show username
+      $(".username").text(user.name);
+      $(".dropdown-header h6").text(`Welcome ${user.name}!`);
+    });
+  </script>
+
+  <script>
+    function logoutUser() {
+      localStorage.removeItem("userProfile");
+
+      // Detect correct path automatically
+      if (window.location.pathname.includes("/examples/")) {
+        window.location.href = "login.html";      // inside /examples/
+      } else {
+        window.location.href = "./examples/login.html"; // root folder
+      }
     }
 
-    // If logged in → show username
-    $(".username").text(user.name);
-    $(".dropdown-header h6").text(`Welcome ${user.name}!`);
-});
-</script>
+  </script>
+
 
 
 

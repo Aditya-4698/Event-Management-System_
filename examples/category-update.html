@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
-       Event Management System
+        Event Management System
     </title>
     <!-- Favicon -->
     <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
@@ -36,8 +35,9 @@
             </button>
             <!-- Brand -->
             <a class="" href="./index.html">
-        <img src="../assets/img/brand/logo.PNG" class="" alt="..."style="width: 150px; height:90px !important;">
-      </a>
+                <img src="../assets/img/brand/logo.PNG" class="" alt="..."
+                    style="width: 150px; height:90px !important;">
+            </a>
             <!-- User -->
             <ul class="nav align-items-center d-md-none">
                 <li class="nav-item dropdown">
@@ -56,11 +56,11 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
-                        <div class="media align-items-center">
-                            <span class="avatar avatar-sm rounded-circle">
-                                <img alt="Image placeholder" src="../assets/img/theme/team-1-800x800.jpg
-">
-                            </span>
+                        <div class="col-6 collapse-brand">
+                            <a class="" href="./index.html">
+                                <img src="../assets/img/brand/logo.PNG" class="" alt="..."
+                                    style="width: 150px; height:90px !important;">
+                            </a>
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
@@ -75,16 +75,18 @@
                             <i class="ni ni-settings-gear-65"></i>
                             <span>Settings</span>
                         </a>
-                        <a href="../examples/profile.html" class="dropdown-item">
+                        <a href="http://localhost/Eventcrystal2/themewagon.github.io/theevent/index.html"
+                            class="dropdown-item">
                             <i class="ni ni-calendar-grid-58"></i>
-                            <span>Activity</span>
+                            <span>EventCrystal</span>
                         </a>
+
                         <a href="../examples/profile.html" class="dropdown-item">
                             <i class="ni ni-support-16"></i>
                             <span>Support</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#!" class="dropdown-item">
+                        <a href="javascript:void(0)" class="dropdown-item" onclick="logoutUser()">
                             <i class="ni ni-user-run"></i>
                             <span>Logout</span>
                         </a>
@@ -98,8 +100,9 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a class="" href="./index.html">
-        <img src="../assets/img/brand/logo.PNG" class="" alt="..."style="width: 150px; height:90px !important;">
-      </a>
+                                <img src="../assets/img/brand/logo.PNG" class="" alt="..."
+                                    style="width: 150px; height:90px !important;">
+                            </a>
                         </div>
                         <div class="col-6 collapse-close">
                             <button type="button" class="navbar-toggler" data-toggle="collapse"
@@ -138,7 +141,7 @@
                         </a>
                     <li class="nav-item">
                         <a class="nav-link" href="../examples/category-list.html">
-                           <i class="bi bi-list-task"></i> </i>
+                            <i class="bi bi-list-task"></i> </i>
                             <h3>Category</h3>
                         </a>
                     </li>
@@ -175,7 +178,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="../examples/payment-list.html">
-                           <i class="bi bi-credit-card"></i>
+                            <i class="bi bi-credit-card"></i>
                             <h3> Payment</h3>
                         </a>
                     </li>
@@ -185,19 +188,20 @@
                             <h3> Feedback</h3>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link  active " href="../examples/profile.html">
                             <i class="ni ni-single-02 text-yellow"></i>
                             <h3>Profile</h3>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
-                        <a class="nav-link" href="../examples/login.html">
-                            <i class="ni ni-key-25 text-info"></i>
-                            <h3>Logout</h3>
+                        <a href="javascript:void(0)" class="dropdown-item" onclick="logoutUser()">
+                            <i class="ni ni-user-run"></i>
+                            <span>Logout</span>
                         </a>
+
                     </li>
                 </ul>
                 <!-- Divider -->
@@ -219,7 +223,7 @@
                 <!-- Form -->
                 <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
                     <div class="form-group mb-0">
-                        
+
                     </div>
                 </form>
                 <!-- User -->
@@ -227,13 +231,16 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <div class="media align-items-center">
+                            <div class="media align-items-center pt-2">
                                 <span class="avatar avatar-sm rounded-circle">
-                                    <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
+                                    <img alt="Image placeholder" class="profile-img"
+                                        src="../assets/img/theme/team-1-800x800.jpg">
                                 </span>
+
                                 <div class="media-body ml-2 d-none d-lg-block">
-                                    <span class="mb-0 text-sm  font-weight-bold">Aditya</span>
+                                    <span class="mb-0 text-sm font-weight-bold user-name"></span>
                                 </div>
+
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
@@ -248,16 +255,17 @@
                                 <i class="ni ni-settings-gear-65"></i>
                                 <span>Settings</span>
                             </a>
-                            <a href="../examples/profile.html" class="dropdown-item">
+                            <a href="http://localhost/Eventcrystal2/themewagon.github.io/theevent/index.html"
+                                class="dropdown-item">
                                 <i class="ni ni-calendar-grid-58"></i>
-                                <span>Activity</span>
+                                <span>EventCrystal</span>
                             </a>
                             <a href="../examples/profile.html" class="dropdown-item">
                                 <i class="ni ni-support-16"></i>
                                 <span>Support</span>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#!" class="dropdown-item">
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="logoutUser()">
                                 <i class="ni ni-user-run"></i>
                                 <span>Logout</span>
                             </a>
@@ -302,7 +310,7 @@
                 </li> -->
             </div>
             <!-- Card Body -->
-            <div class="card-body" id="CategoryupdateSection" >
+            <div class="card-body" id="CategoryupdateSection">
                 <form class="needs-validation" novalidate action="category-update.py" method="post">
 
                     <div class="form-row">
@@ -318,7 +326,8 @@
                         <!-- Service ID -->
                         <div class="col-md-4 mb-3">
                             <label for="serviceId">Category Name</label>
-                            <input type="text" class="form-control" id="categname" placeholder="" required > <span></span>
+                            <input type="text" class="form-control" id="categname" placeholder="" required>
+                            <span></span>
                             <div class="invalid-feedback">
                                 Please enter a valid service ID.
                             </div>
@@ -336,7 +345,8 @@
                         <!-- Food Name -->
                         <div class="col-md-12 mb-3">
                             <label for="Description">Description</label>
-                            <textarea name="" id="description" rows="3" style="resize: none;" class="form-control"></textarea> <span></span>
+                            <textarea name="" id="description" rows="3" style="resize: none;"
+                                class="form-control"></textarea> <span></span>
                         </div>
 
                         <!-- Cost -->
@@ -379,19 +389,47 @@
             });
     </script>
     <script>
-      $(document).ready(function () {
-        const catid = localStorage.getItem('catid');
-        const categname = localStorage.getItem('categname');
-        const date = localStorage.getItem('date');
-        const description = localStorage.getItem('description');
-        $('#catid').val(catid);
-        $('#categname').val(categname);
-        $('#date').val(date);
-        $('#description').val(description);
-      });
+        $(document).ready(function () {
+            const catid = localStorage.getItem('catid');
+            const categname = localStorage.getItem('categname');
+            const date = localStorage.getItem('date');
+            const description = localStorage.getItem('description');
+            $('#catid').val(catid);
+            $('#categname').val(categname);
+            $('#date').val(date);
+            $('#description').val(description);
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const user = JSON.parse(localStorage.getItem("userProfile"));
 
+            if (!user) {
+                window.location.href = "../examples/login.html";
+                return;
+            }
+
+            const userName = user.name || user.fullname || user.username || "User";
+            const profileImage = user.avatar || user.image || "../assets/img/theme/team-1-800x800.jpg";
+
+            document.querySelectorAll(".user-name").forEach(el => {
+                el.textContent = userName;
+            });
+
+            // FIXED selector
+            document.querySelectorAll(".profile-img").forEach(img => {
+                img.src = profileImage;
+            });
+        });
+
+        // LOGOUT
+        function logoutUser() {
+            localStorage.removeItem("userProfile");
+            window.location.href = "../examples/login.html";
+        }
+
+    </script>
 </body>
 
 </html>

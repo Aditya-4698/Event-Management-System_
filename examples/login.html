@@ -277,20 +277,20 @@
       });
     });
   </script>
-<script>
-$("#togglePassword").click(function () {
-  const pass = $("#password");
-  const icon = $("#eyeIcon");
+  <script>
+    $("#togglePassword").click(function () {
+      const pass = $("#password");
+      const icon = $("#eyeIcon");
 
-  if (pass.attr("type") === "password") {
-    pass.attr("type", "text");
-    icon.removeClass("fa-eye").addClass("fa-eye-slash");
-  } else {
-    pass.attr("type", "password");
-    icon.removeClass("fa-eye-slash").addClass("fa-eye");
-  }
-});
-</script>
+      if (pass.attr("type") === "password") {
+        pass.attr("type", "text");
+        icon.removeClass("fa-eye").addClass("fa-eye-slash");
+      } else {
+        pass.attr("type", "password");
+        icon.removeClass("fa-eye-slash").addClass("fa-eye");
+      }
+    });
+  </script>
 
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
