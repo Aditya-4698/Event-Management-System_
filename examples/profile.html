@@ -195,12 +195,12 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="../examples/login.html">
               <i class="ni ni-key-25 text-info"></i>
               <h3>Logout</h3>
             </a>
-          </li>
+          </li> -->
         </ul>
         <!-- Divider -->
 
@@ -494,53 +494,6 @@
       // ================================
       // STEP 3: Save Profile
       // ================================
-      // $("#submit").click(function (e) {
-      //   e.preventDefault();
-
-      //   const profileData = {
-      //     name: $("#name").val()?.trim() || "",
-      //     email: $("#email").val()?.trim() || "",
-      //     contact: $("#contact").val()?.trim() || "",
-      //     role: $("#role").val()?.trim() || "",
-      //     address: $("#address").val()?.trim() || "",
-      //     state: $("#state").val()?.trim() || "",
-      //     country: $("#country").val()?.trim() || "",
-      //     pincode: $("#pincode").val()?.trim() || "",
-      //     about: $("#about").val()?.trim() || ""
-
-      //   };
-
-      //   if (!profileData.name || !profileData.email) {
-      //     Swal.fire("⚠️ Missing Fields", "Name and Email are required!", "warning");
-      //     return;
-      //   }
-
-      //   $.ajax({
-      //     url: "profile_save.py",
-      //     type: "POST",
-      //     xhrFields: { withCredentials: true },   // <-- send cookies
-      //     crossDomain: true,                      // <-- allow cookies for CGI
-      //     data: profileData,
-
-      //     success: function (res) {
-      //       const r = res.trim();
-      //       if (r === "1") {
-      //         Swal.fire("✔ Profile Saved", "Your profile is updated!", "success");
-      //       }
-      //       else if (r === "0") {
-      //         Swal.fire("⚠ Session Expired", "Please login again.", "warning");
-      //         setTimeout(() => window.location.href = "login.html", 1500);
-      //       }
-      //       else {
-      //         Swal.fire("Error", r, "error");
-      //       }
-      //     },
-      //     error: function (xhr, status, err) {
-      //       Swal.fire("Server Error", err, "error");
-      //     }
-      //   });
-
-      // });
       $("#submit").click(function (e) {
         e.preventDefault();
 
