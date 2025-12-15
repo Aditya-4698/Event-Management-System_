@@ -87,8 +87,8 @@
               <span>Support</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#!" class="dropdown-item">
-              <i class="ni ni-user-run"></i>
+            <a href="javascript:void(0)" class="dropdown-item" onclick="logoutUser()">
+              <i class="ni ni-key-25 text-info"></i>
               <span>Logout</span>
             </a>
           </div>
@@ -229,13 +229,15 @@
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
-              <div class="media align-items-center">
+              <div class="media align-items-center pt-2">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
+                  <img alt="Image placeholder" class="profile-img" src="../assets/img/theme/team-1-800x800.jpg">
                 </span>
+
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Aditya</span>
+                  <span class="mb-0 text-sm font-weight-bold user-name"></span>
                 </div>
+
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
@@ -259,8 +261,8 @@
                 <span>Support</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item">
-                <i class="ni ni-user-run"></i>
+              <a href="javascript:void(0)" class="dropdown-item" onclick="logoutUser()">
+                <i class="ni ni-key-25 text-info"></i>
                 <span>Logout</span>
               </a>
             </div>
@@ -459,8 +461,10 @@
       $.ajax({
         url: "profile_fetch.py",
         type: "GET",
-        dataType: "json",
+        // dataType: "json",
         success: function (res) {
+          // console.log(res);
+
           console.log("Profile fetch response:", res);
           if (res.status === 1 && res.profile) {
             const p = res.profile;
@@ -541,7 +545,35 @@
     });
   </script>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const user = JSON.parse(localStorage.getItem("userProfile"));
 
+      if (!user) {
+        window.location.href = "../examples/login.html";
+        return;
+      }
+
+      const userName = user.name || user.fullname || user.username || "User";
+      const profileImage = user.avatar || user.image || "../assets/img/theme/team-1-800x800.jpg";
+
+      document.querySelectorAll(".user-name").forEach(el => {
+        el.textContent = userName;
+      });
+
+      // FIXED selector
+      document.querySelectorAll(".profile-img").forEach(img => {
+        img.src = profileImage;
+      });
+    });
+
+    // LOGOUT
+    function logoutUser() {
+      localStorage.removeItem("userProfile");
+      window.location.href = "../examples/login.html";
+    }
+
+  </script>
 
 
 </body>
