@@ -651,62 +651,47 @@
 
     </div>
   </div>
-  <!--   Core   -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="./assets/js/plugins/jquery/dist/jquery.min.js"></script>
-  <script src="./assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <!--   Optional JS   -->
-  <script src="./assets/js/plugins/chart.js/dist/Chart.min.js"></script>
-  <script src="./assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
-  <!--   Argon JS   -->
-  <script src="./assets/js/argon-dashboard.min.js?v=1.1.2"></script>
-  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-  <script>
-    window.TrackJS &&
-      TrackJS.install({
-        token: "ee6fab19c5a04ac1a32a645abde4613a",
-        application: "argon-dashboard-free"
-      });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-$(document).ready(function () {
-    
-    let user = JSON.parse(localStorage.getItem("userProfile"));
+  <!-- 1️⃣ jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<!-- 2️⃣ Bootstrap JS next -->
+<script src="./assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 3️⃣ Optional JS (Chart.js, SweetAlert etc.) -->
+<script src="./assets/js/plugins/chart.js/dist/Chart.min.js"></script>
+<script src="./assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- 4️⃣ Argon Dashboard JS -->
+<script src="./assets/js/argon-dashboard.min.js?v=1.1.2"></script>
+
+<!-- 5️⃣ TrackJS -->
+<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
+<!-- 6️⃣ Your custom JS -->
+<script>
+$(document).ready(function () {
+    let user = JSON.parse(localStorage.getItem("userProfile"));
     if (!user) {
         window.location.href = "examples/login.html";
         return;
     }
-
-    // Show username
     $(".username").text(user.name);
     $(".dropdown-header h6").text(`Welcome ${user.name}!`);
-
-    // ⭐ SET PROFILE IMAGE (if exists)
     if (user.profile_image && user.profile_image !== "") {
         $("img[alt='Image placeholder']").attr("src", user.profile_image);
     } else {
         $("img[alt='Image placeholder']").attr("src", "./assets/img/theme/team-4-800x800.jpg");
     }
 });
-</script>
 
-  <script>
-    function logoutUser() {
-      localStorage.removeItem("userProfile");
+function logoutUser() {
+    localStorage.removeItem("userProfile");
+    window.location.href = "./examples/login.html";
+}
 
-      // Detect correct path automatically
-      if (window.location.pathname.includes("/examples/")) {
-        window.location.href = "login.html";      // inside /examples/
-      } else {
-        window.location.href = "./examples/login.html"; // root folder
-      }
-    }
-
-
-
-    fetch('/.netlify/functions/dashboard')
+// Fetch dashboard data
+fetch('/.netlify/functions/dashboard')
   .then(res => res.json())
   .then(data => {
     document.getElementById('venue-count').textContent = data.venueCount;
@@ -714,9 +699,7 @@ $(document).ready(function () {
     document.getElementById('visitor-count').textContent = data.visitorCount;
     document.getElementById('feedback-percent').textContent = data.feedbackPercent;
   });
-
-
-  </script>
+</script>
 
 </body>
 
