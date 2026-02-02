@@ -227,8 +227,8 @@
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
               <div class="media align-items-center">
-                <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="./assets/img/theme/team-4-800x800.jpg">
+                <span class="avatar avatar-sm rounded-circle" >
+                  <img alt="Image placeholder" src="./assets/img/theme/team-4-800x800.jpg" >
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
                   <span class="mb-0 text-sm  font-weight-bold username">Aditya</span>
@@ -410,7 +410,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                  <h2 class="mb-0">Total Event</h2>
+                  <h2 class="mb-0">Total Event Organizer</h2>
                 </div>
               </div>
             </div>
@@ -702,6 +702,18 @@ $(document).ready(function () {
         window.location.href = "./examples/login.html"; // root folder
       }
     }
+
+
+
+    fetch('/.netlify/functions/dashboard')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('venue-count').textContent = data.venueCount;
+    document.getElementById('event-count').textContent = data.eventCount;
+    document.getElementById('visitor-count').textContent = data.visitorCount;
+    document.getElementById('feedback-percent').textContent = data.feedbackPercent;
+  });
+
 
   </script>
 

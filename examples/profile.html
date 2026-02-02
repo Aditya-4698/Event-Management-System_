@@ -18,11 +18,6 @@
   <!-- CSS Files -->
   <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-
-  <!-- <script src="https://code.jquery.com/jquery-migrate-3.5.0.min.js"></script> -->
-
-  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../assets/js/jqueryy.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -461,37 +456,50 @@
       $.ajax({
         url: "profile_fetch.py",
         type: "GET",
-        // dataType: "json",
+        dataType: "json",   // ✅ VERY IMPORTANT
         success: function (res) {
-          // console.log(res);
 
           console.log("Profile fetch response:", res);
-          if (res.status === 1 && res.profile) {
-            const p = res.profile;
-            $("#name").val(p.name || "");
-            $("#email").val(p.Email || "");
-            $("#contact").val(p.contact || "");
-            $("#role").val(p.role || "");
-            $("#address").val(p.address || "");
-            $("#state").val(p.state || "");
-            $("#country").val(p.country || "");
-            $("#pincode").val(p.pincode || "");
-            $("#about").val(p.about || "");
 
-            // IMAGE SET KARNE KA CODE
+          if (res.status === 1 && res.profile) {
+
+            const p = res.profile;
+
+            // ✅ MATCH DB COLUMN NAMES EXACTLY
+            $("#name").val(p.Name || "");
+            $("#email").val(p.Email || "");
+            $("#contact").val(p.Contact || "");
+            $("#role").val(p.Role || "");
+            $("#address").val(p.Address || "");
+            $("#state").val(p.State || "");
+            $("#country").val(p.Country || "");
+            $("#pincode").val(p.Pincode || "");
+            $("#about").val(p.About || "");
+
+            $(".display-2.text-white").text("Hello, " + (p.Name || "User"));
+            $(".font-weight-bold").text(p.Name || "User");
+
             if (p.profile_image) {
+              // image set
               $("#previewImg").attr("src", p.profile_image);
+              $(".profile-img").attr("src", p.profile_image);
+
+              // ✅ image ka NAME nikaalo
+              const imageName = p.profile_image.split("/").pop();
+
+              // ✅ kahin bhi dikhana ho
+              $(".username").text(imageName);   // navbar
+              $("#imageName").text(imageName);  // profile page (agar span hai)
             }
 
-          } else if (res.status === 0) {
-            Swal.fire("⚠️ Login Required", "Please login first!", "warning");
+
+          } else {
+            Swal.fire("⚠ Login Required", "Please login again", "warning");
             setTimeout(() => window.location.href = "login.html", 1200);
-          } else if (res.status === "error") {
-            Swal.fire("❌ Server Error", res.message, "error");
           }
         },
-        error: function (xhr, status, err) {
-          console.warn("Server not reachable, using localStorage only.", err);
+        error: function (err) {
+          console.error("Fetch error:", err);
         }
       });
 

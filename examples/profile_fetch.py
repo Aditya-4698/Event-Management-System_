@@ -1,19 +1,16 @@
-#!C:\Users\adity\AppData\Local\Programs\Python\Python39\python.exe
+#!C:/Users/adity/AppData/Local/Programs/Python/Python39/python.exe
 
 import mysql.connector, http.cookies, os, json, sys
 
-print("Content-Type: text/html")
+print("Content-Type: application/json")
 print()
 
-try:
-    cookie = http.cookies.SimpleCookie(os.environ.get("HTTP_COOKIE", ""))
-    email = cookie["user_email"].value.strip().strip('"').lower() if "user_email" in cookie else None
-except Exception as e:
-    print("Cookie error:", e)
-    sys.exit()
+# Read cookie
+cookie = http.cookies.SimpleCookie(os.environ.get("HTTP_COOKIE", ""))
+email = cookie["user_email"].value.lower() if "user_email" in cookie else None
 
 if not email:
-    print("No email found in cookies")
+    print(json.dumps({"status": 0}))
     sys.exit()
 
 try:
@@ -28,16 +25,19 @@ try:
     cur.execute("""
         SELECT Name, Email, Contact, Role, Address, State, Country, Pincode, About, profile_image
         FROM profilesection
-        WHERE LOWER(TRIM(Email)) = LOWER(%s)
+        WHERE LOWER(Email)=%s
     """, (email,))
-    
-    row_rr = cur.fetchone()
-    print(row_rr)   # DEBUG
+
+    row = cur.fetchone()
+
+    if row:
+        print(json.dumps({"status": 1, "profile": row}))
+    else:
+        print(json.dumps({"status": 0}))
 
 except Exception as e:
-    print("DB ERROR:", e)
+    print(json.dumps({"status": "error", "message": str(e)}))
+
 finally:
     if 'con' in locals():
         con.close()
-
-

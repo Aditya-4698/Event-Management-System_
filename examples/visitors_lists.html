@@ -58,10 +58,12 @@
                         aria-expanded="false">
                         <div class="media align-items-center">
                             <span class="avatar avatar-sm rounded-circle">
-                                <img alt="Image placeholder" src="../assets/img/theme/team-1-800x800.jpg
-">
-                            </span>
+                                <img alt="Profile Image" class="profile-img rounded-circle"
+                                    src="../assets/img/theme/team-1-800x800.jpg">
+                                <span class="user-name">
+                                </span>
                         </div>
+
                     </a>
                     <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                         <div class=" dropdown-header noti-title">
@@ -458,33 +460,39 @@
 
         <script>
             document.addEventListener("DOMContentLoaded", function () {
+                // Get user profile from localStorage
                 const user = JSON.parse(localStorage.getItem("userProfile"));
 
+                // If no user, redirect to login
                 if (!user) {
                     window.location.href = "../examples/login.html";
-
                     return;
                 }
 
+                // Get user name or default to "User"
                 const userName = user.name || user.fullname || user.username || "User";
-                const profileImage = user.avatar || user.image || "../assets/img/theme/team-1-800x800.jpg";
 
+                // Get profile image, fallback to default if missing
+                const profileImage = (user.avatar || user.image) ? (user.avatar || user.image) : "../assets/img/theme/team-1-800x800.jpg";
+
+                // Update all elements with class "user-name"
                 document.querySelectorAll(".user-name").forEach(el => {
                     el.textContent = userName;
                 });
 
-                // FIXED selector
+                // Update all profile images
                 document.querySelectorAll(".profile-img").forEach(img => {
                     img.src = profileImage;
                 });
             });
 
-            // LOGOUT
+            // Logout function
             function logoutUser() {
                 localStorage.removeItem("userProfile");
                 window.location.href = "../examples/login.html";
             }
         </script>
+
 </body>
 
 </html>
