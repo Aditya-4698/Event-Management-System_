@@ -701,7 +701,56 @@ fetch('/.netlify/functions/dashboard')
     document.getElementById('visitor-count').textContent = data.visitorCount;
     document.getElementById('feedback-percent').textContent = data.feedbackPercent;
   });
+</script><!-- 1️⃣ jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- 2️⃣ Then Bootstrap JS (bundle includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 3️⃣ Optional JS plugins -->
+<script src="./assets/js/plugins/chart.js/dist/Chart.min.js"></script>
+<script src="./assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- 4️⃣ Argon Dashboard JS -->
+<script src="./assets/js/argon-dashboard.min.js?v=1.1.2"></script>
+
+<!-- 5️⃣ TrackJS -->
+<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
+<!-- 6️⃣ Your custom JS -->
+<script>
+$(document).ready(function () {
+    let user = JSON.parse(localStorage.getItem("userProfile"));
+    if (!user) {
+        window.location.href = "examples/login.html";
+        return;
+    }
+    $(".username").text(user.name);
+    $(".dropdown-header h6").text(`Welcome ${user.name}!`);
+    if (user.profile_image && user.profile_image !== "") {
+        $("img[alt='Image placeholder']").attr("src", user.profile_image);
+    } else {
+        $("img[alt='Image placeholder']").attr("src", "./assets/img/theme/team-4-800x800.jpg");
+    }
+});
+
+function logoutUser() {
+    localStorage.removeItem("userProfile");
+    window.location.href = "./examples/login.html";
+}
+
+// Fetch dashboard data
+fetch('/.netlify/functions/dashboard')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('venue-count').textContent = data.venueCount;
+    document.getElementById('event-count').textContent = data.eventCount;
+    document.getElementById('visitor-count').textContent = data.visitorCount;
+    document.getElementById('feedback-percent').textContent = data.feedbackPercent;
+  });
 </script>
+
 
 </body>
 

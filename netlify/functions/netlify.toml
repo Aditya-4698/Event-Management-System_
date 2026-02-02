@@ -1,0 +1,3 @@
+[build]
+  publish = "."                 # or your build folder if different
+  functions = "netlify/functions"
